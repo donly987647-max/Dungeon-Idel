@@ -1,0 +1,29 @@
+name: Verify v0.8.2 UI
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-v082.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source
+        run: |
+          node --check app.js
+          grep -q 'v0.8.2' index.html
+          grep -q 'v0.8.2 concise mobile UX' app.css
+      - name: Verify live Vercel
+        run: |
+          for i in 1 2 3 4 5 6; do
+            curl -fsSL --max-time 20 https://hero-extermination-inc.vercel.app/ -o /tmp/index.html || true
+            curl -fsSL --max-time 20 https://hero-extermination-inc.vercel.app/app.js?v=0820 -o /tmp/app.js || true
+            curl -fsSL --max-time 20 https://hero-extermination-inc.vercel.app/app.css?v=0820 -o /tmp/app.css || true
+            if grep -q 'v0.8.2' /tmp/index.html 2>/dev/null && grep -q 'function monsters' /tmp/app.js 2>/dev/null && grep -q 'v0.8.2 concise mobile UX' /tmp/app.css 2>/dev/null; then
+              echo LIVE_V082_OK=1
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'v0.8.2 not live yet'
+          exit 1
