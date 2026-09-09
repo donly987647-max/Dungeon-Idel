@@ -50,3 +50,32 @@ button{touch-action:manipulation}.pixel-char,.pixel-item{display:block;width:100
 .game-header .brief-strip{display:none}.game-header{box-shadow:0 3px 0 #080a08}.view{gap:10px;padding-top:10px}.stat-rail{height:42px}.corp-bar{height:64px}.title-stack small{display:none}.title-stack h1{font-size:21px}.vault{min-width:94px}.vault span{display:none}.vault b{font-size:16px}.bottom-nav b{font-size:10px}
 @media(max-width:430px){.facility-row{min-height:78px;grid-template-columns:56px minmax(0,1fr) auto;gap:9px;padding:8px 9px}.facility-row img{width:48px;height:48px}.facility-copy b{font-size:17px}.facility-copy small{font-size:10px}.facility-side{gap:5px}.facility-side i{font-size:20px}.office-banner{min-height:110px;padding:15px 13px}.office-banner h2{font-size:20px}.personnel-row{grid-template-columns:58px minmax(0,1fr) 68px}.personnel-avatar{height:78px}.personnel-avatar .pixel-char{width:54px;height:54px}.lodge-row{grid-template-columns:54px minmax(0,1fr) 105px}.lodge-avatar{height:72px}.lodge-avatar .pixel-char{width:50px;height:50px}.lodge-stats b{font-size:10px}.lodge-stats small{font-size:6px}.lodge-footer{grid-template-columns:1fr}.lodge-footer button{width:100%}}
 @media(max-width:360px){.facility-side em{display:none}.lodge-row{grid-template-columns:52px minmax(0,1fr) 82px}.lodge-stats i:nth-child(3){display:none}.lodge-stats{grid-template-columns:1fr 1fr}.personnel-row{grid-template-columns:54px minmax(0,1fr) 62px}}
+
+
+/* v0.11.8 chapter loot collection + popup warehouse */
+.bottom-nav .nav-placeholder{display:block;border-right:1px solid #2d352e;min-width:0}
+.mission-cta{min-width:146px;display:flex;justify-content:flex-end;align-items:flex-end}
+.chapter-loot-btn{min-height:38px;border:1px solid #a56e38;background:linear-gradient(180deg,#6f4b2a,#49301d);color:#f6d19b;padding:7px 9px;font-size:10px;font-weight:900;line-height:1.2;text-align:center;box-shadow:inset 0 0 0 1px #25180f}
+.chapter-loot-btn strong{display:block;margin-top:2px;color:#fff0ca;font-size:11px}
+.chapter-loot-btn:disabled{filter:grayscale(.75);opacity:.44}
+.warehouse-popup-sheet,.collection-result-sheet{max-height:min(82vh,720px);overflow:auto}
+.warehouse-popup-note{margin:0 0 10px;padding:10px;border:1px solid #455047;background:#141915;color:#9da89f;font-size:10px;line-height:1.55}
+.warehouse-popup-note b{color:#efbb78}
+.warehouse-popup-grid{padding-bottom:8px}
+.dim-close-hint{text-align:center;color:#677269;font-size:9px;padding:13px 0 2px}
+.collection-result-head{padding:18px 17px 12px;border-bottom:1px solid #3a443c;background:linear-gradient(180deg,#272e28,#171c18)}
+.collection-result-head h2{margin:3px 0 4px;font-size:22px}
+.collection-result-head p{margin:0;color:#8e9a90;font-size:10px}
+.collection-xp,.collection-loot{margin:12px;border:1px solid #3e493f;background:#141915}
+.collection-xp>header,.collection-loot>header{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-bottom:1px solid #343d35;background:#1d241e}
+.collection-xp>header b,.collection-loot>header b{font-size:12px}
+.collection-xp>header small,.collection-loot>header small{font-size:9px;color:#89948c}
+.collection-xp-row,.collection-loot-row{min-height:48px;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid #293129}
+.collection-xp-row:last-child,.collection-loot-row:last-child{border-bottom:0}
+.collection-xp-row>span,.collection-loot-row>span{width:38px;height:38px;display:grid;place-items:center;background:#0d110e;border:1px solid #354038}
+.collection-xp-row svg,.collection-loot-row svg{width:34px;height:34px;image-rendering:pixelated}
+.collection-xp-row b,.collection-loot-row b{font-size:11px}
+.collection-xp-row strong{color:#9ed18f;font-size:12px}
+.collection-loot-row strong{color:#efbb78;font-size:12px}
+.collection-empty{padding:18px 12px;text-align:center;color:#747f76;font-size:10px}
+@media(max-width:430px){.mission-foot{gap:7px}.mission-cta{min-width:126px}.chapter-loot-btn{font-size:9px;padding:6px 7px}.chapter-loot-btn strong{font-size:10px}}
