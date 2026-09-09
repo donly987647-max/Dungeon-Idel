@@ -1,0 +1,33 @@
+name: Verify v0.7.0 Frontend
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify public Vercel build
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://hero-extermination-inc.vercel.app'
+          for i in {1..12}; do
+            curl -fsSL "$URL" -o /tmp/index.html || true
+            if grep -q '용사 박멸 주식회사 v0.7.0' /tmp/index.html 2>/dev/null; then break; fi
+            sleep 5
+          done
+          grep -q '용사 박멸 주식회사 v0.7.0' /tmp/index.html
+          grep -q 'bottom-nav' /tmp/index.html
+          curl -fsSL "$URL/app.css?v=0700" -o /tmp/app.css
+          curl -fsSL "$URL/app.js?v=0700" -o /tmp/app.js
+          grep -q 'site-card' /tmp/app.css
+          grep -q 'function siteCard' /tmp/app.js
+          node --check /tmp/app.js
+          echo 'V070_PUBLIC_FRONTEND_OK=1'
