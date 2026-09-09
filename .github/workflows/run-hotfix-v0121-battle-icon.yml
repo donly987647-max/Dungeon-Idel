@@ -1,0 +1,37 @@
+name: Run v0.12.1 Battle Icon Hotfix
+on:
+  push:
+    paths:
+      - 'scripts/hotfix_v0121_battle_icon.py'
+      - '.github/workflows/run-hotfix-v0121-battle-icon.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  hotfix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply hotfix
+        run: python scripts/hotfix_v0121_battle_icon.py
+      - name: Verify JavaScript
+        run: node --check app.js
+      - name: Verify pixel icon
+        run: |
+          grep -q "encounter-pict" app.js
+          grep -q "pixel encounter icon hotfix" app.css
+          grep -q "0121b" index.html
+      - name: Commit release files
+        run: |
+          git config user.name "Doong"
+          git config user.email "donly987647@gmail.com"
+          git add app.js app.css index.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "fix: keep battle state icon synced with server event"
+            git push origin HEAD:main
+          fi
