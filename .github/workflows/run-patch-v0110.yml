@@ -1,0 +1,29 @@
+name: Run v0.11.0 Economy Frontend Patch
+on:
+  push:
+    paths:
+      - 'scripts/patch_v0110_economy.py'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply v0.11 frontend patch
+        run: python scripts/patch_v0110_economy.py
+      - name: Verify JavaScript
+        run: node --check app.js
+      - name: Verify version and assets
+        run: |
+          grep -q 'v0.11.0' index.html
+          test -f economy-v011.css
+          test -f assets/icon-workshop.svg
+          test -f assets/icon-shop.svg
+      - name: Commit
+        run: |
+          git config user.name "Doong"
+          git config user.email "donly987647@gmail.com"
+          git add app.js index.html
+          git diff --cached --quiet || git commit -m "Implement v0.11.0 crafting economy party and boss UI"
+          git push
