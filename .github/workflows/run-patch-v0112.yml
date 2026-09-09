@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'scripts/patch_v0112_polish.py'
+      - 'scripts/run_v0112_polish.py'
       - '.github/workflows/run-patch-v0112.yml'
 permissions:
   contents: write
@@ -12,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Apply v0.11.2 app patch
-        run: python scripts/patch_v0112_polish.py
+        run: python scripts/run_v0112_polish.py
       - name: Verify JavaScript
         run: node --check app.js
       - name: Commit app
