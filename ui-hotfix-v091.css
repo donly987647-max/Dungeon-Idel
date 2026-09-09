@@ -1,0 +1,4 @@
+/* v0.9.1 — remove redundant header status rail */
+.stat-rail{display:none!important}
+.game-header{border-bottom:1px solid #303630}
+.view{min-height:calc(100vh - 150px)}
