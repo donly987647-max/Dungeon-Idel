@@ -36,19 +36,21 @@ async function ensurePlayer(player:string){
 async function state(player:string){
   await ensurePlayer(player)
   await db.rpc('game_tick_all')
-  const [p,a,m,c,e,s,i]=await Promise.all([
+  const [p,a,m,c,e,s,i,q,d]=await Promise.all([
     db.from('game_players').select('*').eq('device_id',player).single(),
     db.from('game_accounts').select('username,created_at,last_login_at').eq('user_id',player).maybeSingle(),
     db.from('game_monsters').select('*').eq('player_id',player).order('created_at'),
     db.from('game_candidates').select('*').eq('player_id',player).order('created_at'),
     db.from('game_expeditions').select('*').eq('player_id',player).order('started_at',{ascending:false}),
     db.from('game_hunt_sites').select('*').order('unlock_order'),
-    db.from('game_inventory').select('*').eq('player_id',player).order('item_id')
+    db.from('game_inventory').select('*').eq('player_id',player).order('item_id'),
+    db.from('game_monster_equipment').select('*').eq('player_id',player).order('equipped_at'),
+    db.from('game_item_defs').select('*').order('id')
   ])
-  const err=[p,a,m,c,e,s,i].find(x=>x.error)?.error
+  const err=[p,a,m,c,e,s,i,q,d].find(x=>x.error)?.error
   if(err)throw err
   const maxLevel=Math.max(1,...(m.data||[]).map((x:any)=>x.level||1))
-  return {account:a.data||null,player:p.data,monsters:m.data||[],candidates:c.data||[],expeditions:e.data||[],sites:(s.data||[]).map((x:any)=>({...x,unlocked:x.unlock_order===1||(x.unlock_order===2&&maxLevel>=5)||(x.unlock_order===3&&maxLevel>=10)})),inventory:i.data||[],serverNow:new Date().toISOString()}
+  return {account:a.data||null,player:p.data,monsters:m.data||[],candidates:c.data||[],expeditions:e.data||[],sites:(s.data||[]).map((x:any)=>({...x,unlocked:x.unlock_order===1||(x.unlock_order===2&&maxLevel>=5)||(x.unlock_order===3&&maxLevel>=10)})),inventory:i.data||[],equipment:q.data||[],itemDefs:d.data||[],serverNow:new Date().toISOString()}
 }
 
 Deno.serve(async(req:Request)=>{
@@ -102,11 +104,23 @@ Deno.serve(async(req:Request)=>{
       const unlocked=site.unlock_order===1||(site.unlock_order===2&&mon.level>=5)||(site.unlock_order===3&&mon.level>=10)
       if(!unlocked)return json({error:'locked'},400)
       await db.from('game_expeditions').update({active:false,updated_at:new Date().toISOString()}).eq('player_id',player).eq('monster_id',monsterId).eq('active',true)
-      const {error}=await db.from('game_expeditions').insert({player_id:player,monster_id:monsterId,site_id:siteId,active:true});if(error)throw error
+      const {error}=await db.from('game_expeditions').insert({player_id:player,monster_id:monsterId,site_id:siteId,active:true,phase:'탐색',event_state:{type:'deploy',text:'현장 진입 시작',t:new Date().toISOString()}});if(error)throw error
       return json({ok:true,state:await state(player)})
     }
-    if(action==='recall'){const id=String(body.expeditionId||'');const {error}=await db.from('game_expeditions').update({active:false,updated_at:new Date().toISOString()}).eq('id',id).eq('player_id',player);if(error)throw error;return json({ok:true,state:await state(player)})}
+    if(action==='recall'){const id=String(body.expeditionId||'');const {error}=await db.from('game_expeditions').update({active:false,phase:'복귀',updated_at:new Date().toISOString()}).eq('id',id).eq('player_id',player);if(error)throw error;return json({ok:true,state:await state(player)})}
     if(action==='collect'){const id=body.expeditionId?String(body.expeditionId):null;const {data,error}=await db.rpc('game_collect_loot',{p_player:player,p_expedition:id});if(error)throw error;return json({ok:true,collected:data||{},state:await state(player)})}
+    if(action==='equip'){
+      const monsterId=String(body.monsterId||''),itemId=String(body.itemId||'')
+      const {error}=await db.rpc('game_equip_item',{p_player:player,p_monster:monsterId,p_item:itemId})
+      if(error){const msg=String(error.message||'');if(msg.includes('not_equipment'))return json({error:'not_equipment'},400);if(msg.includes('item_missing'))return json({error:'item_missing'},400);if(msg.includes('monster_missing'))return json({error:'invalid_target'},400);throw error}
+      return json({ok:true,state:await state(player)})
+    }
+    if(action==='unequip'){
+      const monsterId=String(body.monsterId||''),slot=String(body.slot||'')
+      const {error}=await db.rpc('game_unequip_item',{p_player:player,p_monster:monsterId,p_slot:slot})
+      if(error)throw error
+      return json({ok:true,state:await state(player)})
+    }
     if(action==='hire'){
       const id=String(body.candidateId||'')
       const [{data:p},{data:c},{count}]=await Promise.all([db.from('game_players').select('*').eq('device_id',player).single(),db.from('game_candidates').select('*').eq('id',id).eq('player_id',player).maybeSingle(),db.from('game_monsters').select('id',{count:'exact',head:true}).eq('player_id',player)])
