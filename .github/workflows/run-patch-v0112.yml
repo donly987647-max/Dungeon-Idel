@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'scripts/patch_v0112_polish.py'
+      - '.github/workflows/run-patch-v0112.yml'
 permissions:
   contents: write
 jobs:
