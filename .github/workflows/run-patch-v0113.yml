@@ -1,0 +1,23 @@
+name: Run v0.11.3 Remove HQ Banner
+on:
+  push:
+    paths:
+      - 'scripts/patch_v0113_remove_hq_banner.py'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply v0.11.3 patch
+        run: python scripts/patch_v0113_remove_hq_banner.py
+      - name: Verify JavaScript
+        run: node --check app.js
+      - name: Commit changes
+        run: |
+          git config user.name "Doong"
+          git config user.email "donly987647@gmail.com"
+          git add app.js index.html
+          git diff --cached --quiet || git commit -m "Remove HQ identity banner in v0.11.3"
+          git push
