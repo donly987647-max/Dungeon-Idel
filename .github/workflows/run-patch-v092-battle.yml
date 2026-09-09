@@ -1,0 +1,29 @@
+name: Run v0.9.2 Battle Screen Patch
+on:
+  push:
+    paths:
+      - 'tools/patch_v092_battle.py'
+      - '.github/workflows/run-patch-v092-battle.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply battle screen patch
+        run: python tools/patch_v092_battle.py
+      - name: Verify syntax and assets
+        run: |
+          node --check app.js
+          grep -q 'battle-report-sheet' app.js
+          grep -q 'battle-v092.css' index.html
+          test -f battle-v092.css
+      - name: Commit
+        run: |
+          git config user.name 'Doong'
+          git config user.email 'donly987647@gmail.com'
+          git add app.js index.html battle-v092.css
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Implement v0.9.2 full live battle report screen'
+          git push
