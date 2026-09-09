@@ -1,0 +1,47 @@
+name: Verify v0.8.0 Frontend
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'app.css'
+      - 'app.js'
+      - 'assets/**'
+      - '.github/workflows/verify-v080.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source syntax
+        run: |
+          node --check app.js
+          grep -q '용사 박멸 주식회사 v0.8.0' index.html
+          grep -q 'assets/hq-scene.svg' app.css
+          test -f assets/brand-seal.svg
+          test -f assets/site-mountain.svg
+          test -f assets/site-farm.svg
+          test -f assets/site-border.svg
+          test -f assets/icon-dorm.svg
+          test -f assets/icon-recruit.svg
+          test -f assets/icon-storage.svg
+          test -f assets/icon-ops.svg
+      - name: Verify public Vercel
+        run: |
+          set -euo pipefail
+          URL='https://hero-extermination-inc.vercel.app'
+          for i in {1..12}; do
+            curl -fsSL "$URL/?qa=$GITHUB_SHA-$i" -o /tmp/index.html || true
+            if grep -q 'v0.8.0' /tmp/index.html 2>/dev/null; then break; fi
+            sleep 5
+          done
+          grep -q '용사 박멸 주식회사 v0.8.0' /tmp/index.html
+          curl -fsSL "$URL/app.js?v=0800" -o /tmp/app.js
+          node --check /tmp/app.js
+          curl -fsSL "$URL/app.css?v=0800" -o /tmp/app.css
+          grep -q 'industrial' /tmp/app.css || grep -q 'hq-hero' /tmp/app.css
+          for asset in brand-seal.svg hq-scene.svg site-mountain.svg site-farm.svg site-border.svg icon-dorm.svg icon-recruit.svg icon-storage.svg icon-ops.svg; do
+            code=$(curl -sS -o /tmp/a -w '%{http_code}' "$URL/assets/$asset")
+            test "$code" = 200
+          done
+          echo V080_PUBLIC_OK=1
