@@ -1,0 +1,82 @@
+name: Patch v0.6.2 Auth Frontend
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/patch-auth-v062.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch app.js
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('app.js')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("const loginEmail=u=>String(u||'').trim().toLowerCase()+'@players.dungeon-idel.game';\n","")
+          old="""async function registerAccount(username,password){
+            const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB},body:JSON.stringify({action:'register',username,password})});
+            const d=await r.json().catch(()=>({error:'bad_response'}));
+            if(!r.ok)throw new Error(d.error||'register_failed');
+            return d;
+          }
+
+          function showAuth()"""
+          new="""async function registerAccount(username,password){
+            const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB},body:JSON.stringify({action:'register',username,password})});
+            const d=await r.json().catch(()=>({error:'bad_response'}));
+            if(!r.ok)throw new Error(d.error||'register_failed');
+            return d;
+          }
+          async function loginAccount(username,password){
+            const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB},body:JSON.stringify({action:'login',username,password})});
+            const d=await r.json().catch(()=>({error:'bad_response'}));
+            if(!r.ok)throw new Error(d.error||'invalid_credentials');
+            return d;
+          }
+          async function applySession(authSession){
+            if(!authSession?.access_token||!authSession?.refresh_token)throw new Error('invalid_credentials');
+            const {data,error}=await sb.auth.setSession({access_token:authSession.access_token,refresh_token:authSession.refresh_token});
+            if(error||!data.session)throw new Error('invalid_credentials');
+            session=data.session;
+          }
+          const validKoreanId=u=>/^[가-힣]{2,12}$/.test(String(u||'').normalize('NFC'));
+          const validPin=p=>/^\\d{4}$/.test(String(p||''));
+
+          function showAuth()"""
+          if old not in s:
+            raise SystemExit('register block marker not found')
+          s=s.replace(old,new,1)
+          lines=s.splitlines()
+          login_new="$('#loginForm').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const u=$('#loginId').value.trim().normalize('NFC'),p=$('#loginPw').value;if(!validKoreanId(u)){authMsg('아이디는 한글 2~12글자로 입력해 주세요.');return}if(!validPin(p)){authMsg('비밀번호는 숫자 4자리로 입력해 주세요.');return}busy=true;authMsg('로그인 중...');try{const d=await loginAccount(u,p);await applySession(d.session);authMsg('');await enterGame()}catch(err){authMsg(errorKo(err.message))}finally{busy=false}});"
+          signup_new="$('#signupForm').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const u=$('#signupId').value.trim().normalize('NFC'),p=$('#signupPw').value,p2=$('#signupPw2').value;if(!validKoreanId(u)){authMsg('아이디는 한글 2~12글자로 입력해 주세요.');return}if(!validPin(p)){authMsg('비밀번호는 숫자 4자리로 입력해 주세요.');return}if(p!==p2){authMsg('비밀번호 확인이 일치하지 않습니다.');return}busy=true;authMsg('계정을 생성 중...');try{const d=await registerAccount(u,p);await applySession(d.session);authMsg('계정 생성 완료.',true);await enterGame()}catch(err){authMsg(errorKo(err.message))}finally{busy=false}});"
+          error_new="function errorKo(code){return {username_format:'아이디는 한글 2~12글자로 입력해 주세요.',password_format:'비밀번호는 숫자 4자리로 입력해 주세요.',username_taken:'이미 사용 중인 아이디입니다.',invalid_credentials:'아이디 또는 비밀번호가 맞지 않습니다.',unauthorized:'로그인이 만료되었습니다.',quarters_full:'숙소가 가득 찼습니다.',gold_short:'골드가 부족합니다.',locked:'아직 갈 수 없는 지역입니다.',candidate_missing:'영입 후보가 사라졌습니다.'}[code]||code}"
+          found={'login':False,'signup':False,'error':False}
+          for i,line in enumerate(lines):
+            if line.startswith("function errorKo(code)"):
+              lines[i]=error_new; found['error']=True
+            elif line.startswith("$('#loginForm').addEventListener"):
+              lines[i]=login_new; found['login']=True
+            elif line.startswith("$('#signupForm').addEventListener"):
+              lines[i]=signup_new; found['signup']=True
+          if not all(found.values()):
+            raise SystemExit(f'patch markers missing: {found}')
+          s='\n'.join(lines)+'\n'
+          p.write_text(s,encoding='utf-8')
+          PY
+          node --check app.js
+          grep -q 'validKoreanId' app.js
+          grep -q "action:'login'" app.js
+          ! grep -q 'loginEmail' app.js
+      - name: Commit patched frontend
+        run: |
+          git config user.name 'Doong'
+          git config user.email 'donly987647@gmail.com'
+          git add app.js
+          git commit -m 'Use Korean IDs and 4-digit PIN on frontend'
+          git push
