@@ -1,0 +1,33 @@
+name: Verify v0.8.1 Frontend
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-v081.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source
+        run: |
+          node --check app.js
+          grep -q 'v0.8.1' index.html
+          grep -q 'assets/characters.svg' app.js
+          grep -q 'assets/items.svg' app.js
+      - name: Verify live Vercel assets
+        run: |
+          set -e
+          BASE='https://hero-extermination-inc.vercel.app'
+          for i in {1..12}; do
+            HTML=$(curl -fsSL "$BASE/?v=0810" || true)
+            if echo "$HTML" | grep -q 'v0.8.1'; then break; fi
+            sleep 5
+          done
+          echo "$HTML" | grep -q 'v0.8.1'
+          curl -fsSL "$BASE/app.js?v=0810" | grep -q 'assets/characters.svg'
+          curl -fsSL "$BASE/assets/characters.svg" | grep -q 'monster-slime'
+          curl -fsSL "$BASE/assets/characters.svg" | grep -q 'human-captain'
+          curl -fsSL "$BASE/assets/items.svg" | grep -q 'id="sword"'
+          curl -fsSL "$BASE/assets/items.svg" | grep -q 'id="crate"'
+          echo 'V081_LIVE_OK=1'
