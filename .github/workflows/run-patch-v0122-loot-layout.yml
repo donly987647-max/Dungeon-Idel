@@ -1,0 +1,29 @@
+name: Run v0.12.2 Loot Layout Patch
+on:
+  push:
+    paths:
+      - 'scripts/patch_v0122_loot_layout.py'
+      - '.github/workflows/run-patch-v0122-loot-layout.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply v0.12.2 loot layout patch
+        run: python scripts/patch_v0122_loot_layout.py
+      - name: Verify layout markers
+        run: |
+          grep -F '.compact-mission{height:auto;min-height:154px}' app.css
+          grep -F '.compact-mission .mission-foot{grid-template-columns:minmax(0,1fr);gap:7px;align-items:stretch}' app.css
+          grep -F '.compact-mission .mission-cta{width:100%;min-width:0;height:auto;display:block}' app.css
+          grep -F '.chapter-loot-btn{width:100%;min-height:42px;' app.css
+          grep -F 'v0.12.2' index.html
+      - name: Commit release files
+        run: |
+          git config user.name 'Doong'
+          git config user.email 'donly987647@gmail.com'
+          git add app.css index.html
+          git commit -m 'fix: make chapter loot controls flow without overlap'
+          git push
