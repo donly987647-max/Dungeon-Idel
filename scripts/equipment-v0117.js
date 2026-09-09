@@ -1,6 +1,7 @@
 /* v0.11.7 Equipment UX
  * Equipment management belongs to the monster detail flow.
  * Warehouse equipment cards are informational only.
+ * Production trigger: v0.11.7a
  */
 (()=>{
   const slotByLabel={무기:'weapon',방어구:'armor',장신구:'accessory'};
