@@ -1,0 +1,52 @@
+name: Deploy Hero Extermination Inc to Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Vercel token
+        shell: bash
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN is not configured for this repository."
+            exit 2
+          fi
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Link Vercel project
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel link --yes --project hero-extermination-inc --token "$VERCEL_TOKEN"
+
+      - name: Deploy production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          URL=$(vercel deploy --prod --yes --token "$VERCEL_TOKEN")
+          echo "Production URL: $URL"
+          echo "VERCEL_PRODUCTION_URL=$URL" >> "$GITHUB_ENV"
+
+      - name: Verify deployed page
+        run: |
+          curl -fsSL "$VERCEL_PRODUCTION_URL" -o /tmp/index.html
+          grep -q '용사 박멸 주식회사' /tmp/index.html
+          if grep -q 'const html=String.raw' /tmp/index.html; then
+            echo 'Raw source leaked into rendered HTML.'
+            exit 3
+          fi
+          echo "VERCEL_SMOKE_OK=1"
