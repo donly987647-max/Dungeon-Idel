@@ -36,14 +36,57 @@
 .page-head{min-height:34px!important;align-items:center!important}.page-head h2{font-size:18px!important;line-height:1.05!important}.page-head span{font-size:7px!important;line-height:1!important}
 .compact-head{min-height:28px!important}
 
+/* v0.11.6 — top-aligned pages, overflow-only scrolling, refined motion */
+html,body{height:100%;overflow:hidden}
+body{padding-bottom:0!important}
+#app{height:100dvh;min-height:100dvh;overflow:hidden}
+.game-header{flex:0 0 auto}
+#view.view{
+  height:calc(100dvh - 156px - env(safe-area-inset-bottom));
+  min-height:0!important;
+  max-height:calc(100dvh - 156px - env(safe-area-inset-bottom));
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+  align-content:start;
+  gap:4px!important;
+  padding:4px 8px 8px!important;
+  scroll-behavior:smooth;
+}
+#view>.page-head,#view>.compact-head{margin:0!important;padding-top:0!important;padding-bottom:2px!important}
+#view>.page-head{min-height:31px!important}
+#view>.compact-head{min-height:26px!important}
+.personnel-list{gap:3px!important;margin:0!important;padding:0!important}
+.compact-missions,.mission-list{gap:4px!important;margin:0!important;padding:0!important}
+.compact-mission{margin:0!important}
+
+/* Motion feedback stays subtle and GPU-friendly */
+.view.view-enter>*{animation:screenEnterPolished .2s cubic-bezier(.2,.72,.2,1) both!important}
+.view.view-enter>*:nth-child(2){animation-delay:.018s!important}.view.view-enter>*:nth-child(3){animation-delay:.032s!important}
+@keyframes screenEnterPolished{from{opacity:0;transform:translate3d(0,4px,0) scale(.998)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+button,.facility-row,.personnel-row,.mission-card,.inventory-slot,.compact-item,.party-select-row,.shop-item,.recipe-row{touch-action:manipulation;transform:translateZ(0);will-change:transform}
+.bottom-nav button,.facility-row,.personnel-row,.mission-card,.inventory-slot,.compact-item,.party-select-row,.shop-item,.recipe-row,.primary-btn,.soft-btn,.danger-btn,.close-btn{transition:transform .12s cubic-bezier(.2,.72,.2,1),filter .12s ease,background-color .14s ease,border-color .14s ease,opacity .14s ease!important}
+.bottom-nav button:active,.facility-row:active,.personnel-row:active,.mission-card:active,.inventory-slot:active,.compact-item:active,.party-select-row:active,.shop-item:active,.recipe-row:active{transform:translate3d(0,1px,0) scale(.988)!important;filter:brightness(1.08)}
+.primary-btn:active,.soft-btn:active,.danger-btn:active,.close-btn:active{transform:translate3d(0,1px,0) scale(.97)!important;filter:brightness(1.09)}
+.bottom-nav button.active .nav-pict{transform:translateY(-1px) scale(1.05);transition:transform .18s cubic-bezier(.2,.72,.2,1)}
+.modal .sheet{transition:transform .2s cubic-bezier(.2,.72,.2,1),opacity .16s ease!important}
+
 @media(max-width:430px){
   :root{--roster-row-h:56px;--item-cell-h:54px}
   .personnel-row{grid-template-columns:48px minmax(0,1fr) 56px!important}
   .personnel-avatar .pixel-char{width:40px!important;height:40px!important}
   .compact-warehouse .shelf,.inventory-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #view.view{padding:3px 7px 7px!important;gap:3px!important}
+  .personnel-list{gap:2px!important}.compact-missions,.mission-list{gap:3px!important}
 }
 @media(max-width:360px){
   .compact-warehouse .shelf,.inventory-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   .personnel-row{grid-template-columns:46px minmax(0,1fr) 54px!important}
   .personnel-info{padding-left:5px!important;padding-right:5px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #view.view{scroll-behavior:auto}
+  .view.view-enter>*{animation:none!important}
+  .bottom-nav button,.facility-row,.personnel-row,.mission-card,.inventory-slot,.compact-item,.party-select-row,.shop-item,.recipe-row,.primary-btn,.soft-btn,.danger-btn,.close-btn,.modal .sheet{transition:none!important}
 }
