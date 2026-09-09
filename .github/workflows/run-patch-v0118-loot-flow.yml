@@ -1,0 +1,34 @@
+name: Run v0.11.8 Loot Flow Patch
+on:
+  push:
+    paths:
+      - 'scripts/patch_v0118_loot_flow.py'
+      - '.github/workflows/run-patch-v0118-loot-flow.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply v0.11.8 loot flow patch
+        run: python scripts/patch_v0118_loot_flow.py
+      - name: Verify JavaScript
+        run: node --check app.js
+      - name: Verify patch markers
+        run: |
+          grep -q 'sitePending(site.id)' app.js
+          grep -q 'collect-site' app.js
+          grep -q 'warehouseModal' app.js
+          grep -q "e.target?.id==='modal'" app.js
+          grep -q '전리품 수거' app.js
+          grep -q 'nav-placeholder' index.html
+          grep -q 'v0.11.8' index.html
+          grep -q 'chapter-loot-btn' app.css
+      - name: Commit app
+        run: |
+          git config user.name "Doong"
+          git config user.email "donly987647@gmail.com"
+          git add app.js app.css index.html
+          git diff --cached --quiet || git commit -m "release: v0.11.8 chapter loot collection flow"
+          git push
