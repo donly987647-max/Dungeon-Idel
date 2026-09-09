@@ -1,0 +1,34 @@
+name: Verify Vercel Public Access
+
+on:
+  push:
+    paths:
+      - '.github/workflows/vercel-public-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Inspect public alias
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://hero-extermination-inc.vercel.app'
+          code=$(curl -sS -L -D /tmp/headers.txt -o /tmp/body.html -w '%{http_code}' "$URL")
+          echo "HTTP_CODE=$code"
+          echo '--- HEADERS ---'
+          sed -n '1,30p' /tmp/headers.txt
+          echo '--- BODY HEAD ---'
+          sed -n '1,50p' /tmp/body.html
+          echo '--- CHECKS ---'
+          if grep -q '용사 박멸 주식회사' /tmp/body.html; then echo TITLE_OK=1; else echo TITLE_OK=0; fi
+          if grep -q 'const html=String.raw' /tmp/body.html; then echo RAW_SOURCE_LEAK=1; else echo RAW_SOURCE_LEAK=0; fi
+          test "$code" = 200
+          grep -q '용사 박멸 주식회사' /tmp/body.html
+          ! grep -q 'const html=String.raw' /tmp/body.html
+          echo PUBLIC_VERCEL_OK=1
