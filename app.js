@@ -4,7 +4,6 @@ const API=SB_URL+'/functions/v1/dungeon-idel-api';
 const sb=window.supabase.createClient(SB_URL,PUB,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 let screen='home',S=null,busy=false,session=null;
 const $=s=>document.querySelector(s),fmt=n=>Number(n||0).toLocaleString('ko-KR');
-const loginEmail=u=>String(u||'').trim().toLowerCase()+'@players.dungeon-idel.game';
 
 function authMsg(text='',ok=false){const e=$('#authMsg');e.textContent=text;e.classList.toggle('ok',ok)}
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove('show'),1700)}
@@ -30,6 +29,20 @@ async function registerAccount(username,password){
   if(!r.ok)throw new Error(d.error||'register_failed');
   return d;
 }
+async function loginAccount(username,password){
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB},body:JSON.stringify({action:'login',username,password})});
+  const d=await r.json().catch(()=>({error:'bad_response'}));
+  if(!r.ok)throw new Error(d.error||'invalid_credentials');
+  return d;
+}
+async function applySession(authSession){
+  if(!authSession?.access_token||!authSession?.refresh_token)throw new Error('invalid_credentials');
+  const {data,error}=await sb.auth.setSession({access_token:authSession.access_token,refresh_token:authSession.refresh_token});
+  if(error||!data.session)throw new Error('invalid_credentials');
+  session=data.session;
+}
+const validKoreanId=u=>/^[가-힣]{2,12}$/.test(String(u||'').normalize('NFC'));
+const validPin=p=>/^\d{4}$/.test(String(p||''));
 
 function showAuth(){close();S=null;session=null;$('#app').classList.add('hidden');$('#authGate').classList.remove('hidden');authMsg('')}
 async function enterGame(){
@@ -59,11 +72,11 @@ function deployOpen(siteId){const site=S.sites.find(x=>x.id===siteId);modal(`<di
 function watch(id){const e=S.expeditions.find(x=>x.id===id),m=S.monsters.find(x=>x.id===e.monster_id),site=S.sites.find(x=>x.id===e.site_id);modal(`<div class="title"><div><h2>${site.name}</h2><div class="sub">${m.name} 서버 자동전투 관전</div></div><button class="btn" data-action="close">닫기</button></div><div class="battle"><canvas id="watchCanvas" width="320" height="190"></canvas><div class="log">${(e.battle_log||[]).slice(0,6).map(x=>`${new Date(x.t).toLocaleTimeString('ko-KR')} · ${x.enemy} · ${x.result==='win'?'처치':'패배'}`).join('<br>')||'전투 시작 대기 중...'}</div></div>`);battleCanvas($('#watchCanvas'),e)}
 async function refresh(){if(busy||!session||!S)return;try{await api('state');render()}catch(e){if(e.message==='unauthorized'){await sb.auth.signOut();showAuth()}else{$('#serverState').textContent='서버 재연결 중';$('#serverState').className='danger'}}}
 
-function errorKo(code){return {username_format:'아이디는 3~20자의 영문, 숫자, 밑줄(_)만 사용할 수 있습니다.',password_format:'비밀번호는 8~72자로 입력해 주세요.',username_taken:'이미 사용 중인 아이디입니다.',invalid_credentials:'아이디 또는 비밀번호가 맞지 않습니다.',unauthorized:'로그인이 만료되었습니다.',quarters_full:'숙소가 가득 찼습니다.',gold_short:'골드가 부족합니다.',locked:'아직 갈 수 없는 지역입니다.',candidate_missing:'영입 후보가 사라졌습니다.'}[code]||code}
+function errorKo(code){return {username_format:'아이디는 한글 2~12글자로 입력해 주세요.',password_format:'비밀번호는 숫자 4자리로 입력해 주세요.',username_taken:'이미 사용 중인 아이디입니다.',invalid_credentials:'아이디 또는 비밀번호가 맞지 않습니다.',unauthorized:'로그인이 만료되었습니다.',quarters_full:'숙소가 가득 찼습니다.',gold_short:'골드가 부족합니다.',locked:'아직 갈 수 없는 지역입니다.',candidate_missing:'영입 후보가 사라졌습니다.'}[code]||code}
 
 document.querySelectorAll('[data-auth-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-auth-tab]').forEach(x=>x.classList.toggle('active',x===b));const signup=b.dataset.authTab==='signup';$('#loginForm').classList.toggle('hidden',signup);$('#signupForm').classList.toggle('hidden',!signup);authMsg('')}));
-$('#loginForm').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;busy=true;authMsg('로그인 중...');try{const u=$('#loginId').value.trim(),p=$('#loginPw').value;const {data,error}=await sb.auth.signInWithPassword({email:loginEmail(u),password:p});if(error)throw new Error('invalid_credentials');session=data.session;authMsg('');await enterGame()}catch(err){authMsg(errorKo(err.message))}finally{busy=false}});
-$('#signupForm').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const u=$('#signupId').value.trim(),p=$('#signupPw').value,p2=$('#signupPw2').value;if(p!==p2){authMsg('비밀번호 확인이 일치하지 않습니다.');return}busy=true;authMsg('계정을 생성 중...');try{await registerAccount(u,p);const {data,error}=await sb.auth.signInWithPassword({email:loginEmail(u),password:p});if(error)throw new Error('invalid_credentials');session=data.session;authMsg('계정 생성 완료.',true);await enterGame()}catch(err){authMsg(errorKo(err.message))}finally{busy=false}});
+$('#loginForm').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const u=$('#loginId').value.trim().normalize('NFC'),p=$('#loginPw').value;if(!validKoreanId(u)){authMsg('아이디는 한글 2~12글자로 입력해 주세요.');return}if(!validPin(p)){authMsg('비밀번호는 숫자 4자리로 입력해 주세요.');return}busy=true;authMsg('로그인 중...');try{const d=await loginAccount(u,p);await applySession(d.session);authMsg('');await enterGame()}catch(err){authMsg(errorKo(err.message))}finally{busy=false}});
+$('#signupForm').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const u=$('#signupId').value.trim().normalize('NFC'),p=$('#signupPw').value,p2=$('#signupPw2').value;if(!validKoreanId(u)){authMsg('아이디는 한글 2~12글자로 입력해 주세요.');return}if(!validPin(p)){authMsg('비밀번호는 숫자 4자리로 입력해 주세요.');return}if(p!==p2){authMsg('비밀번호 확인이 일치하지 않습니다.');return}busy=true;authMsg('계정을 생성 중...');try{const d=await registerAccount(u,p);await applySession(d.session);authMsg('계정 생성 완료.',true);await enterGame()}catch(err){authMsg(errorKo(err.message))}finally{busy=false}});
 
 document.addEventListener('click',async e=>{const n=e.target.closest('[data-screen]');if(n){screen=n.dataset.screen;close();render();return}const go=e.target.closest('[data-go]');if(go){screen=go.dataset.go;render();return}const b=e.target.closest('[data-action]');if(!b)return;const a=b.dataset.action;if(a==='logout'){if(busy)return;busy=true;try{await sb.auth.signOut();showAuth()}finally{busy=false}return}try{busy=true;if(a==='close')close();else if(a==='candidates')candidates();else if(a==='deploy-open')deployOpen(b.dataset.id);else if(a==='watch')watch(b.dataset.id);else if(a==='deploy'){await api('deploy',{monsterId:b.dataset.id,siteId:b.dataset.site});close();toast('사냥을 시작했습니다.');render()}else if(a==='recall'){await api('recall',{expeditionId:b.dataset.id});toast('몬스터를 복귀시켰습니다.');render()}else if(a==='collect-all'){await api('collect');toast('전리품을 일괄 수령했습니다.');render()}else if(a==='collect-one'){await api('collect',{expeditionId:b.dataset.id});toast('전리품을 수령했습니다.');render()}else if(a==='hire'){await api('hire',{candidateId:b.dataset.id});close();toast('몬스터를 영입했습니다.');render()}else if(a==='reject'){await api('reject',{candidateId:b.dataset.id});close();toast('후보를 돌려보냈습니다.');render()}else if(a==='upgrade'){await api('upgrade',{facility:b.dataset.id});toast('시설을 확장했습니다.');render()}}catch(err){toast(errorKo(err.message)||'처리에 실패했습니다.')}finally{busy=false}});
 
