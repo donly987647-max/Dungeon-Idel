@@ -35,7 +35,8 @@ jobs:
           PY
           node --check /tmp/game.js
           echo JS_SYNTAX_OK=1
-          user="qa_v061_$(date +%s)_$RANDOM"
+          user="q61_${RANDOM}${RANDOM}"
+          user="${user:0:18}"
           pass="QaTest_${RANDOM}_9876"
           curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" --data "{\"action\":\"register\",\"username\":\"$user\",\"password\":\"$pass\"}" > /tmp/register.json
           email="$user@players.dungeon-idel.game"
