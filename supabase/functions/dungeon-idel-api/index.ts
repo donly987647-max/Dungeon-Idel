@@ -85,10 +85,10 @@ Deno.serve(async(req:Request)=>{
    const monsterId=String(body.monsterId||''),evolutionId=String(body.evolutionId||'');const {data,error}=await db.rpc('game_evolve_monster',{p_player:player,p_monster:monsterId,p_evolution:evolutionId});if(error){const msg=String(error.message||'');for(const code of ['monster_missing','monster_busy','evolution_invalid','evolution_level'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,evolution:data||{},state:await state(player)})
   }
   if(action==='hire'){
-   const id=String(body.candidateId||'');const [{data:p},{data:c},{count}]=await Promise.all([db.from('game_players').select('quarters_level').eq('device_id',player).single(),db.from('game_candidates').select('*').eq('id',id).eq('player_id',player).maybeSingle(),db.from('game_monsters').select('id',{count:'exact',head:true}).eq('player_id',player)])
-   if(!c)return json({error:'candidate_missing'},400);const cap=quartersCapacity(Number(p.quarters_level||1));if((count||0)>=cap)return json({error:'quarters_full'},400)
-   const {error:mi}=await db.from('game_monsters').insert({player_id:player,name:c.name,family:c.family,form_id:c.family,evolution_tier:0,skill_id:null,talent:c.talent,trait:c.trait,power_base:c.power_base,personality:c.personality,growth_grade:c.growth_grade,hp_base:c.hp_base,atk_base:c.atk_base,def_base:c.def_base,spd_base:c.spd_base,crit_base:c.crit_base,evade_base:c.evade_base});if(mi)throw mi
-   await db.from('game_candidates').delete().eq('id',id).eq('player_id',player);return json({ok:true,state:await state(player)})
+   const id=String(body.candidateId||'');const {data,error}=await db.rpc('game_hire_candidate',{p_player:player,p_candidate:id});if(error){const msg=String(error.message||'');for(const code of ['candidate_missing','quarters_full','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,hire:data||{},state:await state(player)})
+  }
+  if(action==='candidate-lock'){
+   const id=String(body.candidateId||''),locked=body.locked===true;const {data,error}=await db.rpc('game_set_candidate_lock',{p_player:player,p_candidate:id,p_locked:locked});if(error){const msg=String(error.message||'');for(const code of ['candidate_missing','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,locked:!!data,state:await state(player)})
   }
   if(action==='reject'){await db.from('game_candidates').delete().eq('id',String(body.candidateId||'')).eq('player_id',player);return json({ok:true,state:await state(player)})}
   if(action==='upgrade'){
