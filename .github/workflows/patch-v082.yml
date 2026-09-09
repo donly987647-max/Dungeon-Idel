@@ -1,0 +1,91 @@
+name: Patch v0.8.2 Concise UI
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-v082.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply concise mobile UI
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_block(src, start, end, new):
+              i=src.index(start); j=src.index(end,i)
+              return src[:i]+new+'\n\n'+src[j:]
+
+          p=Path('app.js')
+          s=p.read_text()
+
+          s=s.replace("function briefText(){const active=(S?.expeditions||[]).filter(e=>e.active).length,pending=totalPending();if(pending>0)return `회수 대기 화물 ${pending}개 · 창고팀 확인 필요`;if(active>0)return `${active}개 현장 작전 진행 중 · 서버 자동전투 정상`;if((S?.candidates||[]).length)return `신규 몬스터 지원자 ${(S.candidates||[]).length}명 면접 대기`;return `다음 지원자 ${candidateText()} · 전 부서 정상 가동`}", "function briefText(){const active=(S?.expeditions||[]).filter(e=>e.active).length,pending=totalPending();if(pending)return `화물 ${pending}개 수령 대기`;if(active)return `작전 ${active}건 진행 중`;if((S?.candidates||[]).length)return `지원자 ${(S.candidates||[]).length}명 대기`;return `다음 지원자 ${candidateText()}`}")
+
+          s=replace_block(s,'function hq(){','function monsters(){',r'''function hq(){const [rank,grade]=companyRank(),active=(S.expeditions||[]).filter(e=>e.active),pending=totalPending(),cap=capacity();return `
+          <section class="hq-hero compact-hero"><div class="hq-copy"><div class="section-kicker">HEADQUARTERS</div><h2>${esc(S.account?.username||'사장')}의 박멸 본부</h2></div><div class="hq-bottom"><div class="rank-box"><b>${rank}</b><small>${grade}등급</small></div><div class="next-hire"><b id="candidateTimer">${candidateText()}</b><small>다음 지원자</small></div></div></section>
+          <section class="kpi-grid"><div class="kpi"><small>작전</small><b>${active.length}</b></div><div class="kpi"><small>화물</small><b class="accent">${pending}</b></div><div class="kpi"><small>직원</small><b>${S.monsters.length}/${cap}</b></div></section>
+          <section class="quick-grid">
+            <article class="quick-card"><img src="assets/icon-dorm.svg" alt=""><div><b>숙소</b><small>Lv.${S.player.quarters_level} · ${S.monsters.length}/${cap}</small></div><button class="primary-btn" data-action="upgrade" data-id="quarters">${fmt(nextQuarterCost())}G</button></article>
+            <article class="quick-card"><img src="assets/icon-recruit.svg" alt=""><div><b>영입</b><small>${(S.candidates||[]).length}명 대기</small></div><button class="soft-btn" data-action="candidates">보기</button></article>
+            <article class="quick-card"><img src="assets/icon-storage.svg" alt=""><div><b>창고</b><small>${pending}개 미수령</small></div><button class="soft-btn" data-go="loot">열기</button></article>
+            <article class="quick-card"><img src="assets/icon-ops.svg" alt=""><div><b>작전실</b><small>${active.length}건 진행</small></div><button class="soft-btn" data-go="hunt">이동</button></article>
+          </section>
+          ${active.length?`<div class="compact-head"><b>진행 중</b><small>${active.length}건</small></div><section class="active-board">${active.map(e=>{const m=S.monsters.find(x=>x.id===e.monster_id),site=S.sites.find(x=>x.id===e.site_id);return `<button class="contract-line" data-action="watch" data-id="${e.id}"><i></i><span><b>${esc(site?.name||'작전')}</b><small>${esc(m?.name||'직원')} · 처치 ${fmt(e.kills)} · 화물 ${lootCount(e)}</small></span><em>›</em></button>`}).join('')}</section>`:''}`}
+          ''')
+
+          s=replace_block(s,'function monsters(){','function hunt(){',r'''function monsters(){return `
+          <div class="compact-head"><div><b>몬스터 직원</b><small>${S.monsters.length}/${capacity()}명</small></div><button class="primary-btn" data-action="candidates">지원자 ${(S.candidates||[]).length}</button></div>
+          <section class="employee-list compact-list">${S.monsters.map(m=>{const e=activeOf(m.id),need=Math.max(100,m.level*100),pct=Math.min(100,Math.round((m.xp/need)*100));return `<article class="employee-card compact-employee ${e?'onmission':''}" data-action="employee" data-id="${m.id}"><div class="portrait-wrap"><div class="employee-portrait">${charSvg(monsterAsset(m.family),'employee-sprite')}</div><span class="emp-level">LV.${m.level}</span></div><div class="emp-body"><div class="emp-top"><div class="emp-name"><b>${esc(m.name)}</b><small>${fam(m.family)} · ${esc(m.trait||'무특성')}</small></div><span class="duty ${e?'active':''}">${e?'작전중':'대기'}</span></div><div class="emp-compact"><span>전투력 <b>${fmt(power(m))}</b></span><span>XP ${pct}%</span></div><div class="xpbar"><i style="width:${pct}%"></i></div></div><span class="row-chevron">›</span></article>`}).join('')}</section>`}
+          ''')
+
+          s=replace_block(s,'function hunt(){','function loot(){',r'''function hunt(){const active=(S.expeditions||[]).filter(e=>e.active);return `
+          <div class="compact-head"><div><b>박멸 작전</b><small>${active.length}건 진행</small></div></div>
+          <section class="mission-list compact-missions">${S.sites.map(site=>{const ex=activeAt(site.id),unlocked=!!site.unlocked,pending=ex.reduce((a,e)=>a+lootCount(e),0),battle=ex.reduce((a,e)=>a+Number(e.battle_count||0),0),pct=ex.length?Math.min(94,18+(battle%78)):0;return `<article class="mission-card compact-mission ${unlocked?'':'locked'}" data-action="mission" data-id="${site.id}" data-site="${site.id}"><div class="mission-art"></div><div class="mission-wash"></div><div class="mission-file"><header><div><div class="mission-code">${siteCode(site.id)}</div><div class="mission-title">${esc(site.name)}</div></div><span class="risk">권장 ${fmt(site.recommended_power)}</span></header><div class="mission-middle"><div class="squad">${ex.length?ex.slice(0,3).map(e=>{const mm=S.monsters.find(x=>x.id===e.monster_id);return `<span class="party-avatar">${mm?charSvg(monsterAsset(mm.family),'party-sprite'):''}</span>`}).join(''):'<span class="empty-slot">+</span>'}</div></div><footer class="mission-foot"><div><div class="op-state">${ex.length?`교전 ${battle} · 화물 ${pending}`:(unlocked?'배치 가능':'잠김')}</div><div class="opbar"><i style="width:${pct}%"></i></div></div><div class="mission-cta"><b>${unlocked?(ex.length?'현장':'배치'):'잠김'}</b></div></footer></div></article>`}).join('')}</section>`}
+          ''')
+
+          s=replace_block(s,'function loot(){','function updateChrome(){',r'''function loot(){const groups=(S.expeditions||[]).filter(e=>lootCount(e)>0),total=totalPending();return `
+          <div class="compact-head"><div><b>전리품 창고</b><small>${total}개 수령 대기</small></div><button class="primary-btn" data-action="collect-all" ${total?'':'disabled'}>전체 수령</button></div>
+          ${groups.length?groups.map(e=>{const m=S.monsters.find(x=>x.id===e.monster_id),site=S.sites.find(x=>x.id===e.site_id);return `<section class="warehouse-group compact-warehouse"><header><span><b>${esc(site?.name||'현장')}</b><small>${esc(m?.name||'직원')} · ${lootCount(e)}개</small></span><button class="soft-btn" data-action="collect-one" data-id="${e.id}">수령</button></header><div class="shelf">${Object.entries(e.pending_loot||{}).map(([name,qty])=>`<div class="item-bin compact-item"><div class="item-art">${itemSvg(itemAsset(name))}</div><b>${esc(name)}</b><strong>${fmt(qty)}</strong></div>`).join('')}</div></section>`}).join(''):`<div class="empty-state warehouse-empty"><div>${itemSvg('crate')}</div><b>대기 화물 없음</b></div>`}
+          <section class="inventory-card"><div class="compact-head inner"><b>보관 재고</b><small>${(S.inventory||[]).length}종</small></div><div class="inventory-grid">${(S.inventory||[]).length?S.inventory.map(x=>`<div class="inventory-slot"><div class="item-art small">${itemSvg(itemAsset(x.item_id))}</div><b>${esc(x.item_id)}</b><small>${fmt(x.qty)}</small></div>`).join(''):'<div class="empty-state" style="grid-column:1/-1">비어 있음</div>'}</div></section>`}
+          ''')
+
+          s=s.replace("$('#briefLine').textContent=briefText();", "if($('#briefLine'))$('#briefLine').textContent=briefText();")
+          p.write_text(s)
+
+          h=Path('index.html')
+          t=h.read_text().replace('v0.8.1','v0.8.2').replace('0810','0820')
+          h.write_text(t)
+
+          css=Path('app.css')
+          c=css.read_text()
+          addon=r'''
+          /* v0.8.2 concise mobile UX */
+          .corp-bar{height:64px;grid-template-columns:42px minmax(0,1fr) auto;padding:7px 10px}.menu-button{width:36px;height:36px}.title-stack{min-width:0}.title-stack small{display:none}.title-stack h1{font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.vault{min-width:88px;max-width:108px;padding:6px 8px}.vault span{display:none}.vault b{display:block;max-width:78px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.vault:before{width:13px;height:13px;left:7px}.stat-rail{height:42px}.stat-rail span{grid-template-columns:16px minmax(0,1fr);padding:4px 6px}.stat-rail b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stat-rail small{font-size:7px}.rail-icon{transform:scale(.78);transform-origin:center}.brief-strip{height:31px;padding:0 10px;grid-template-columns:auto auto minmax(0,1fr) auto;font-size:9px}.brief-strip #briefLine{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.view{padding:10px 9px 20px;gap:8px;min-height:calc(100vh - 210px)}.bottom-nav{height:64px}.bottom-nav b{font-size:9px}.nav-pict{width:21px;height:21px}
+          .compact-hero{height:132px}.compact-hero .hq-copy{width:72%;padding:14px}.compact-hero .hq-copy h2{font-size:20px;margin:2px 0}.compact-hero .hq-copy p,.compact-hero .seal-mini{display:none}.hq-bottom{left:12px;right:12px;bottom:9px}.rank-box b{font-size:14px}.next-hire b{font-size:14px}.kpi-grid{gap:5px}.kpi{min-height:48px;padding:7px}.kpi small{font-size:7px}.kpi b{font-size:15px}
+          .quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.quick-card{min-width:0;min-height:66px;border:1px solid #3d493f;background:#171d18;display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;gap:7px;padding:7px}.quick-card img{width:36px;height:36px;image-rendering:pixelated}.quick-card div{min-width:0}.quick-card b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.quick-card small{display:block;font-size:8px;color:#7f8b82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.quick-card button{padding:5px 6px;font-size:8px;white-space:nowrap}.compact-head{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:2px 0}.compact-head>div{min-width:0}.compact-head>b,.compact-head>div>b{font-size:15px}.compact-head small{font-size:9px;color:#7f8a82;margin-left:5px}.compact-head button{white-space:nowrap;flex:none;padding:6px 8px;font-size:9px}.compact-head.inner{padding:0 0 8px}
+          .contract-line{grid-template-columns:5px minmax(0,1fr) auto;padding:7px 8px}.contract-line i{width:5px;height:28px}.contract-line span{min-width:0}.contract-line b,.contract-line small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.contract-line em{font-size:18px}
+          .compact-list{gap:5px}.compact-employee{grid-template-columns:66px minmax(0,1fr);min-height:80px}.compact-employee .portrait-wrap{min-width:0}.compact-employee .employee-portrait{width:62px;height:62px}.compact-employee .emp-body{min-width:0;padding:8px 20px 6px 8px}.compact-employee .emp-top{gap:5px}.compact-employee .emp-name{min-width:0}.compact-employee .emp-name b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.compact-employee .emp-name small{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.compact-employee .duty{flex:none;font-size:7px;padding:2px 4px}.emp-compact{display:flex;justify-content:space-between;gap:8px;margin-top:6px;color:#88948b;font-size:8px}.emp-compact span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.emp-compact b{color:#e8ece7;font-size:10px}.compact-employee .xpbar{height:3px;margin:4px 0 0}.compact-employee .row-chevron{right:6px}.compact-employee .emp-level{font-size:7px}
+          .compact-missions{gap:7px}.compact-mission{height:142px}.compact-mission .mission-file{padding:9px 10px}.compact-mission .mission-title{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}.compact-mission .risk{font-size:7px;white-space:nowrap}.compact-mission .mission-middle{align-items:flex-end}.compact-mission .party-avatar,.compact-mission .empty-slot{width:36px;height:36px}.compact-mission .party-avatar .pixel-char{width:34px;height:34px}.compact-mission .mission-foot{grid-template-columns:minmax(0,1fr) 54px;gap:6px}.compact-mission .op-state{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.compact-mission .mission-cta{width:54px;min-width:54px;height:34px}.compact-mission .mission-cta small{display:none}.compact-mission .mission-cta b{font-size:9px}.compact-mission .opbar{height:4px;margin-top:4px}
+          .compact-warehouse header{padding:7px 8px}.compact-warehouse header span{min-width:0}.compact-warehouse header b,.compact-warehouse header small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.compact-warehouse .shelf{grid-template-columns:repeat(3,1fr)}.compact-item{min-width:0;min-height:73px;padding:6px}.compact-item .item-art{width:37px;height:37px;margin-bottom:3px}.compact-item .item-art .pixel-item{width:33px;height:33px}.compact-item b{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:16px}.compact-item strong{font-size:10px}.inventory-card{padding:8px}.inventory-grid{gap:3px}.inventory-slot{min-width:0;min-height:68px;padding:4px}.inventory-slot b{font-size:7px}.inventory-slot small{font-size:8px}
+          .sheet{padding:12px 10px calc(12px + env(safe-area-inset-bottom))}.sheet-head{gap:6px}.sheet-head>div{min-width:0}.sheet-head h2{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sheet-head p{font-size:8px;line-height:1.35}.candidate-card,.dispatch-row{min-width:0}.candidate-card>div:nth-child(2),.dispatch-row>div:nth-child(2){min-width:0}.candidate-card b,.candidate-card small,.dispatch-row b,.dispatch-row small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.battle-stage{height:250px}.battle-unit{width:82px}.actor-sprite{width:80px;height:80px}.battle-sprite{width:78px;height:78px}.battle-unit span{max-width:84px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.battle-log{font-size:8px;max-height:104px}.battle-hud{gap:4px}.battle-hud span{font-size:8px;white-space:nowrap}
+          @media(max-width:380px){.stat-rail span{padding:3px 4px}.rail-icon{display:none}.stat-rail span{grid-template-columns:1fr}.quick-grid{grid-template-columns:1fr}.quick-card{min-height:58px}.compact-mission .mission-title{max-width:155px}.compact-warehouse .shelf{grid-template-columns:repeat(2,1fr)}.candidate-card{grid-template-columns:48px minmax(0,1fr)}.candidate-card .actions{grid-column:1/-1}.battle-stage{height:220px}}
+          '''
+          if 'v0.8.2 concise mobile UX' not in c:
+              c += addon
+          css.write_text(c)
+          PY
+      - name: Verify source
+        run: |
+          node --check app.js
+          grep -q 'v0.8.2' index.html
+          grep -q 'v0.8.2 concise mobile UX' app.css
+      - name: Commit
+        run: |
+          git config user.name 'Doong'
+          git config user.email 'donly987647@gmail.com'
+          git add index.html app.js app.css
+          git commit -m 'Refine v0.8.2 concise mobile UI and text layout'
+          git push
