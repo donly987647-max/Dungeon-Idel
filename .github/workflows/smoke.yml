@@ -1,7 +1,5 @@
 name: Dungeon-Idel Online Smoke
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,8 +23,7 @@ jobs:
           user="qa_$(date +%s)_$RANDOM"
           pass="QaTest_${RANDOM}_9876"
           echo "TEST_USER=$user"
-          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" \
-            --data "{\"action\":\"register\",\"username\":\"$user\",\"password\":\"$pass\"}" > /tmp/register.json
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" --data "{\"action\":\"register\",\"username\":\"$user\",\"password\":\"$pass\"}" > /tmp/register.json
           python - <<'PY'
           import json
           d=json.load(open('/tmp/register.json'))
@@ -34,8 +31,7 @@ jobs:
           print('REGISTER_OK=1')
           PY
           email="$user@players.dungeon-idel.game"
-          curl -sS -f "$AUTH" -H 'Content-Type: application/json' -H "apikey: $KEY" \
-            --data "{\"email\":\"$email\",\"password\":\"$pass\"}" > /tmp/login.json
+          curl -sS -f "$AUTH" -H 'Content-Type: application/json' -H "apikey: $KEY" --data "{\"email\":\"$email\",\"password\":\"$pass\"}" > /tmp/login.json
           token=$(python - <<'PY'
           import json
           d=json.load(open('/tmp/login.json'))
@@ -44,8 +40,7 @@ jobs:
           PY
           )
           echo LOGIN_OK=1
-          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" -H "Authorization: Bearer $token" \
-            --data '{"action":"state"}' > /tmp/state.json
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" -H "Authorization: Bearer $token" --data '{"action":"state"}' > /tmp/state.json
           python - <<'PY'
           import json
           d=json.load(open('/tmp/state.json'))
