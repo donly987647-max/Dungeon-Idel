@@ -1,0 +1,60 @@
+name: Dungeon-Idel Online Smoke
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Verify public game, signup, login and save
+        shell: bash
+        run: |
+          set -euo pipefail
+          WEB='https://xtvhisddjtfnsumprgpm.supabase.co/functions/v1/dungeon-idel'
+          API='https://xtvhisddjtfnsumprgpm.supabase.co/functions/v1/dungeon-idel-api'
+          AUTH='https://xtvhisddjtfnsumprgpm.supabase.co/auth/v1/token?grant_type=password'
+          KEY='sb_publishable_pYdQeWXJJjNHGwchtshJGQ_ybwDsQ5O'
+          code=$(curl -sS -o /tmp/game.html -w '%{http_code}' "$WEB")
+          echo "WEB_HTTP=$code"
+          test "$code" = 200
+          grep -q 'Dungeon Idel · 몬스터 길드 v0.6.0' /tmp/game.html
+          user="qa_$(date +%s)_$RANDOM"
+          pass="QaTest_${RANDOM}_9876"
+          echo "TEST_USER=$user"
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" \
+            --data "{\"action\":\"register\",\"username\":\"$user\",\"password\":\"$pass\"}" > /tmp/register.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/register.json'))
+          assert d['ok'] is True
+          print('REGISTER_OK=1')
+          PY
+          email="$user@players.dungeon-idel.game"
+          curl -sS -f "$AUTH" -H 'Content-Type: application/json' -H "apikey: $KEY" \
+            --data "{\"email\":\"$email\",\"password\":\"$pass\"}" > /tmp/login.json
+          token=$(python - <<'PY'
+          import json
+          d=json.load(open('/tmp/login.json'))
+          assert d.get('access_token')
+          print(d['access_token'])
+          PY
+          )
+          echo LOGIN_OK=1
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" -H "Authorization: Bearer $token" \
+            --data '{"action":"state"}' > /tmp/state.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/state.json'))
+          assert d['ok'] is True
+          s=d['state']
+          assert len(s['monsters']) == 1
+          assert s['monsters'][0]['family'] == 'slime'
+          assert s['monsters'][0]['name'] == '보글'
+          assert s['account']['username'].startswith('qa_')
+          print('SAVE_OK=1')
+          PY
+          echo PUBLIC_ACCOUNT_FLOW_OK=1
