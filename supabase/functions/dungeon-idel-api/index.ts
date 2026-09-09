@@ -10,8 +10,11 @@ const url=Deno.env.get('SUPABASE_URL')!
 const secrets=JSON.parse(Deno.env.get('SUPABASE_SECRET_KEYS')||'{}')
 const secretKey=secrets.default||Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 const db=createClient(url,secretKey,{auth:{persistSession:false,autoRefreshToken:false}})
-const normUser=(v:string)=>v.trim().toLowerCase()
-const loginEmail=(username:string)=>`${normUser(username)}@players.dungeon-idel.game`
+const normUser=(v:string)=>v.trim().normalize('NFC')
+const validUsername=(v:string)=>/^[가-힣]{2,12}$/u.test(v)
+const validPin=(v:string)=>/^\d{4}$/.test(v)
+const authPassword=(pin:string)=>`Hero!${pin}#Corp2026`
+const authEmail=()=>`player-${crypto.randomUUID()}@players.dungeon-idel.game`
 
 async function getAuthUser(req:Request){
   const h=req.headers.get('authorization')||''
@@ -55,20 +58,36 @@ Deno.serve(async(req:Request)=>{
     const body=await req.json().catch(()=>({}))
     const action=String(body.action||'state')
     if(action==='register'){
-      const username=String(body.username||'').trim(),password=String(body.password||'')
-      if(!/^[A-Za-z0-9_]{3,20}$/.test(username))return json({error:'username_format'},400)
-      if(password.length<8||password.length>72)return json({error:'password_format'},400)
+      const username=normUser(String(body.username||'')),pin=String(body.password||'')
+      if(!validUsername(username))return json({error:'username_format'},400)
+      if(!validPin(pin))return json({error:'password_format'},400)
       const usernameNorm=normUser(username)
       const {data:taken,error:te}=await db.from('game_accounts').select('user_id').eq('username_norm',usernameNorm).maybeSingle()
       if(te)throw te
       if(taken)return json({error:'username_taken'},409)
-      const {data:created,error:ce}=await db.auth.admin.createUser({email:loginEmail(username),password,email_confirm:true,user_metadata:{username}})
-      if(ce||!created.user){if(String(ce?.message||'').toLowerCase().includes('already'))return json({error:'username_taken'},409);throw ce||new Error('auth_create_failed')}
+      const email=authEmail(),password=authPassword(pin)
+      const {data:created,error:ce}=await db.auth.admin.createUser({email,password,email_confirm:true,user_metadata:{username}})
+      if(ce||!created.user)throw ce||new Error('auth_create_failed')
       const uid=created.user.id
       const {error:ae}=await db.from('game_accounts').insert({user_id:uid,username})
       if(ae){await db.auth.admin.deleteUser(uid);throw ae}
       await ensurePlayer(uid)
-      return json({ok:true,username})
+      const {data:login,error:le}=await db.auth.signInWithPassword({email,password})
+      if(le||!login.session)throw le||new Error('auth_login_failed')
+      return json({ok:true,username,session:login.session})
+    }
+    if(action==='login'){
+      const username=normUser(String(body.username||'')),pin=String(body.password||'')
+      if(!validUsername(username)||!validPin(pin))return json({error:'invalid_credentials'},401)
+      const {data:account,error:ae}=await db.from('game_accounts').select('user_id').eq('username_norm',username).maybeSingle()
+      if(ae)throw ae
+      if(!account)return json({error:'invalid_credentials'},401)
+      const {data:authUser,error:ue}=await db.auth.admin.getUserById(account.user_id)
+      if(ue||!authUser.user?.email)return json({error:'invalid_credentials'},401)
+      const {data:login,error:le}=await db.auth.signInWithPassword({email:authUser.user.email,password:authPassword(pin)})
+      if(le||!login.session)return json({error:'invalid_credentials'},401)
+      await db.from('game_accounts').update({last_login_at:new Date().toISOString()}).eq('user_id',account.user_id)
+      return json({ok:true,username,session:login.session})
     }
     const user=await getAuthUser(req)
     if(!user)return json({error:'unauthorized'},401)
