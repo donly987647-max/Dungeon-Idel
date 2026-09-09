@@ -1,0 +1,68 @@
+name: Hero Extermination v0.6.1 Smoke
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v061-smoke.yml'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Verify public page and gameplay API
+        shell: bash
+        run: |
+          set -euo pipefail
+          WEB='https://xtvhisddjtfnsumprgpm.supabase.co/functions/v1/dungeon-idel'
+          API='https://xtvhisddjtfnsumprgpm.supabase.co/functions/v1/dungeon-idel-api'
+          AUTH='https://xtvhisddjtfnsumprgpm.supabase.co/auth/v1/token?grant_type=password'
+          code=$(curl -sS -o /tmp/game.html -w '%{http_code}' "$WEB")
+          echo "WEB_HTTP=$code"
+          test "$code" = 200
+          grep -q '<title>용사 박멸 주식회사 v0.6.1</title>' /tmp/game.html
+          grep -q 'HERO EXTERMINATION INC.' /tmp/game.html
+          if grep -q 'cdn.jsdelivr.net' /tmp/game.html; then exit 1; fi
+          KEY=$(grep -o 'sb_publishable_[A-Za-z0-9_-]*' /tmp/game.html | head -1)
+          test -n "$KEY"
+          python - <<'PY'
+          import re
+          html=open('/tmp/game.html',encoding='utf-8').read()
+          scripts=re.findall(r'<script>(.*?)</script>',html,re.S)
+          assert scripts
+          open('/tmp/game.js','w',encoding='utf-8').write('\n'.join(scripts))
+          PY
+          node --check /tmp/game.js
+          echo JS_SYNTAX_OK=1
+          user="qa_v061_$(date +%s)_$RANDOM"
+          pass="QaTest_${RANDOM}_9876"
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" --data "{\"action\":\"register\",\"username\":\"$user\",\"password\":\"$pass\"}" > /tmp/register.json
+          email="$user@players.dungeon-idel.game"
+          curl -sS -f "$AUTH" -H 'Content-Type: application/json' -H "apikey: $KEY" --data "{\"email\":\"$email\",\"password\":\"$pass\"}" > /tmp/login.json
+          token=$(python - <<'PY'
+          import json
+          d=json.load(open('/tmp/login.json'))
+          assert d.get('access_token')
+          print(d['access_token'])
+          PY
+          )
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" -H "Authorization: Bearer $token" --data '{"action":"state"}' > /tmp/state.json
+          mid=$(python - <<'PY'
+          import json
+          d=json.load(open('/tmp/state.json'))
+          assert d['ok'] is True
+          s=d['state']
+          assert len(s['monsters'])==1 and s['monsters'][0]['name']=='보글'
+          assert any(x['id']=='mountain_village' and x['unlocked'] for x in s['sites'])
+          print(s['monsters'][0]['id'])
+          PY
+          )
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" -H "Authorization: Bearer $token" --data "{\"action\":\"deploy\",\"monsterId\":\"$mid\",\"siteId\":\"mountain_village\"}" > /tmp/deploy.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/deploy.json'))
+          assert d['ok'] is True
+          assert any(e['active'] and e['site_id']=='mountain_village' for e in d['state']['expeditions'])
+          print('PUBLIC_GAMEPLAY_OK=1')
+          PY
