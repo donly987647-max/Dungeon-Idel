@@ -1,0 +1,28 @@
+name: Run v0.9.0 Facility UI Patch
+on:
+  push:
+    paths:
+      - '.github/workflows/run-patch-v090.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch
+        run: python scripts/patch_v090.py
+      - name: Verify
+        run: |
+          node --check app.js
+          grep -q 'v0.9.0' index.html
+          grep -q 'function dormModal' app.js
+          grep -q 'data-action="dorm"' app.js
+          grep -q 'v0.9.0 facility-first UI' app.css
+      - name: Commit
+        run: |
+          git config user.name 'Doong'
+          git config user.email 'donly987647@gmail.com'
+          git add index.html app.js app.css
+          git commit -m 'Redesign v0.9.0 facility-first mobile UI'
+          git push
