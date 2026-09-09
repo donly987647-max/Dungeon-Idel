@@ -24,7 +24,7 @@ async function state(player:string){
   const [p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk]=await Promise.all([
     db.from('game_players').select('*').eq('device_id',player).single(),
     db.from('game_accounts').select('username,created_at,last_login_at').eq('user_id',player).maybeSingle(),
-    db.from('game_monsters').select('*').eq('player_id',player).order('created_at'),
+    db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).order('created_at'),
     db.from('game_candidates').select('*').eq('player_id',player).order('created_at'),
     db.from('game_expeditions').select('*').eq('player_id',player).order('started_at',{ascending:false}),
     db.from('game_hunt_sites').select('*').order('unlock_order'),
@@ -68,7 +68,7 @@ Deno.serve(async(req:Request)=>{
   if(action==='state')return json({ok:true,state:await state(player)})
   if(action==='deploy'){
    const siteId=String(body.siteId||''),idsRaw=Array.isArray(body.monsterIds)?body.monsterIds:[body.monsterId],monsterIds=[...new Set(idsRaw.map((x:any)=>String(x||'')).filter(Boolean))];if(monsterIds.length<1||monsterIds.length>4)return json({error:'party_size'},400)
-   const [{data:site},{data:mons},{data:activeExps}]=await Promise.all([db.from('game_hunt_sites').select('*').eq('id',siteId).maybeSingle(),db.from('game_monsters').select('*').eq('player_id',player).in('id',monsterIds),db.from('game_expeditions').select('id').eq('player_id',player).eq('active',true)])
+   const [{data:site},{data:mons},{data:activeExps}]=await Promise.all([db.from('game_hunt_sites').select('*').eq('id',siteId).maybeSingle(),db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).in('id',monsterIds),db.from('game_expeditions').select('id').eq('player_id',player).eq('active',true)])
    if(!site||!mons||mons.length!==monsterIds.length)return json({error:'invalid_target'},400)
    if(site.unlock_order>1){const {data:prev}=await db.from('game_hunt_sites').select('id').eq('unlock_order',site.unlock_order-1).maybeSingle();const {data:pr}=prev?await db.from('game_stage_progress').select('boss_cleared').eq('player_id',player).eq('site_id',prev.id).maybeSingle():{data:null} as any;if(!pr?.boss_cleared)return json({error:'locked'},400)}
    if((activeExps||[]).length){const expIds=(activeExps||[]).map((x:any)=>x.id);const {data:busy}=await db.from('game_expedition_members').select('monster_id').in('expedition_id',expIds).in('monster_id',monsterIds);if((busy||[]).length)return json({error:'monster_busy'},400)}
@@ -91,6 +91,9 @@ Deno.serve(async(req:Request)=>{
    const id=String(body.candidateId||''),locked=body.locked===true;const {data,error}=await db.rpc('game_set_candidate_lock',{p_player:player,p_candidate:id,p_locked:locked});if(error){const msg=String(error.message||'');for(const code of ['candidate_missing','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,locked:!!data,state:await state(player)})
   }
   if(action==='reject'){await db.from('game_candidates').delete().eq('id',String(body.candidateId||'')).eq('player_id',player);return json({ok:true,state:await state(player)})}
+  if(action==='release'){
+   const id=String(body.monsterId||'');const {data,error}=await db.rpc('game_release_monster',{p_player:player,p_monster:id});if(error){const msg=String(error.message||'');for(const code of ['monster_missing','monster_busy','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,release:data||{},state:await state(player)})
+  }
   if(action==='upgrade'){
    const facility=String(body.facility||''),field:{[k:string]:string}={quarters:'quarters_level',tavern:'tavern_level',storage:'storage_level',workshop:'workshop_level',shop:'shop_level'},key=field[facility];if(!key)return json({error:'facility'},400)
    const {data:p,error:pe}=await db.from('game_players').select('*').eq('device_id',player).single();if(pe)throw pe;const lv=Number(p[key]||1),max=facility==='quarters'?8:5;if(lv>=max)return json({error:'max_level'},400);const cost=facilityCost(facility,lv);if(p.gold<cost)return json({error:'gold_short'},400)

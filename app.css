@@ -109,3 +109,34 @@ button{touch-action:manipulation}.pixel-char,.pixel-item{display:block;width:100
 
 /* v0.12.4 persistent 2-second turn combat */
 .battle-party-unit{position:relative}.battle-party-unit>em{display:block;margin-top:1px;font:700 7px monospace;color:#aab6ad}.battle-party-unit.dead{opacity:.34;filter:grayscale(1)}.battle-party-unit.dead:after{content:'DOWN';position:absolute;inset:20px 2px auto;background:#3a1717;color:#f2a0a0;border:1px solid #7c3434;font:800 7px monospace;text-align:center;padding:2px}.combat-log-row.encounter{border-color:#6e5d39;background:#1c1a12}.combat-log-row.encounter strong{color:#efbb78}.combat-log-row.battle-turn{border-left:3px solid #55675a}.combat-log-row.battle-turn.party-turn{border-left-color:#7ea36e}.combat-log-row.battle-turn.enemy-turn{border-left-color:#a65d55}.combat-death-line{margin-top:5px;padding:5px 6px;border:1px solid #733939;background:#281515;color:#ef9b95;font-size:8px;line-height:1.5}.combat-death-line span{display:block}.battle-report-scene.state-battle .battle-server-badge{animation:turnPulse 1s steps(2,end) infinite}.battle-report-scene.state-result .battle-server-badge{background:#2b2520;color:#efbb78}@keyframes turnPulse{50%{filter:brightness(1.35)}}
+
+
+/* v0.12.5 roster/recruit layout */
+.recruit-sheet .candidate-list{display:grid;gap:10px;padding-bottom:8px}
+.recruit-sheet .candidate-card{display:block;height:auto;min-height:0;padding:0;overflow:hidden;border-radius:12px}
+.recruit-sheet .candidate-profile-btn{position:relative;display:grid!important;grid-template-columns:66px minmax(0,1fr) auto;grid-template-rows:auto auto auto;width:100%;min-height:0;height:auto!important;padding:12px 12px 10px;gap:7px 10px;text-align:left;align-items:center;overflow:visible}
+.recruit-sheet .candidate-avatar{grid-column:1;grid-row:1/4;width:60px;height:60px;display:grid;place-items:center;align-self:start}
+.recruit-sheet .candidate-avatar .pixel-char{width:58px;height:58px}
+.recruit-sheet .candidate-identity{grid-column:2;grid-row:1;min-width:0;display:grid;gap:2px}
+.recruit-sheet .candidate-identity>b{font-size:15px;display:flex;align-items:center;gap:6px;min-width:0}
+.recruit-sheet .candidate-identity small,.recruit-sheet .candidate-identity em{font-size:11px;line-height:1.25;white-space:normal;overflow:visible;text-overflow:clip}
+.recruit-sheet .candidate-grade{display:inline-grid;place-items:center;min-width:23px;height:23px;border-radius:6px;font-style:normal;font-size:12px;flex:none}
+.recruit-sheet .candidate-power{grid-column:3;grid-row:1;display:grid;justify-items:end;align-self:start;min-width:48px}
+.recruit-sheet .candidate-power small{font-size:9px;opacity:.65}.recruit-sheet .candidate-power b{font-size:16px;line-height:1.1}
+.recruit-sheet .candidate-card-stats{grid-column:2/4;grid-row:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;width:100%}
+.recruit-sheet .candidate-card-stats i{display:grid;gap:1px;padding:6px 4px;border-radius:7px;text-align:center;font-style:normal;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.07)}
+.recruit-sheet .candidate-card-stats small{font-size:9px;opacity:.62}.recruit-sheet .candidate-card-stats b{font-size:12px;line-height:1.1}
+.recruit-sheet .candidate-detail-cue,.recruit-sheet .candidate-lock-badge{grid-column:2/4;grid-row:3;position:static!important;justify-self:start;margin:0;font-size:10px;line-height:1.2}
+.recruit-sheet .candidate-card>.actions,.recruit-sheet .candidate-actions{position:static!important;display:grid!important;grid-template-columns:1fr 1fr;gap:7px;width:auto;margin:0;padding:0 10px 10px;transform:none!important}
+.recruit-sheet .candidate-actions button{min-height:40px;margin:0!important}
+.recruit-sheet .recruit-summary span{display:grid;gap:2px}.recruit-sheet .recruit-summary em{font-style:normal;font-size:10px;opacity:.65}
+.monster-detail-headbar{grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:8px}
+.monster-detail-headbar>div{min-width:0}.monster-back-btn{min-width:58px;height:34px;padding:0 10px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:inherit;font-weight:800;font-size:12px}
+.monster-release-zone{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0 0;padding:12px;border-radius:10px;border:1px solid rgba(205,77,66,.28);background:rgba(112,35,31,.12)}
+.monster-release-zone span{display:grid;gap:2px;min-width:0}.monster-release-zone small{font-size:9px;opacity:.55}.monster-release-zone b{font-size:13px}.monster-release-zone em{font-size:10px;line-height:1.35;font-style:normal;opacity:.72}
+.monster-release-btn{flex:none;min-width:66px}.monster-release-btn:disabled{opacity:.45}
+.release-confirm-head{grid-template-columns:auto minmax(0,1fr) auto;gap:8px}.release-confirm-card{display:grid;gap:12px}.release-confirm-monster{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,.045)}
+.release-confirm-monster .release-sprite{width:64px;height:64px}.release-confirm-monster span{display:grid;gap:3px}.release-confirm-monster b{font-size:17px}.release-confirm-monster small{font-size:11px;opacity:.7}
+.release-warning{padding:13px;border-radius:10px;border:1px solid rgba(205,77,66,.32);background:rgba(112,35,31,.14)}.release-warning b{font-size:13px}.release-warning p{margin:6px 0 0;font-size:11px;line-height:1.55;opacity:.78}
+.release-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.release-confirm-actions button{min-height:44px}
+@media(max-width:420px){.recruit-sheet .candidate-profile-btn{grid-template-columns:54px minmax(0,1fr) auto;padding:10px;gap:6px 8px}.recruit-sheet .candidate-avatar{width:50px;height:50px}.recruit-sheet .candidate-avatar .pixel-char{width:48px;height:48px}.recruit-sheet .candidate-card-stats{grid-column:1/4;margin-top:2px}.recruit-sheet .candidate-detail-cue,.recruit-sheet .candidate-lock-badge{grid-column:1/4}.monster-release-zone{align-items:flex-start;flex-direction:column}.monster-release-btn{width:100%}}
