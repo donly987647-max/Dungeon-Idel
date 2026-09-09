@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# v0.11.1: storage capacity counts occupied item types, not stack quantity.
 p=Path('app.js')
 s=p.read_text()
 old="const inventoryUsed=()=>Number((S?.inventory||[]).reduce((a,x)=>a+Number(x.qty||0),0));"
