@@ -36,27 +36,29 @@
 .page-head{min-height:34px!important;align-items:center!important}.page-head h2{font-size:18px!important;line-height:1.05!important}.page-head span{font-size:7px!important;line-height:1!important}
 .compact-head{min-height:28px!important}
 
-/* v0.11.6 — top-aligned pages, overflow-only scrolling, refined motion */
+/* v0.11.6 — intrinsic top/content/nav layout. Only content overflow scrolls. */
 html,body{height:100%;overflow:hidden}
-body{padding-bottom:0!important}
-#app{height:100dvh;min-height:100dvh;overflow:hidden}
-.game-header{flex:0 0 auto}
+body{padding:0!important}
+#app{height:100dvh;min-height:0!important;display:flex!important;flex-direction:column;overflow:hidden}
+.game-header{position:relative!important;top:auto!important;flex:0 0 auto}
 #view.view{
-  height:calc(100dvh - 156px - env(safe-area-inset-bottom));
+  flex:1 1 auto;
+  height:auto!important;
   min-height:0!important;
-  max-height:calc(100dvh - 156px - env(safe-area-inset-bottom));
+  max-height:none!important;
   overflow-x:hidden;
   overflow-y:auto;
   overscroll-behavior-y:contain;
   -webkit-overflow-scrolling:touch;
   align-content:start;
   gap:4px!important;
-  padding:4px 8px 8px!important;
+  padding:3px 8px 7px!important;
   scroll-behavior:smooth;
 }
-#view>.page-head,#view>.compact-head{margin:0!important;padding-top:0!important;padding-bottom:2px!important}
-#view>.page-head{min-height:31px!important}
-#view>.compact-head{min-height:26px!important}
+.bottom-nav{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;flex:0 0 auto;width:100%!important;max-width:none!important}
+#view>.page-head,#view>.compact-head{margin:0!important;padding-top:0!important;padding-bottom:1px!important}
+#view>.page-head{min-height:30px!important}
+#view>.compact-head{min-height:25px!important}
 .personnel-list{gap:3px!important;margin:0!important;padding:0!important}
 .compact-missions,.mission-list{gap:4px!important;margin:0!important;padding:0!important}
 .compact-mission{margin:0!important}
@@ -77,7 +79,7 @@ button,.facility-row,.personnel-row,.mission-card,.inventory-slot,.compact-item,
   .personnel-row{grid-template-columns:48px minmax(0,1fr) 56px!important}
   .personnel-avatar .pixel-char{width:40px!important;height:40px!important}
   .compact-warehouse .shelf,.inventory-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
-  #view.view{padding:3px 7px 7px!important;gap:3px!important}
+  #view.view{padding:2px 7px 6px!important;gap:3px!important}
   .personnel-list{gap:2px!important}.compact-missions,.mission-list{gap:3px!important}
 }
 @media(max-width:360px){
