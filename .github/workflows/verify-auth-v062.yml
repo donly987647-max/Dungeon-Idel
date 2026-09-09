@@ -1,0 +1,58 @@
+name: Verify v0.6.2 Korean PIN Auth
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-auth-v062.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify live Vercel UI and auth flow
+        shell: bash
+        run: |
+          set -euo pipefail
+          WEB='https://hero-extermination-inc.vercel.app'
+          API='https://xtvhisddjtfnsumprgpm.supabase.co/functions/v1/dungeon-idel-api'
+          curl -fsSL "$WEB" -o /tmp/index.html
+          grep -q '용사 박멸 주식회사 v0.6.2' /tmp/index.html
+          grep -q '한글 2글자 이상' /tmp/index.html
+          grep -q '숫자 4자리' /tmp/index.html
+          curl -fsSL "$WEB/app.js?v=0620" -o /tmp/app.js
+          node --check /tmp/app.js
+          grep -q 'validKoreanId' /tmp/app.js
+          grep -q "action:'login'" /tmp/app.js
+          KEY=$(grep -o 'sb_publishable_[A-Za-z0-9_-]*' /tmp/app.js | head -1)
+          test -n "$KEY"
+          USER='검증계정'
+          PIN='4821'
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" --data "{\"action\":\"register\",\"username\":\"$USER\",\"password\":\"$PIN\"}" > /tmp/register.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/register.json'))
+          assert d['ok'] is True
+          assert d['username']=='검증계정'
+          assert d['session']['access_token']
+          assert d['session']['refresh_token']
+          PY
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" --data "{\"action\":\"login\",\"username\":\"$USER\",\"password\":\"$PIN\"}" > /tmp/login.json
+          TOKEN=$(python - <<'PY'
+          import json
+          d=json.load(open('/tmp/login.json'))
+          assert d['ok'] is True
+          print(d['session']['access_token'])
+          PY
+          )
+          curl -sS -f "$API" -H 'Content-Type: application/json' -H "apikey: $KEY" -H "Authorization: Bearer $TOKEN" --data '{"action":"state"}' > /tmp/state.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/state.json'))
+          assert d['ok'] is True
+          s=d['state']
+          assert s['account']['username']=='검증계정'
+          assert len(s['monsters'])==1 and s['monsters'][0]['name']=='보글'
+          print('AUTH_V062_OK=1')
+          PY
