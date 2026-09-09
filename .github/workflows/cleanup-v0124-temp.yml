@@ -1,0 +1,22 @@
+name: Cleanup v0.12.4 Temp Files
+on:
+  push:
+    paths:
+      - '.github/workflows/cleanup-v0124-temp.yml'
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove temporary patch infrastructure
+        run: |
+          git config user.name 'Doong'
+          git config user.email 'donly987647@gmail.com'
+          git rm -f scripts/patch_v0124_turn_combat.py scripts/patch_v0124b_combat_hp.py .github/workflows/run-patch-v0124-turn-combat.yml .github/workflows/run-patch-v0124b-combat-hp.yml .github/workflows/cleanup-v0124-temp.yml
+          git commit -m 'chore: remove temporary v0.12.4 patch infrastructure'
+          git pull --rebase origin main
+          git push
