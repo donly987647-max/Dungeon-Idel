@@ -40,7 +40,7 @@ const facilityCost=k=>Number(S?.facilityCosts?.[k]||0);
 const nextQuarterCost=()=>facilityCost('quarters');
 const nextTavernCost=()=>facilityCost('tavern');
 const inventoryQty=id=>Number((S?.inventory||[]).find(x=>x.item_id===id)?.qty||0);
-const inventoryUsed=()=>Number((S?.inventory||[]).reduce((a,x)=>a+Number(x.qty||0),0));
+const inventoryUsed=()=>Number((S?.inventory||[]).filter(x=>Number(x.qty||0)>0).length);
 const recipeForOutput=id=>(S?.recipes||[]).find(x=>x.output_item===id)||null;
 const secText=n=>{n=Math.max(0,Math.round(Number(n||0)));const m=Math.floor(n/60),ss=n%60;return m?`${m}분 ${String(ss).padStart(2,'0')}초`:`${ss}초`};
 const leftText=t=>secText(Math.max(0,(new Date(t).getTime()-Date.now())/1000));
