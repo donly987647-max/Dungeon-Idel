@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Apply v0.12.4 combat patch
         run: python scripts/patch_v0124_turn_combat.py
       - name: Verify frontend JavaScript
@@ -28,5 +30,7 @@ jobs:
           git config user.name 'Doong'
           git config user.email 'donly987647@gmail.com'
           git add app.js app.css index.html
-          git commit -m 'release: v0.12.4 persistent two-second turn combat'
-          git push
+          git diff --cached --quiet || git commit -m 'release: v0.12.4 persistent two-second turn combat'
+          git pull --rebase origin main
+          for i in 1 2 3; do git push && exit 0; sleep 2; done
+          exit 1
