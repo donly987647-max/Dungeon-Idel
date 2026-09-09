@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'scripts/patch_v0110_economy.py'
+      - '.github/workflows/run-patch-v0110.yml'
 permissions:
   contents: write
 jobs:
