@@ -1,0 +1,38 @@
+name: Run v0.12.1 Battle Sync Patch
+on:
+  push:
+    paths:
+      - 'scripts/patch_v0121_battle_sync.py'
+      - '.github/workflows/run-patch-v0121-battle-sync.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Apply v0.12.1 battle sync patch
+        run: python scripts/patch_v0121_battle_sync.py
+      - name: Verify JavaScript
+        run: node --check app.js
+      - name: Verify battle sync markers
+        run: |
+          grep -q "function battleEventState" app.js
+          grep -q "CHAPTER INTEL" app.js
+          grep -q "v0.12.1 server-synced battle presentation" app.css
+          grep -q "v0.12.1" index.html
+      - name: Commit release files
+        run: |
+          git config user.name "Doong"
+          git config user.email "donly987647@gmail.com"
+          git add app.js app.css index.html
+          if git diff --cached --quiet; then
+            echo "No release changes"
+          else
+            git commit -m "release: v0.12.1 sync battle visuals to server events"
+            git push origin HEAD:main
+          fi
