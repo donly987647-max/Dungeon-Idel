@@ -113,23 +113,7 @@
   function enhanceWatch(){
     const sheet=document.querySelector('#modal .battle-report-sheet');if(!sheet)return;const copy=sheet.querySelector('.battle-zone-copy span');
     if(copy&&!copy.dataset.v0131){copy.dataset.v0131='1';copy.textContent='2초마다 탐색·이동·조우 또는 전투 턴이 진행됩니다. 보스전 전멸 시 해당 챕터 진행도가 0/500으로 초기화됩니다.'}
-    sheet.querySelectorAll('.combat-log-row.explore em').forEach(em=>{em.textContent=em.textContent.replace('전리품','바닥 습득')});
-  }
-
-  function openBattleAfterDeploy(siteId,beforeIds){
-    let tries=0;
-    const tick=()=>{
-      tries++;
-      if(!S){if(tries<100)setTimeout(tick,50);return}
-      const current=(S.expeditions||[]).filter(e=>e.active&&e.site_id===siteId);
-      const next=current.find(e=>!beforeIds.has(e.id))||current[current.length-1];
-      if(next){
-        requestAnimationFrame(()=>watchModal(next.id));
-        return;
-      }
-      if(tries<100)setTimeout(tick,50);
-    };
-    setTimeout(tick,50);
+    sheet.querySelectorAll('.combat-log-row.explore em').forEach(em=>{if(em.textContent.includes('전리품'))em.textContent=em.textContent.replace('전리품','바닥 습득')});
   }
 
   function decorate(){enhanceHuntCards();enhanceDropPanel();enhanceWatch()}
@@ -139,19 +123,9 @@
   document.addEventListener('click',e=>{
     const mission=e.target.closest('[data-action="mission"][data-site], [data-action="mission"][data-id]');if(mission)lastMissionSite=mission.dataset.site||mission.dataset.id||lastMissionSite;
     const watch=e.target.closest('[data-action="watch"][data-id]');if(watch){const ex=(S?.expeditions||[]).find(x=>x.id===watch.dataset.id);if(ex)lastMissionSite=ex.site_id}
-    const deploy=e.target.closest('[data-action="deploy-party"][data-site]');
-    if(deploy){
-      const siteId=deploy.dataset.site;
-      const beforeIds=new Set((S?.expeditions||[]).filter(x=>x.active&&x.site_id===siteId).map(x=>x.id));
-      lastMissionSite=siteId;
-      openBattleAfterDeploy(siteId,beforeIds);
-    }
     schedule();
   },true);
 
-  const modal=document.querySelector('#modal'),view=document.querySelector('#view');
-  const observer=new MutationObserver(muts=>{if(muts.some(m=>m.addedNodes.length))schedule()});
-  if(modal)observer.observe(modal,{subtree:true,childList:true});
-  if(view)observer.observe(view,{subtree:true,childList:true});
+  document.addEventListener('game:render',schedule);
   schedule();
 })();
