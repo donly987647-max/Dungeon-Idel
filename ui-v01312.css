@@ -1,5 +1,17 @@
 /* v0.13.12 — stable frontend presentation layer.
    Generated scene art remains decorative; critical icons always use individual assets. */
+:root{--facility-scenes-v01312:url('assets/ui/facility-scenes-v0139.png')}
+
+/* Keep generated scenery as a non-critical background only. */
+.facility-stack .facility-row{background-repeat:no-repeat!important;background-size:100% 100%,200% 400%!important;background-color:#292e2a!important}
+.facility-stack .facility-row.dorm{background-image:linear-gradient(90deg,rgba(14,18,15,.84),rgba(20,24,21,.88) 46%,rgba(27,31,28,.68)),var(--facility-scenes-v01312)!important;background-position:center,100% 0%!important}
+.facility-stack .facility-row.recruit{background-image:linear-gradient(90deg,rgba(14,18,15,.84),rgba(20,24,21,.88) 46%,rgba(27,31,28,.68)),var(--facility-scenes-v01312)!important;background-position:center,0% 33.333%!important}
+.facility-stack .facility-row.workshop{background-image:linear-gradient(90deg,rgba(14,18,15,.84),rgba(20,24,21,.88) 46%,rgba(27,31,28,.68)),var(--facility-scenes-v01312)!important;background-position:center,100% 33.333%!important}
+.facility-stack .facility-row.shop{background-image:linear-gradient(90deg,rgba(14,18,15,.84),rgba(20,24,21,.88) 46%,rgba(27,31,28,.68)),var(--facility-scenes-v01312)!important;background-position:center,0% 66.667%!important}
+.facility-stack .facility-row.forge{background-image:linear-gradient(90deg,rgba(14,18,15,.84),rgba(20,24,21,.88) 46%,rgba(27,31,28,.68)),var(--facility-scenes-v01312)!important;background-position:center,100% 66.667%!important}
+.facility-stack .facility-row.storage{background-image:linear-gradient(90deg,rgba(14,18,15,.84),rgba(20,24,21,.88) 46%,rgba(27,31,28,.68)),var(--facility-scenes-v01312)!important;background-position:center,100% 100%!important}
+.facility-stack .facility-row.ops{background-image:linear-gradient(90deg,rgba(14,18,15,.84),rgba(20,24,21,.88) 46%,rgba(27,31,28,.68)),var(--facility-scenes-v01312)!important;background-position:center,0% 100%!important}
+.office-banner{background-image:linear-gradient(90deg,rgba(10,13,11,.92),rgba(10,13,11,.76) 48%,rgba(10,13,11,.42)),var(--facility-scenes-v01312)!important;background-size:100% 100%,200% 400%!important;background-position:center,0% 0%!important;background-repeat:no-repeat!important}
 
 /* Never hide the real facility icon. The previous sprite pseudo-element could point at
    transparent/incorrect cells and made the whole menu appear asset-less. */
