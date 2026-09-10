@@ -8,29 +8,33 @@ permissions:
 jobs:
   promote:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 6
     steps:
-      - name: Promote verified static deployment without a new build
+      - uses: actions/checkout@v4
+        with:
+          ref: '3496c57524b1f9e6309709f7f3a2961b9b210bef'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate selected already-built deployment
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           python3 - <<'PY'
           import json, os
-          from urllib.request import Request, urlopen
+          from urllib.request import Request,urlopen
           token=os.environ.get('VERCEL_TOKEN','')
-          if not token:
-              raise SystemExit('PROMOTION_CREDENTIAL_NOT_CONFIGURED: production remains unchanged')
-          project='prj_oN16fERQAklapuasrNyEtAH0QIA6'
-          deployment='dpl_9pJqb1BcZsCoRJDZXq9GP6QhwKH8'
-          team='team_7bLL2tRq5PMtthxr701h7FRa'
-          headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'}
-          def request(path,data=None):
-              with urlopen(Request('https://api.vercel.com'+path+'?teamId='+team,data=data,headers=headers),timeout=30) as r:
-                  return json.loads(r.read() or b'{}')
-          found=request('/v13/deployments/'+deployment)
-          assert found.get('projectId')==project, 'Wrong project'
-          assert found.get('readyState')=='READY', 'Deployment not ready'
-          assert found.get('meta',{}).get('githubCommitSha')=='16cdbd596b82eb9628b635f5b3a2004e9ed906b4', 'Unexpected source'
-          request('/v10/projects/'+project+'/promote/'+deployment,b'{}')
-          print('VERIFIED_DEPLOYMENT_PROMOTION_REQUESTED')
+          if not token:raise SystemExit('PROMOTION_CREDENTIAL_NOT_CONFIGURED')
+          req=Request('https://api.vercel.com/v13/deployments/dpl_9pJqb1BcZsCoRJDZXq9GP6QhwKH8?teamId=team_7bLL2tRq5PMtthxr701h7FRa',headers={'Authorization':'Bearer '+token})
+          with urlopen(req,timeout=30) as r:found=json.load(r)
+          assert found.get('projectId')=='prj_oN16fERQAklapuasrNyEtAH0QIA6'
+          assert found.get('readyState')=='READY'
+          assert found.get('meta',{}).get('githubCommitSha')=='16cdbd596b82eb9628b635f5b3a2004e9ed906b4'
+          print('VERIFIED_DEPLOYMENT_CONFIRMED')
           PY
+      - name: Promote the verified Preview with explicit confirmation
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx --yes vercel@latest promote hero-extermination-hkkuk6yht-donly987647-maxs-projects.vercel.app --yes --scope donly987647-maxs-projects --token "$VERCEL_TOKEN" --timeout 2m
+      - name: Verify production serves the validated frontend
+        run: python3 tools/production_smoke.py
