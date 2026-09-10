@@ -1,18 +1,17 @@
-/* v0.13.16 — event-driven information hierarchy */
+/* v0.13.17 — readable primary flow for monster, hunt and battle screens */
 (()=>{
   const text=(el,fallback='-')=>(el?.textContent||'').trim()||fallback;
+  const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
   function makeTabs(sheet){
     if(!sheet||sheet.dataset.readabilityTabs==='1')return;
     const profile=sheet.querySelector('.monster-profile-v10');
     if(!profile)return;
-
     const role=profile.querySelector(':scope > .monster-role-card');
     const skill=profile.querySelector(':scope > .unique-skill-card');
     const note=profile.querySelector(':scope > .detail-note');
     const release=sheet.querySelector(':scope > .monster-release-zone');
     const stats=profile.querySelector(':scope > .combat-stat-grid');
-
     const roleName=text(role?.querySelector('header b'),'기본 전투원');
     const skillName=text(skill?.querySelector('b'),'미해금');
     const statusName=text(note?.querySelector('b'),'본부 대기');
@@ -28,14 +27,12 @@
     wrap.className='readability-tabs is-collapsed';
     wrap.dataset.readabilityTabs='1';
     wrap.innerHTML=`<div class="readability-tab-bar"><button type="button" data-readability-tab="combat" aria-expanded="false">역할 · 스킬 상세</button><button type="button" data-readability-tab="manage" aria-expanded="false">기록 · 관리</button></div><div class="readability-panel" data-readability-panel="combat" hidden></div><div class="readability-panel" data-readability-panel="manage" hidden></div>`;
-
     const combat=wrap.querySelector('[data-readability-panel="combat"]');
     const manage=wrap.querySelector('[data-readability-panel="manage"]');
     if(role)combat.append(role);
     if(skill)combat.append(skill);
     if(note)manage.append(note);
     if(release)manage.append(release);
-
     const battle=sheet.querySelector(':scope > .battle-actions');
     if(battle)sheet.insertBefore(wrap,battle);else sheet.append(wrap);
     sheet.dataset.readabilityTabs='1';
@@ -87,8 +84,78 @@
     sheet.dataset.readabilityLoot='1';
   }
 
-  function escapeHtml(v){
-    return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  function simplifyMission(sheet){
+    if(!sheet||sheet.dataset.huntSimple==='1')return;
+    const intel=sheet.querySelector(':scope > .chapter-intel');
+    const drops=sheet.querySelector(':scope > .drop-panel');
+    const head=sheet.querySelector(':scope > .sheet-head');
+    if(!head||(!intel&&!drops))return;
+
+    const tools=document.createElement('div');
+    tools.className='hunt-utility-row';
+    tools.innerHTML='<button type="button" class="hunt-drop-toggle" data-hunt-drop-toggle aria-expanded="false"><span>드랍률 확인</span><i>›</i></button>';
+    head.insertAdjacentElement('afterend',tools);
+
+    const drawer=document.createElement('section');
+    drawer.className='hunt-drop-drawer';
+    drawer.hidden=true;
+    drawer.dataset.huntDropDrawer='1';
+    if(drops)drawer.append(drops);
+    if(intel){
+      const more=document.createElement('details');
+      more.className='secondary-details mission-intel-details';
+      more.innerHTML='<summary>지역 세부 정보</summary><div class="secondary-content"></div>';
+      more.querySelector('.secondary-content').append(intel);
+      drawer.append(more);
+    }
+    tools.insertAdjacentElement('afterend',drawer);
+
+    const launch=sheet.querySelector('.party-launch .primary-btn');
+    if(launch){
+      const boss=/보스/.test(launch.textContent||'');
+      launch.textContent=boss?'보스 약탈 시작':'약탈 시작';
+    }
+    const partyHead=sheet.querySelector('.party-select-head b');
+    if(partyHead)partyHead.textContent='출동 파티 편성';
+    sheet.dataset.huntSimple='1';
+  }
+
+  function simplifyBattle(sheet){
+    if(!sheet||sheet.dataset.battleSimple==='1')return;
+    const scene=sheet.querySelector('#battleScene');
+    const center=scene?.querySelector('.battle-center-event');
+    const floats=scene?.querySelector('#liveCombatFloats');
+    if(center&&floats){
+      center.append(floats);
+    }
+
+    const body=sheet.querySelector('.battle-report-body');
+    const summary=body?.querySelector('.battle-summary.detailed');
+    const zone=body?.querySelector('.battle-zone-copy');
+    const logTitle=body?.querySelector('.combat-log-title');
+    const log=body?.querySelector('#liveLog');
+    if(body&&summary){
+      summary.classList.add('battle-primary-summary');
+      const cards=[...summary.children];
+      const secondary=cards.slice(3);
+      const details=document.createElement('details');
+      details.className='battle-secondary-details';
+      details.innerHTML='<summary><span>전투 기록</span><small>세부 수치 · 행동 로그</small></summary><div class="battle-secondary-content"></div>';
+      const content=details.querySelector('.battle-secondary-content');
+      if(zone)content.append(zone);
+      if(secondary.length){
+        const extra=document.createElement('div');
+        extra.className='battle-extra-stats';
+        secondary.forEach(x=>extra.append(x));
+        content.append(extra);
+      }
+      if(logTitle)content.append(logTitle);
+      if(log)content.append(log);
+      summary.insertAdjacentElement('afterend',details);
+    }
+    const alert=body?.querySelector('#liveAlert');
+    if(alert)alert.setAttribute('aria-live','polite');
+    sheet.dataset.battleSimple='1';
   }
 
   window.applyReadability=function(root){
@@ -97,10 +164,26 @@
     if(sheet.classList.contains('monster-detail-sheet-v10'))makeTabs(sheet);
     if(sheet.classList.contains('candidate-detail-sheet'))wrapCandidateDetails(sheet);
     if(sheet.classList.contains('economy-v0128-sheet'))wrapEconomyGuide(sheet);
+    if(sheet.classList.contains('mission-party-sheet'))simplifyMission(sheet);
+    if(sheet.classList.contains('battle-report-sheet'))simplifyBattle(sheet);
     wrapLootRule(sheet);
   };
 
   document.addEventListener('click',e=>{
+    const huntBtn=e.target.closest('[data-hunt-drop-toggle]');
+    if(huntBtn){
+      e.preventDefault();
+      const sheet=huntBtn.closest('.mission-party-sheet');
+      const drawer=sheet?.querySelector('[data-hunt-drop-drawer]');
+      if(!drawer)return;
+      const open=drawer.hidden;
+      drawer.hidden=!open;
+      huntBtn.classList.toggle('active',open);
+      huntBtn.setAttribute('aria-expanded',open?'true':'false');
+      const icon=huntBtn.querySelector('i');if(icon)icon.textContent=open?'⌄':'›';
+      return;
+    }
+
     const btn=e.target.closest('[data-readability-tab]');
     if(!btn)return;
     e.preventDefault();
