@@ -8,15 +8,18 @@ const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const fmt=n=>Number(n||0).toLocaleString('ko-KR');
 const esc=s=>String(s??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));
-const fam=k=>({slime:'슬라임',goblin:'고블린',troll:'트롤',mandrake:'만드라고라',imp:'임프',golem:'골렘'}[k]||k);
+const fam=k=>({slime:'슬라임',goblin:'고블린',troll:'트롤',mandrake:'만드라고라',pixie:'픽시',imp:'임프',wisp:'위습',golem:'골렘',mimic:'미믹'}[k]||k);
 const siteCode=id=>({mountain_village:'OP-001',farm_road:'OP-014',border_outpost:'OP-031'}[id]||'OP-???');
 const siteShort=id=>({mountain_village:'산촌',farm_road:'농로',border_outpost:'국경'}[id]||'미확인');
-const roleOf=m=>({slime:'완충 요원',goblin:'물리 딜러',troll:'브루저',mandrake:'힐러',imp:'마법 딜러',golem:'탱커'}[m?.family]||'전투 요원');
-const roleKey=m=>({mandrake:'healer',imp:'mage',golem:'tank',goblin:'dps',troll:'bruiser',slime:'buffer'}[m?.family]||'fighter');
+const roleOf=m=>({slime:'완충 요원',goblin:'물리 딜러',troll:'브루저',mandrake:'힐러',pixie:'힐러',imp:'마법 딜러',wisp:'마법 딜러',golem:'탱커',mimic:'탱커'}[m?.family]||'전투 요원');
+const roleKey=m=>({mandrake:'healer',pixie:'healer',imp:'mage',wisp:'mage',golem:'tank',mimic:'tank',goblin:'dps',troll:'bruiser',slime:'buffer'}[m?.family]||'fighter');
 const roleMeta=m=>({
-  mandrake:{key:'healer',title:'힐러',summary:'낮은 공격력을 감수하고 부상한 아군을 주기적으로 회복합니다.',points:['최저 HP 아군 우선 회복','장기전 생존력 상승','단독 화력은 낮음']},
-  imp:{key:'mage',title:'마법 딜러',summary:'몸은 약하지만 고유 마법으로 높은 방어력을 관통합니다.',points:['방어 관통 마법 공격','높은 순간 화력','낮은 HP·방어']},
-  golem:{key:'tank',title:'탱커',summary:'인간의 공격을 자신에게 끌어오고 받는 피해를 줄여 파티를 보호합니다.',points:['높은 도발 가중치','상시 피해 감소','낮은 속도·화력']},
+  mandrake:{key:'healer',title:'힐러 · 지속형',summary:'낮은 공격력을 감수하고 일정 주기로 아군을 안정적으로 회복합니다.',points:['고정 주기 회복','장기전 유지력 우수','안정적인 생존 지원']},
+  pixie:{key:'healer',title:'힐러 · 응급형',summary:'몸은 매우 약하지만 높은 확률의 즉시 회복으로 갑작스러운 피해를 복구합니다.',points:['확률형 빠른 회복','높은 회피와 선공 기여','매우 낮은 HP·방어']},
+  imp:{key:'mage',title:'마법 딜러 · 폭발형',summary:'주기적으로 강한 관통 마법을 사용해 중장갑 인간을 빠르게 녹입니다.',points:['3타 주기 강한 마법','높은 순간 화력','낮은 HP·방어']},
+  wisp:{key:'mage',title:'마법 딜러 · 연속형',summary:'한 방은 임프보다 약하지만 마법이 자주 터지고 회피와 선공이 뛰어납니다.',points:['확률형 잦은 마법','높은 속도·회피','낮은 단발 화력과 생존력']},
+  golem:{key:'tank',title:'탱커 · 수비형',summary:'높은 도발과 피해 감소로 인간의 공격을 자신에게 집중시키는 정통 탱커입니다.',points:['최상급 생존력','높은 도발 가중치','낮은 속도·화력']},
+  mimic:{key:'tank',title:'탱커 · 반격형',summary:'골렘보다 덜 단단하지만 더 자주, 더 강하게 반격하는 공격형 탱커입니다.',points:['3타 주기 강한 반격','준수한 도발과 피해 감소','골렘보다 낮은 순수 생존력']},
   goblin:{key:'dps',title:'물리 딜러',summary:'빠른 속도와 치명타를 이용하는 기본 물리 공격수입니다.',points:['높은 속도','높은 치명·회피','낮은 생존력']},
   troll:{key:'bruiser',title:'브루저',summary:'체력과 공격력을 함께 가진 전열형 공격수입니다.',points:['높은 HP·공격','안정적인 전열 유지','전담 탱커보다 보호 능력 낮음']},
   slime:{key:'buffer',title:'완충형',summary:'체력과 방어가 고르게 잡힌 범용 전투 요원입니다.',points:['안정적인 생존','균형형 성장','전문화 효과 없음']}
@@ -35,7 +38,7 @@ const personalityMeta=n=>({
 }[n]||{summary:'아직 분석되지 않은 성격.',effects:['고유 효과 없음'],penalty:'없음'});
 const growthMul=m=>({S:1.21,A:1.13,B:1.06,C:1}[m?.growth_grade||'C']||1);
 const monsterStats=m=>{const eq=equippedFor(m.id).map(x=>itemDef(x.item_id)).filter(Boolean),sum=k=>eq.reduce((a,x)=>a+Number(x[k]||0),0),p=m.personality||'침착',tr=m.trait||'',g=growthMul(m),lv=Math.max(1,Number(m.level||1));let st={hp:Math.round(Number(m.hp_base||120)+(lv-1)*9*g+Math.max(0,Number(m.talent||80)-80)*2+sum('hp')),atk:Number(m.atk_base||18)+(lv-1)*2*g+Math.max(0,Number(m.talent||80)-80)*.22+sum('atk'),def:Number(m.def_base||8)+(lv-1)*.8*g+sum('def'),spd:Number(m.spd_base||10)+(lv-1)*.18*g+sum('spd'),crit:Number(m.crit_base||.05)+sum('crit'),evade:Number(m.evade_base||.03)+sum('evade'),human:sum('human_damage')};if(tr==='질긴 가죽')st.def*=1.10;else if(tr==='재빠름'){st.spd*=1.08;st.evade+=.02}if(p==='광전사'){st.atk*=1.15;st.def*=.90;st.crit+=.05}else if(p==='겁쟁이'){st.atk*=.95;st.spd*=1.05;st.evade+=.08}else if(p==='인간혐오'){st.human+=.12}else if(p==='침착'){st.def*=1.10;st.evade+=.02}else if(p==='야행성'&&(kstHour()>=18||kstHour()<6)){st.atk*=1.12;st.spd*=1.12}st.atk=Math.round(st.atk);st.def=Math.round(st.def);st.spd=Math.round(st.spd);st.crit=Math.min(.45,st.crit);st.evade=Math.min(.35,st.evade);return st};
-const utilityPower=m=>({mandrake:13,imp:8,golem:14}[m?.family]||0);
+const utilityPower=m=>({mandrake:13,pixie:14,imp:8,wisp:8,golem:14,mimic:13}[m?.family]||0);
 const power=m=>{const st=monsterStats(m);return Math.floor(Number(m.power_base||0)+(Number(m.level||1)-1)*12+Math.max(0,Number(m.talent||80)-80)*1.2+(st.atk-Number(m.atk_base||18))*.8+(st.def-Number(m.def_base||8))*.55+(st.hp-Number(m.hp_base||120))*.03+utilityPower(m))};
 const slotName=s=>({weapon:'무기',armor:'방어구',accessory:'장신구'}[s]||s);
 const rarityClass=r=>({'일반':'normal','고급':'uncommon','희귀':'rare','영웅':'epic'}[r]||'normal');
@@ -72,7 +75,7 @@ const dropRate=c=>{const p=Number(c||0)*100;return p>=1?`${p.toFixed(p%1?1:0)}%`
 const partyLabel=e=>{const p=partyOf(e);return p.length>1?`${p[0]?.name||'몬스터'} 외 ${p.length-1}`:(p[0]?.name||'몬스터')};
 const validKoreanId=u=>/^[가-힣]{2,12}$/.test(String(u||'').normalize('NFC'));
 const validPin=p=>/^\d{4}$/.test(String(p||''));
-const monsterAsset=f=>`monster-${['slime','goblin','troll','mandrake','imp','golem'].includes(f)?f:'slime'}`;
+const monsterAsset=f=>`monster-${['slime','goblin','troll','mandrake','pixie','imp','wisp','golem','mimic'].includes(f)?f:'slime'}`;
 const evolutionDefForForm=form=>(S?.evolutionDefs||[]).find(x=>x.target_form_id===form)||null;
 const formName=m=>{if(!m)return '몬스터';if(!Number(m.evolution_tier||0))return fam(m.family);return evolutionDefForForm(m.form_id)?.target_name||fam(m.family)};
 const formClass=m=>`form-${String(m?.form_id||m?.family||'base').replace(/[^a-z0-9_-]/gi,'')}`;
