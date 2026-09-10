@@ -1,6 +1,6 @@
-/* v0.13.7 — generated pixel asset presentation + combat frame motion */
+/* v0.13.8 — generated pixel assets, combat motion, and UI consistency */
 .generated-monster-gfx,.generated-item-gfx{display:block;background-repeat:no-repeat;background-color:transparent;image-rendering:pixelated;image-rendering:crisp-edges;flex:0 0 auto}
-.generated-monster-gfx.pixel-char{width:100%;height:100%;overflow:visible}
+.generated-monster-gfx.pixel-char{overflow:hidden}
 .generated-item-gfx.pixel-item{width:100%;height:100%;overflow:visible}
 .employee-sprite.generated-monster-gfx,.candidate-sprite.generated-monster-gfx,.battle-sprite.generated-monster-gfx,.mini-equip-char.generated-monster-gfx{filter:drop-shadow(0 4px 0 #050805)}
 .battle-party-unit .generated-monster-gfx{transform-origin:50% 82%;will-change:transform,filter,background-position}
@@ -13,8 +13,28 @@
 .battle-report-scene.gfx-party-impact .battle-stage:after,.battle-report-scene.gfx-enemy-impact .battle-stage:after{content:"";position:absolute;inset:0;z-index:8;pointer-events:none;animation:gfxImpactFlash .28s steps(3,end)}
 .battle-report-scene.gfx-party-impact .battle-stage{animation:gfxSceneKick .26s steps(4,end)}
 .battle-report-scene.gfx-enemy-impact .battle-stage{animation:gfxSceneHit .24s steps(4,end)}
-/* Monster detail already has global modal Back/X navigation. Keep the duplicate roster-list control out of this sheet only. */
+
+/* Monster detail already has global modal Back/X navigation. */
 .monster-detail-headbar>.monster-back-btn{display:none!important}
+
+/* HQ forge row must use the same final compact dimensions as every other facility row. */
+.facility-stack .facility-row.forge{min-height:68px!important;grid-template-columns:48px minmax(0,1fr) auto!important;gap:9px!important;padding:6px 9px!important;border-color:#5d655e!important;background:#292e2a!important;color:#eef1eb!important;font-family:inherit!important}
+.facility-stack .facility-row.forge:before{background:#6b756c!important}
+.facility-stack .facility-row.forge img{width:42px!important;height:42px!important;object-fit:contain!important}
+.facility-stack .facility-row.forge .facility-copy b{font-size:16px!important;line-height:1.1!important;color:#eef1eb!important}
+.facility-stack .facility-row.forge .facility-copy small{margin-top:3px!important;font-size:9px!important;line-height:1.2!important;color:#b1b7b1!important}
+.facility-stack .facility-row.forge .facility-side{gap:7px!important}
+.facility-stack .facility-row.forge .facility-side em{font-size:8px!important;color:#b7bdb8!important}
+.facility-stack .facility-row.forge .facility-side i{font-size:20px!important;color:#8d948e!important}
+
+/* Generated monster portrait must stay inside a dedicated frame and never invade the text column. */
+.monster-detail-sheet-v10 .monster-identity{grid-template-columns:76px minmax(0,1fr)!important;gap:10px!important;align-items:center!important;overflow:hidden!important}
+.monster-detail-sheet-v10 .monster-identity .detail-portrait{width:72px!important;height:72px!important;min-width:72px!important;min-height:72px!important;display:grid!important;place-items:center!important;overflow:hidden!important;border:1px solid #3f4941;background:#101411}
+.monster-detail-sheet-v10 .monster-identity .detail-portrait .detail-sprite.generated-monster-gfx{width:64px!important;height:64px!important;max-width:64px!important;max-height:64px!important;overflow:hidden!important;flex:none!important}
+.monster-detail-sheet-v10 .monster-identity>div:last-child{min-width:0!important;max-width:100%!important;overflow:hidden!important}
+.monster-detail-sheet-v10 .monster-identity>div:last-child>b,.monster-detail-sheet-v10 .monster-identity>div:last-child>small{max-width:100%!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.monster-detail-sheet-v10 .personality-tag{max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+
 @keyframes gfxBattleIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 @keyframes gfxFallbackAttack{0%,100%{transform:translateX(0) scale(1)}40%{transform:translateX(-3px) scale(.96,1.04)}65%{transform:translateX(10px) scale(1.08,.94)}}
 @keyframes gfxFallbackHurt{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px);filter:brightness(1.7)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
@@ -22,4 +42,18 @@
 @keyframes gfxImpactFlash{0%,100%{background:transparent}35%{background:#fff5b333}55%{background:transparent}}
 @keyframes gfxSceneKick{0%,100%{transform:translateX(0)}40%{transform:translateX(3px)}70%{transform:translateX(-2px)}}
 @keyframes gfxSceneHit{0%,100%{transform:translateX(0)}35%{transform:translateX(-3px)}70%{transform:translateX(2px)}}
+
+@media(max-width:430px){
+  .facility-stack .facility-row.forge{min-height:64px!important;grid-template-columns:48px minmax(0,1fr) auto!important;gap:9px!important;padding:6px 9px!important}
+  .facility-stack .facility-row.forge img{width:40px!important;height:40px!important}
+  .facility-stack .facility-row.forge .facility-copy b{font-size:16px!important}
+  .facility-stack .facility-row.forge .facility-copy small{font-size:9px!important}
+  .facility-stack .facility-row.forge .facility-side{gap:7px!important}
+  .facility-stack .facility-row.forge .facility-side em{font-size:8px!important}
+  .facility-stack .facility-row.forge .facility-side i{font-size:20px!important}
+  .monster-detail-sheet-v10 .monster-identity{grid-template-columns:64px minmax(0,1fr)!important;gap:8px!important;padding:7px!important}
+  .monster-detail-sheet-v10 .monster-identity .detail-portrait{width:60px!important;height:60px!important;min-width:60px!important;min-height:60px!important}
+  .monster-detail-sheet-v10 .monster-identity .detail-portrait .detail-sprite.generated-monster-gfx{width:54px!important;height:54px!important;max-width:54px!important;max-height:54px!important}
+}
+@media(max-width:360px){.facility-stack .facility-row.forge .facility-side em{display:none!important}}
 @media(prefers-reduced-motion:reduce){.battle-party-unit .generated-monster-gfx,.gfx-fallback-attack,.gfx-fallback-hurt,#liveEnemyActor.gfx-enemy-recoil,.battle-report-scene .battle-stage{animation:none!important}.gfx-impact-frame{transform:none!important}}
