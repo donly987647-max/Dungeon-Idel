@@ -6,6 +6,7 @@ on:
       - '*.css'
       - '*.js'
       - 'scripts/**'
+      - 'tools/**'
       - 'assets/**'
       - '.github/workflows/verify-v080.yml'
   workflow_dispatch:
@@ -26,8 +27,12 @@ jobs:
           grep -q 'scripts/readability-v01316.js' index.html
           grep -q 'scripts/navigation-v0130.js' index.html
           grep -q 'scripts/forge-v0132.js' index.html
-          test -f ui-v01316.css
-          test -f scripts/readability-v01316.js
+          grep -q 'ui-v0141.css' index.html
+          grep -q 'scripts/expedition-v0141.js' index.html
+          ! grep -q 'scripts/deploy-watch-v01318.js' index.html
+          test -f ui-v0141.css
+          test -f scripts/expedition-v0141.js
+          test -f tools/attrition_sim_v0141.py
           test -f assets/brand-seal.svg
           test -f assets/hq-scene.svg
           test -f assets/icon-dorm.svg
@@ -35,6 +40,10 @@ jobs:
           test -f assets/icon-storage.svg
           test -f assets/icon-ops.svg
           test -f assets/icon-forge.svg
+      - name: Run expedition attrition simulation
+        run: |
+          set -euo pipefail
+          python3 tools/attrition_sim_v0141.py
       - name: Guard against obsolete UI layers
         run: |
           set -euo pipefail
