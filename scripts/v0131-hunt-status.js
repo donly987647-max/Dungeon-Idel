@@ -1,4 +1,4 @@
-/* v0.13.12 — hunt status without duplicate state polling or timer churn */
+/* v0.13.18 — hunt status, fixed 4-slot parties, direct battle handoff */
 (()=>{
   let lastMissionSite=null;
   let raf=0;
@@ -47,7 +47,7 @@
   function dashboardHtml(site,e){
     const state=missionState(site,e),m=liveMetrics(site,e),progress=site?.progress||{},normalWins=Math.min(500,Number(progress.normal_wins||0)),bossCleared=!!progress.boss_cleared;
     const trend=m.recent.length?`최근 ${m.recent.length}전 ${m.wins}승 ${m.losses}패`:'전투 기록 없음',powerRatio=m.party.length?clamp(m.partyPower/Math.max(1,Number(site.recommended_power||1))*100):0;
-    return `<section class="mission-live-dashboard state-${statusClass(state.key)}"><div class="mission-live-top"><span class="mission-live-state"><i></i><b>${esc(state.label)}</b></span><strong class="power-state ${m.ps.key}">${esc(m.ps.label)}</strong></div><p>${esc(state.detail)}</p><div class="mission-live-kpis"><span><small>진행</small><b>${bossCleared?'CLEAR':`${normalWins}/500`}</b></span><span><small>생존</small><b>${m.party.length?`${m.alive}/${m.party.length}`:'-'}</b></span><span><small>최근</small><b>${esc(trend)}</b></span><span><small>파티전투력</small><b>${m.party.length?fmt(m.partyPower):'-'}</b></span></div>${m.party.length?`<div class="live-bar-row"><span>파티 HP</span><i><em style="width:${clamp(m.partyHpPct)}%"></em></i><b>${percentText(m.partyHpPct)}</b></div>`:''}${m.bs.active?`<div class="live-bar-row enemy"><span>${esc(m.bs.enemy||'적')} HP</span><i><em style="width:${clamp(m.enemyPct)}%"></em></i><b>${percentText(m.enemyPct)}</b></div>`:''}${m.party.length?`<div class="live-bar-row power"><span>권장 대비</span><i><em style="width:${powerRatio}%"></em></i><b>${Math.round(m.partyPower/Math.max(1,Number(site.recommended_power||1))*100)}%</b></div>`:''}<div class="loot-rule-chip">장비·주요 재료는 <b>해당 적 처치 성공</b> 시에만 드롭</div></section>`;
+    return `<section class="mission-live-dashboard state-${statusClass(state.key)}"><div class="mission-live-top"><span class="mission-live-state"><i></i><b>${esc(state.label)}</b></span><strong class="power-state ${m.ps.key}">${esc(m.ps.label)}</strong></div><p>${esc(state.detail)}</p><div class="mission-live-kpis"><span><small>진행</small><b>${bossCleared?'CLEAR':`${normalWins}/500`}</b></span><span><small>생존</small><b>${m.party.length?`${m.alive}/${m.party.length}`:'-'}</b></span><span><small>최근</small><b>${esc(trend)}</b></span><span><small>파티전투력</small><b>${m.party.length?fmt(m.partyPower):'-'}</b></span></div>${m.party.length?`<div class="live-bar-row"><span>파티 HP</span><i><em style="width:${clamp(m.partyHpPct)}%"></em></i><b>${percentText(m.partyHpPct)}</b></div>`:''}${m.bs.active?`<div class="live-bar-row enemy"><span>${esc(m.bs.enemy||'적')} HP</span><i><em style="width:${clamp(m.enemyPct)}%"></em></i><b>${percentText(m.enemyPct)}</b></div>`:''}${m.party.length?`<div class="live-bar-row power"><span>권장 대비</span><i><em style="width:${powerRatio}%"></em></i><b>${Math.round(m.partyPower/Math.max(1,Number(site.recommended_power||1))*100)}%</b></div>`:''}</section>`;
   }
 
   function dashboardSignature(site,e){
@@ -55,11 +55,39 @@
     return [p.normal_wins,p.boss_ready,p.boss_cleared,e?.phase,e?.event_state?.text,e?.kills,bs.active,bs.boss,bs.turn,bs.enemy,bs.enemyHp,bs.enemyMaxHp,JSON.stringify(bs.partyHp||{}),JSON.stringify(bs.partyMaxHp||{}),recent.map(x=>`${x.result}:${x.enemy}:${x.boss?1:0}`).join(',')].join('|');
   }
 
+  function partySlotsHtml(e){
+    const party=e?partyOf(e).slice(0,4):[];
+    return Array.from({length:4},(_,i)=>{
+      const m=party[i];
+      return m
+        ? `<span class="party-avatar party-capacity-slot filled" title="${esc(m.name)}">${charSvg(monsterAsset(m.family),'party-sprite '+formClass(m))}</span>`
+        : `<span class="party-capacity-slot empty" aria-label="빈 파티 슬롯"><i>+</i></span>`;
+    }).join('');
+  }
+
+  function syncPartySlots(card,e){
+    const squad=card.querySelector('.squad');
+    if(!squad)return;
+    const party=e?partyOf(e).slice(0,4):[];
+    const sig=party.map(m=>m.id).join('|')||'empty';
+    if(squad.dataset.partySlots===sig)return;
+    squad.innerHTML=partySlotsHtml(e);
+    squad.dataset.partySlots=sig;
+    let label=card.querySelector('.party-capacity-label');
+    if(!label){
+      label=document.createElement('small');
+      label.className='party-capacity-label';
+      squad.insertAdjacentElement('afterend',label);
+    }
+    label.textContent=`파티 ${party.length}/4`;
+  }
+
   function enhanceHuntCards(){
     if(!S||screen!=='hunt')return;
     document.querySelectorAll('.mission-card[data-site]').forEach(card=>{
       const site=(S.sites||[]).find(x=>x.id===card.dataset.site);if(!site)return;
       const e=currentExp(site.id),sig=dashboardSignature(site,e);let dash=card.querySelector('.mission-live-dashboard');
+      syncPartySlots(card,e);
       if(dash?.dataset.liveSig===sig){card.classList.add('hunt-v0131-enhanced');return}
       const wrap=document.createElement('div');wrap.innerHTML=dashboardHtml(site,e);const next=wrap.firstElementChild;next.dataset.liveSig=sig;
       if(!dash){const middle=card.querySelector('.mission-middle');middle?.insertAdjacentElement('afterend',next)}else dash.replaceWith(next);
@@ -78,14 +106,30 @@
     const panel=sheet.querySelector('.drop-panel'),list=panel?.querySelector('.drop-list');if(!panel||!list||list.dataset.v0131==='1')return;
     const loot=site.loot||[],scavenge=loot.filter(l=>(l.source||'kill')==='scavenge'),kills=loot.filter(l=>(l.source||'kill')==='kill'),enemies=[...(site.enemy_names||[]),site.boss_name].filter(Boolean),groups=enemies.map(enemy=>({enemy,items:kills.filter(l=>(l.enemy||'*')===enemy)})).filter(g=>g.items.length);
     const head=panel.querySelector('header');if(head){const b=head.querySelector('b'),small=head.querySelector('small'),em=head.querySelector('em');if(b)b.textContent='드롭 출처';if(small)small.textContent='바닥 습득과 적 처치 드롭을 분리 표시';if(em)em.textContent=`${new Set(loot.map(l=>l.id)).size}종`}
-    list.innerHTML=`<section class="loot-source-group ground"><header><b>탐색 중 바닥 줍기</b><small>전투 승리 없이도 드물게 1개씩 습득</small></header>${scavenge.map(l=>itemLine(l,'바닥 습득')).join('')||'<p class="loot-source-empty">습득 가능한 잡동사니 없음</p>'}</section>${groups.map(g=>`<section class="loot-source-group ${g.enemy===site.boss_name?'boss':''}"><header><b>${esc(g.enemy)} 처치 드롭${g.enemy===site.boss_name?' · BOSS':''}</b><small>이 적을 실제로 쓰러뜨렸을 때만 판정</small></header>${g.items.map(l=>itemLine(l,g.enemy+' 처치')).join('')}</section>`).join('')}`;list.dataset.v0131='1';
-    const note=panel.querySelector(':scope > p');if(note)note.innerHTML='※ 전투 패배 시 처치 드롭은 <b>0개</b>입니다. 탐색 중에는 위의 잡동사니만 낮은 확률로 습득합니다. 약탈광·수집광은 처치 드롭 확률에 보너스를 줍니다.';
+    list.innerHTML=`<section class="loot-source-group ground"><header><b>탐색 중 바닥 줍기</b><small>전투 승리 없이도 드물게 1개씩 습득</small></header>${scavenge.map(l=>itemLine(l,'바닥 습득')).join('')||'<p class="loot-source-empty">습득 가능한 잡동사니 없음</p>'}</section>${groups.map(g=>`<section class="loot-source-group ${g.enemy===site.boss_name?'boss':''}"><header><b>${esc(g.enemy)} 처치 드롭${g.enemy===site.boss_name?' · BOSS':''}</b><small>처치 성공 시 드롭 판정</small></header>${g.items.map(l=>itemLine(l,g.enemy+' 처치')).join('')}</section>`).join('')}`;list.dataset.v0131='1';
+    const note=panel.querySelector(':scope > p');if(note)note.innerHTML='※ 탐색 습득과 적별 전리품 확률을 표시합니다. 약탈광·수집광 보너스는 별도로 적용됩니다.';
   }
 
   function enhanceWatch(){
     const sheet=document.querySelector('#modal .battle-report-sheet');if(!sheet)return;const copy=sheet.querySelector('.battle-zone-copy span');
-    if(copy&&!copy.dataset.v0131){copy.dataset.v0131='1';copy.textContent='2초마다 탐색·이동·조우 또는 전투 턴이 진행됩니다. 전투 패배 시 처치 드롭은 없으며, 보스전 전멸 시 해당 챕터 진행도가 0/500으로 초기화됩니다.'}
+    if(copy&&!copy.dataset.v0131){copy.dataset.v0131='1';copy.textContent='2초마다 탐색·이동·조우 또는 전투 턴이 진행됩니다. 보스전 전멸 시 해당 챕터 진행도가 0/500으로 초기화됩니다.'}
     sheet.querySelectorAll('.combat-log-row.explore em').forEach(em=>{em.textContent=em.textContent.replace('전리품','바닥 습득')});
+  }
+
+  function openBattleAfterDeploy(siteId,beforeIds){
+    let tries=0;
+    const tick=()=>{
+      tries++;
+      if(!S){if(tries<100)setTimeout(tick,50);return}
+      const current=(S.expeditions||[]).filter(e=>e.active&&e.site_id===siteId);
+      const next=current.find(e=>!beforeIds.has(e.id))||current[current.length-1];
+      if(next){
+        requestAnimationFrame(()=>watchModal(next.id));
+        return;
+      }
+      if(tries<100)setTimeout(tick,50);
+    };
+    setTimeout(tick,50);
   }
 
   function decorate(){enhanceHuntCards();enhanceDropPanel();enhanceWatch()}
@@ -95,6 +139,13 @@
   document.addEventListener('click',e=>{
     const mission=e.target.closest('[data-action="mission"][data-site], [data-action="mission"][data-id]');if(mission)lastMissionSite=mission.dataset.site||mission.dataset.id||lastMissionSite;
     const watch=e.target.closest('[data-action="watch"][data-id]');if(watch){const ex=(S?.expeditions||[]).find(x=>x.id===watch.dataset.id);if(ex)lastMissionSite=ex.site_id}
+    const deploy=e.target.closest('[data-action="deploy-party"][data-site]');
+    if(deploy){
+      const siteId=deploy.dataset.site;
+      const beforeIds=new Set((S?.expeditions||[]).filter(x=>x.active&&x.site_id===siteId).map(x=>x.id));
+      lastMissionSite=siteId;
+      openBattleAfterDeploy(siteId,beforeIds);
+    }
     schedule();
   },true);
 
