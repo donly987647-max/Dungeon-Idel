@@ -1,0 +1,229 @@
+{
+  "generatedAt": "2026-09-10T14:49:31.835Z",
+  "sources": {
+    "catalog": "928b51bd834e82920be518f164acb8d834218ab474855db3d8afb0366b3ddccb",
+    "runtime": "517c9544c283f6f689e8650f13754e70bfd7a176316efe9935605f5b3a579e94",
+    "roster": "2919174f14943cfff6324e920060ba9fac852e7852259cbef35e17796c2fabc0",
+    "uiStats": "24d68e38515c0d7e95e5b3b68c4e544dad14e2828711772fe26079cb40fa4e01",
+    "uiAssessment": "3642406fe7ec8cbd39ee0ab39ed1af8dbd64ce310282cd263114e7a9537923c5"
+  },
+  "notes": "Synthetic full-health parties. Early=target−8, no gear. Prepared=target, one previous-chapter nonlegendary +3 piece per monster. Best matching evolution path. Does not model progression or economy.",
+  "reports": [
+    {
+      "site": "mountain_village",
+      "boss": "자경단장 베르크",
+      "mode": "early",
+      "level": 1,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp"
+      ],
+      "samples": 30,
+      "winRate": 0.5,
+      "estimate": {
+        "key": "warn",
+        "margin": 0.907484284851871,
+        "rounds": 11.615661336488396
+      },
+      "meanRounds": 13.933333333333334,
+      "meanSurvivors": 1.2,
+      "stalled": 0
+    },
+    {
+      "site": "mountain_village",
+      "boss": "자경단장 베르크",
+      "mode": "prepared",
+      "level": 6,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp"
+      ],
+      "samples": 30,
+      "winRate": 1,
+      "estimate": {
+        "key": "good",
+        "margin": 2.739220846622877,
+        "rounds": 6.258053256435356
+      },
+      "meanRounds": 7.6,
+      "meanSurvivors": 2.933333333333333,
+      "stalled": 0
+    },
+    {
+      "site": "farm_road",
+      "boss": "용병대장 브란",
+      "mode": "early",
+      "level": 6,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp"
+      ],
+      "samples": 30,
+      "winRate": 0.26666666666666666,
+      "estimate": {
+        "key": "warn",
+        "margin": 0.951554261216576,
+        "rounds": 12.917001187894313
+      },
+      "meanRounds": 14.833333333333334,
+      "meanSurvivors": 0.5,
+      "stalled": 0
+    },
+    {
+      "site": "farm_road",
+      "boss": "용병대장 브란",
+      "mode": "prepared",
+      "level": 14,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp"
+      ],
+      "samples": 30,
+      "winRate": 1,
+      "estimate": {
+        "key": "good",
+        "margin": 3.5470608225810194,
+        "rounds": 6.0815353295910315
+      },
+      "meanRounds": 7.133333333333334,
+      "meanSurvivors": 3,
+      "stalled": 0
+    },
+    {
+      "site": "border_outpost",
+      "boss": "왕국 기사단 부관",
+      "mode": "early",
+      "level": 18,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp",
+        "goblin"
+      ],
+      "samples": 30,
+      "winRate": 0.16666666666666666,
+      "estimate": {
+        "key": "danger",
+        "margin": 0.7514092014407826,
+        "rounds": 11.47018615279562
+      },
+      "meanRounds": 13.333333333333334,
+      "meanSurvivors": 0.3333333333333333,
+      "stalled": 0
+    },
+    {
+      "site": "border_outpost",
+      "boss": "왕국 기사단 부관",
+      "mode": "prepared",
+      "level": 26,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp",
+        "goblin"
+      ],
+      "samples": 30,
+      "winRate": 1,
+      "estimate": {
+        "key": "good",
+        "margin": 3.6217936997428555,
+        "rounds": 5.553996691474087
+      },
+      "meanRounds": 6.766666666666667,
+      "meanSurvivors": 3.9,
+      "stalled": 0
+    },
+    {
+      "site": "grand_castle",
+      "boss": "철벽의 성주 발레리",
+      "mode": "early",
+      "level": 31,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp",
+        "goblin"
+      ],
+      "samples": 30,
+      "winRate": 0.6333333333333333,
+      "estimate": {
+        "key": "warn",
+        "margin": 1.0253869877179453,
+        "rounds": 12.473185959280706
+      },
+      "meanRounds": 15.933333333333334,
+      "meanSurvivors": 1.9,
+      "stalled": 0
+    },
+    {
+      "site": "grand_castle",
+      "boss": "철벽의 성주 발레리",
+      "mode": "prepared",
+      "level": 39,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp",
+        "goblin"
+      ],
+      "samples": 30,
+      "winRate": 1,
+      "estimate": {
+        "key": "good",
+        "margin": 2.928254442910201,
+        "rounds": 7.372418553251071
+      },
+      "meanRounds": 9.533333333333333,
+      "meanSurvivors": 3.7666666666666666,
+      "stalled": 0
+    },
+    {
+      "site": "hero_kingdom",
+      "boss": "대표 용사 아우렐",
+      "mode": "early",
+      "level": 47,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp",
+        "goblin"
+      ],
+      "samples": 30,
+      "winRate": 0.4666666666666667,
+      "estimate": {
+        "key": "danger",
+        "margin": 0.7396530890157351,
+        "rounds": 11.707162380433525
+      },
+      "meanRounds": 14.133333333333333,
+      "meanSurvivors": 1.0333333333333334,
+      "stalled": 0
+    },
+    {
+      "site": "hero_kingdom",
+      "boss": "대표 용사 아우렐",
+      "mode": "prepared",
+      "level": 55,
+      "families": [
+        "golem",
+        "mandrake",
+        "imp",
+        "goblin"
+      ],
+      "samples": 30,
+      "winRate": 1,
+      "estimate": {
+        "key": "good",
+        "margin": 1.8282207967705768,
+        "rounds": 7.425139820294527
+      },
+      "meanRounds": 8.833333333333334,
+      "meanSurvivors": 3.8333333333333335,
+      "stalled": 0
+    }
+  ]
+}

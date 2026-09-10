@@ -9,7 +9,7 @@ const mons=['slime','golem','mandrake','goblin'].map((family,i)=>({id:`00000000-
 const site={id:'mountain_village',name:'산골 마을',unlocked:true,unlock_order:1,recommended_power:45,boss_power:90,boss_name:'자경단장 베르크',enemy_names:['산골 청년'],battle_seconds:2,xp_per_kill:18,loot:[{id:'강화석',source:'kill',enemy:'산골 청년',chance:.1,min:1,max:1}],progress:{normal_wins:12,boss_ready:false,boss_cleared:false}};
 let state={account:{username:'검증전용'},player:{device_id:'10000000-0000-4000-8000-000000000001',gold:680,fame:0,quarters_level:2,tavern_level:1,storage_level:1,workshop_level:1,shop_level:1,next_candidate_at:new Date(Date.now()+14400000).toISOString()},monsters:mons,candidates:[],expeditions:[],expeditionMembers:[],sites:[site],inventory:[],equipment:[],itemDefs:[{id:'강화석',kind:'material'}],recipes:[],craftJobs:[],sellJobs:[],stageProgress:[{site_id:site.id,...site.progress}],evolutionDefs:[],skillDefs:[],storageCapacity:40,quartersCapacity:5,craftCapacity:5,shopCapacity:5,facilityCosts:{quarters:900,tavern:1800,storage:1200,workshop:1600,shop:1500}};
 let seq=0,rpcCalls=[],failRestart=false,apiCalls=[];
-const browser=await chromium.launch({headless:true});
+const browser=await chromium.launch({headless:true,channel:process.env.QA_BROWSER_CHANNEL||undefined});
 const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.exposeFunction('__qaRpc',async(name,args)=>{

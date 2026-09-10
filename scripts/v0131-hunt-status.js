@@ -112,7 +112,7 @@
 
   function enhanceWatch(){
     const sheet=document.querySelector('#modal .battle-report-sheet');if(!sheet)return;const copy=sheet.querySelector('.battle-zone-copy span');
-    if(copy&&!copy.dataset.v0131){copy.dataset.v0131='1';copy.textContent='2초마다 탐색·이동·조우 또는 전투 턴이 진행됩니다. 보스전 전멸 시 해당 챕터 진행도가 0/500으로 초기화됩니다.'}
+    if(copy&&!copy.dataset.v0131){copy.dataset.v0131='1';copy.textContent='2초마다 탐색·이동·조우 또는 전투 턴이 진행됩니다. 일반 전투 500회 완료로 보스가 해금되며 이후 조우마다 1.5%로 등장합니다. 해금 상태는 패배해도 유지됩니다.'}
     sheet.querySelectorAll('.combat-log-row.explore em').forEach(em=>{if(em.textContent.includes('전리품'))em.textContent=em.textContent.replace('전리품','바닥 습득')});
   }
 

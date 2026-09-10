@@ -27,7 +27,7 @@ jobs:
         run: python3 tools/attrition_sim_v0141.py
       - name: Install pinned test browser
         run: |
-          npm install --no-save --package-lock=false playwright@1.55.0 >/tmp/pw-install.log 2>&1
+          npm install --no-save --package-lock=false playwright@1.55.1 >/tmp/pw-install.log 2>&1
           npx playwright install --with-deps chromium >>/tmp/pw-install.log 2>&1 || { tail -n 60 /tmp/pw-install.log; exit 1; }
       - name: Exercise locally served source with synthetic data
         run: |

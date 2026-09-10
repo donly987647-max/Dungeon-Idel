@@ -1,0 +1,422 @@
+{
+  "seed": 0.417,
+  "generatedAt": "2026-09-10T14:43:15.453Z",
+  "sources": {
+    "catalog": "928b51bd834e82920be518f164acb8d834218ab474855db3d8afb0366b3ddccb",
+    "runtime": "517c9544c283f6f689e8650f13754e70bfd7a176316efe9935605f5b3a579e94",
+    "economy": "7bc8f32e8ae62baa6f31c32beb42100dfd18819f8d744b79672e392f256280fb"
+  },
+  "notes": "Actual company bootstrap, free healer/imp hires, initial slime, and later quarters upgrade/golem hire paid from sales. No gear or enhancements equipped. Actual carry HP, random encounters, recovery, XP, evolution, collecting, crafting, selling, claims, warehouse capacity and facility payments. Management every 50 normal battles. Job deadlines shift by 2 seconds per action to advance the clock; rewards and statuses use real SQL. No user input delay or offline scheduler simulation.",
+  "reports": [
+    {
+      "site": "mountain_village",
+      "normalWins": 524,
+      "normalLosses": 0,
+      "bossWins": 1,
+      "bossLosses": 0,
+      "actions": 3437,
+      "recalls": 2,
+      "evolutions": 0,
+      "firstBoss": {
+        "normalBattles": 524,
+        "actions": 3428,
+        "levels": [
+          8,
+          10,
+          10,
+          10
+        ]
+      },
+      "gearDrops": 0,
+      "legendaryDrops": 0,
+      "economy": {
+        "goldEarned": 1560,
+        "crafted": 50,
+        "sold": 50,
+        "rawSold": 0,
+        "upgrades": [
+          {
+            "cost": 900,
+            "level": 2,
+            "facility": "quarters",
+            "chapter": 1
+          },
+          {
+            "cost": 1600,
+            "level": 2,
+            "facility": "workshop",
+            "chapter": 3
+          },
+          {
+            "cost": 1200,
+            "level": 2,
+            "facility": "storage",
+            "chapter": 4
+          },
+          {
+            "cost": 4800,
+            "level": 3,
+            "facility": "workshop",
+            "chapter": 5
+          }
+        ],
+        "blockedCollections": 0,
+        "gold": 1340,
+        "workshop": 1,
+        "storage": 1,
+        "inventoryTypes": 10
+      },
+      "levels": [
+        {
+          "family": "golem",
+          "level": 8,
+          "form_id": "golem"
+        },
+        {
+          "family": "imp",
+          "level": 10,
+          "form_id": "imp"
+        },
+        {
+          "family": "mandrake",
+          "level": 10,
+          "form_id": "mandrake"
+        },
+        {
+          "family": "slime",
+          "level": 10,
+          "form_id": "slime"
+        }
+      ],
+      "combatMinutes": 114.6
+    },
+    {
+      "site": "farm_road",
+      "normalWins": 584,
+      "normalLosses": 0,
+      "bossWins": 1,
+      "bossLosses": 0,
+      "actions": 4512,
+      "recalls": 0,
+      "evolutions": 0,
+      "firstBoss": {
+        "normalBattles": 584,
+        "actions": 4500,
+        "levels": [
+          16,
+          18,
+          18,
+          17
+        ]
+      },
+      "gearDrops": 2,
+      "legendaryDrops": 0,
+      "economy": {
+        "goldEarned": 4962,
+        "crafted": 101,
+        "sold": 101,
+        "rawSold": 0,
+        "upgrades": [
+          {
+            "cost": 900,
+            "level": 2,
+            "facility": "quarters",
+            "chapter": 1
+          },
+          {
+            "cost": 1600,
+            "level": 2,
+            "facility": "workshop",
+            "chapter": 3
+          },
+          {
+            "cost": 1200,
+            "level": 2,
+            "facility": "storage",
+            "chapter": 4
+          },
+          {
+            "cost": 4800,
+            "level": 3,
+            "facility": "workshop",
+            "chapter": 5
+          }
+        ],
+        "blockedCollections": 0,
+        "gold": 4742,
+        "workshop": 1,
+        "storage": 1,
+        "inventoryTypes": 21
+      },
+      "levels": [
+        {
+          "family": "golem",
+          "level": 16,
+          "form_id": "golem"
+        },
+        {
+          "family": "imp",
+          "level": 18,
+          "form_id": "imp"
+        },
+        {
+          "family": "mandrake",
+          "level": 18,
+          "form_id": "mandrake"
+        },
+        {
+          "family": "slime",
+          "level": 17,
+          "form_id": "slime"
+        }
+      ],
+      "combatMinutes": 150.4
+    },
+    {
+      "site": "border_outpost",
+      "normalWins": 539,
+      "normalLosses": 0,
+      "bossWins": 1,
+      "bossLosses": 0,
+      "actions": 4482,
+      "recalls": 4,
+      "evolutions": 4,
+      "firstBoss": {
+        "normalBattles": 539,
+        "actions": 4467,
+        "levels": [
+          25,
+          25,
+          25,
+          24
+        ]
+      },
+      "gearDrops": 1,
+      "legendaryDrops": 0,
+      "economy": {
+        "goldEarned": 8019,
+        "crafted": 123,
+        "sold": 123,
+        "rawSold": 0,
+        "upgrades": [
+          {
+            "cost": 900,
+            "level": 2,
+            "facility": "quarters",
+            "chapter": 1
+          },
+          {
+            "cost": 1600,
+            "level": 2,
+            "facility": "workshop",
+            "chapter": 3
+          },
+          {
+            "cost": 1200,
+            "level": 2,
+            "facility": "storage",
+            "chapter": 4
+          },
+          {
+            "cost": 4800,
+            "level": 3,
+            "facility": "workshop",
+            "chapter": 5
+          }
+        ],
+        "blockedCollections": 0,
+        "gold": 6199,
+        "workshop": 2,
+        "storage": 1,
+        "inventoryTypes": 32
+      },
+      "levels": [
+        {
+          "family": "golem",
+          "level": 25,
+          "form_id": "guardian_golem"
+        },
+        {
+          "family": "imp",
+          "level": 26,
+          "form_id": "flame_imp"
+        },
+        {
+          "family": "mandrake",
+          "level": 26,
+          "form_id": "moon_mandrake"
+        },
+        {
+          "family": "slime",
+          "level": 24,
+          "form_id": "dark_slime"
+        }
+      ],
+      "combatMinutes": 149.4
+    },
+    {
+      "site": "grand_castle",
+      "normalWins": 543,
+      "normalLosses": 0,
+      "bossWins": 1,
+      "bossLosses": 0,
+      "actions": 5358,
+      "recalls": 4,
+      "evolutions": 4,
+      "firstBoss": {
+        "normalBattles": 543,
+        "actions": 5335,
+        "levels": [
+          36,
+          36,
+          36,
+          34
+        ]
+      },
+      "gearDrops": 5,
+      "legendaryDrops": 1,
+      "economy": {
+        "goldEarned": 12116,
+        "crafted": 146,
+        "sold": 141,
+        "rawSold": 471,
+        "upgrades": [
+          {
+            "cost": 900,
+            "level": 2,
+            "facility": "quarters",
+            "chapter": 1
+          },
+          {
+            "cost": 1600,
+            "level": 2,
+            "facility": "workshop",
+            "chapter": 3
+          },
+          {
+            "cost": 1200,
+            "level": 2,
+            "facility": "storage",
+            "chapter": 4
+          },
+          {
+            "cost": 4800,
+            "level": 3,
+            "facility": "workshop",
+            "chapter": 5
+          }
+        ],
+        "blockedCollections": 0,
+        "gold": 9096,
+        "workshop": 2,
+        "storage": 2,
+        "inventoryTypes": 44
+      },
+      "levels": [
+        {
+          "family": "golem",
+          "level": 36,
+          "form_id": "aegis_golem"
+        },
+        {
+          "family": "imp",
+          "level": 36,
+          "form_id": "inferno_imp"
+        },
+        {
+          "family": "mandrake",
+          "level": 36,
+          "form_id": "sacred_bloom_mandrake"
+        },
+        {
+          "family": "slime",
+          "level": 34,
+          "form_id": "abyss_slime"
+        }
+      ],
+      "combatMinutes": 178.6
+    },
+    {
+      "site": "hero_kingdom",
+      "normalWins": 595,
+      "normalLosses": 0,
+      "bossWins": 1,
+      "bossLosses": 4,
+      "actions": 6176,
+      "recalls": 11,
+      "evolutions": 0,
+      "firstBoss": {
+        "normalBattles": 506,
+        "actions": 5185,
+        "levels": [
+          48,
+          48,
+          48,
+          45
+        ]
+      },
+      "gearDrops": 3,
+      "legendaryDrops": 0,
+      "economy": {
+        "goldEarned": 17349,
+        "crafted": 183,
+        "sold": 177,
+        "rawSold": 678,
+        "upgrades": [
+          {
+            "cost": 900,
+            "level": 2,
+            "facility": "quarters",
+            "chapter": 1
+          },
+          {
+            "cost": 1600,
+            "level": 2,
+            "facility": "workshop",
+            "chapter": 3
+          },
+          {
+            "cost": 1200,
+            "level": 2,
+            "facility": "storage",
+            "chapter": 4
+          },
+          {
+            "cost": 4800,
+            "level": 3,
+            "facility": "workshop",
+            "chapter": 5
+          }
+        ],
+        "blockedCollections": 0,
+        "gold": 9529,
+        "workshop": 3,
+        "storage": 2,
+        "inventoryTypes": 57
+      },
+      "levels": [
+        {
+          "family": "golem",
+          "level": 49,
+          "form_id": "aegis_golem"
+        },
+        {
+          "family": "imp",
+          "level": 50,
+          "form_id": "inferno_imp"
+        },
+        {
+          "family": "mandrake",
+          "level": 50,
+          "form_id": "sacred_bloom_mandrake"
+        },
+        {
+          "family": "slime",
+          "level": 47,
+          "form_id": "abyss_slime"
+        }
+      ],
+      "combatMinutes": 205.9
+    }
+  ]
+}

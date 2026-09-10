@@ -55,7 +55,7 @@
   }
 
   function patchVisible(){
-    if(typeof S==='undefined'||!S)return;try{updateChrome()}catch(_){}try{updateCandidateTimer()}catch(_){}try{patchHome()}catch(_){}try{patchRoster()}catch(_){}try{patchHuntBase()}catch(_){}try{window.refreshForgeEnhancements?.()}catch(_){}try{window.refreshHuntEnhancements?.()}catch(_){}try{window.refreshExpeditionPartyUI?.()}catch(_){}try{if(watchingExpeditionId)syncWatchPanel()}catch(_){}
+    if(typeof S==='undefined'||!S)return;try{updateChrome()}catch(_){}try{updateCandidateTimer()}catch(_){}try{patchHome()}catch(_){}try{patchRoster()}catch(_){}try{patchHuntBase()}catch(_){}try{window.refreshForgeEnhancements?.()}catch(_){}try{window.refreshHuntEnhancements?.()}catch(_){}try{window.refreshExpeditionPartyUI?.()}catch(_){}try{window.Campaign?.refresh()}catch(_){}try{if(watchingExpeditionId)syncWatchPanel()}catch(_){}
   }
 
   async function pollState(){

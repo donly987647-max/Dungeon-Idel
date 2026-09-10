@@ -1,0 +1,35 @@
+name: Campaign and Economy QA
+on:
+  push:
+    branches: [main, 'codex/gameplay-overhaul']
+    paths: ['app.js', 'index.html', 'scripts/**', 'ui-v015.css', 'assets/art-v015/**', 'content/**', 'supabase/**', 'tools/simulation/**', '.github/workflows/campaign-v015.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --prefix tools/simulation
+      - name: Actual SQL combat, loot and economy checks
+        run: npm test --prefix tools/simulation
+      - name: Install browser
+        working-directory: tools/simulation
+        run: npx playwright install --with-deps chromium
+      - name: Responsive campaign and economy interface
+        env:
+          QA_BROWSER_CHANNEL: chromium
+        run: |
+          python3 -m http.server 8125 --bind 127.0.0.1 >/tmp/campaign-server.log 2>&1 &
+          npm run test:ui --prefix tools/simulation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-${{ github.run_id }}
+          path: tools/simulation/results
+          retention-days: 7

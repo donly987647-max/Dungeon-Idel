@@ -37,8 +37,8 @@
   const gearKey=(mid,slot)=>`${mid}:${slot}`;
   const tierClass=lv=>lv>=20?'mythic':lv>=15?'legend':lv>=10?'master':lv>=4?'danger':'safe';
 
-  function enhancedStats(m){
-    const eq=equippedFor(m.id).map(row=>({row,d:itemDef(row.item_id)})).filter(x=>x.d);
+  function enhancedStats(m,equipmentRows=equippedFor(m.id)){
+    const eq=equipmentRows.map(row=>({row,d:itemDef(row.item_id)})).filter(x=>x.d);
     const sum=k=>eq.reduce((a,x)=>a+Number(x.d[k]||0)*enhanceMul(x.row.enhance_level),0);
     const p=m.personality||'침착',tr=m.trait||'',g=growthMul(m),lv=Math.max(1,Number(m.level||1));
     let st={
@@ -60,6 +60,11 @@
     return st;
   }
 
+  window.forgeStats=enhancedStats;
+  window.forgeCompare=(m,itemId,level=0)=>{
+    const d=itemDef(itemId),rows=equippedFor(m.id);
+    return {before:enhancedStats(m,rows),after:enhancedStats(m,[...rows.filter(r=>r.slot!==d.slot),{monster_id:m.id,item_id:itemId,slot:d.slot,enhance_level:level}])};
+  };
   window.forgePower=m=>{
     const st=enhancedStats(m);
     return Math.floor(Number(m.power_base||0)+(Number(m.level||1)-1)*12+Math.max(0,Number(m.talent||80)-80)*1.2+(st.atk-Number(m.atk_base||18))*.8+(st.def-Number(m.def_base||8))*.55+(st.hp-Number(m.hp_base||120))*.03+utilityPower(m));

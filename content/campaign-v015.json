@@ -1,0 +1,5033 @@
+{
+  "version": 15,
+  "sites": [
+    {
+      "id": "mountain_village",
+      "name": "산골 마을",
+      "description": "민원은 받지 않습니다. 첫 박멸 실적을 쌓고 자경단의 영업 방해를 끝내세요.",
+      "unlock_order": 1,
+      "recommended_power": 45,
+      "battle_seconds": 2,
+      "xp_per_kill": 24,
+      "gold_per_kill": 0,
+      "enemy_names": [
+        "산골 청년",
+        "나무꾼",
+        "마을 사냥꾼",
+        "자경대장"
+      ],
+      "loot": [
+        {
+          "id": "나무 조각",
+          "source": "scavenge",
+          "chance": 0.45,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "거친 천",
+          "source": "scavenge",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "낡은 동전",
+          "source": "scavenge",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "연습용 표적 조각",
+          "source": "kill",
+          "enemy": "산골 청년",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "청년회 회비 봉투",
+          "source": "kill",
+          "enemy": "산골 청년",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "청년회 돌팔매",
+          "source": "kill",
+          "enemy": "산골 청년",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "청년회 출근표",
+          "source": "kill",
+          "enemy": "산골 청년",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "나무꾼 도끼날",
+          "source": "kill",
+          "enemy": "나무꾼",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "송진 묻은 장갑",
+          "source": "kill",
+          "enemy": "나무꾼",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "나무 몽둥이",
+          "source": "kill",
+          "enemy": "나무꾼",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "송진 작업복",
+          "source": "kill",
+          "enemy": "나무꾼",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "마른 약초",
+          "source": "kill",
+          "enemy": "마을 사냥꾼",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "사냥꾼 활시위",
+          "source": "kill",
+          "enemy": "마을 사냥꾼",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "돌부적",
+          "source": "kill",
+          "enemy": "마을 사냥꾼",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "은닉처 단궁",
+          "source": "kill",
+          "enemy": "마을 사냥꾼",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "자경단 완장",
+          "source": "kill",
+          "enemy": "자경대장",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "근무 교대표",
+          "source": "kill",
+          "enemy": "자경대장",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "누더기 조끼",
+          "source": "kill",
+          "enemy": "자경대장",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "정시 순찰 완장",
+          "source": "kill",
+          "enemy": "자경대장",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "연습용 표적 조각",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "청년회 회비 봉투",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "청년회 돌팔매",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "청년회 출근표",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "나무꾼 도끼날",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "송진 묻은 장갑",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "나무 몽둥이",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "송진 작업복",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "마른 약초",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "사냥꾼 활시위",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "돌부적",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "은닉처 단궁",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "자경단 완장",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "근무 교대표",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "누더기 조끼",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "정시 순찰 완장",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "베르크의 퇴근 종",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "민원 반사 조끼",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "*",
+          "chance": 0.07,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "자경단장 베르크",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "boss_name": "자경단장 베르크",
+      "boss_power": 85,
+      "chapter": {
+        "version": 15,
+        "subtitle": "제1장 · 첫 영업은 조용하게",
+        "objective": "3인 박멸조를 꾸려 자경단장 베르크 처치",
+        "level": [
+          1,
+          8
+        ],
+        "bossGate": 500,
+        "bossChance": 0.015,
+        "color": "#9fc778",
+        "art": "village",
+        "search": "빈 장작더미와 버려진 빨랫줄을 수색한다",
+        "move": "민원 접수함을 피해 다음 골목으로 이동한다",
+        "profiles": {
+          "산골 청년": {
+            "role": "민병",
+            "hp": 55,
+            "atk": 14,
+            "def": 3,
+            "spd": 10,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "겁 없는 돌진",
+              "every": 3,
+              "multiplier": 1.35
+            },
+            "counter": "방어형 몬스터가 선두를 맡으면 안정적입니다.",
+            "art": "villager"
+          },
+          "나무꾼": {
+            "role": "투사",
+            "hp": 78,
+            "atk": 19,
+            "def": 4,
+            "spd": 7,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "장작 패기",
+              "every": 3,
+              "multiplier": 1.65
+            },
+            "counter": "세 번째 공격 전에 빠르게 처치하세요.",
+            "art": "lumberjack"
+          },
+          "마을 사냥꾼": {
+            "role": "궁수",
+            "hp": 48,
+            "atk": 17,
+            "def": 2,
+            "spd": 15,
+            "crit": 0.1,
+            "evade": 0.08,
+            "skill": {
+              "name": "급소 조준",
+              "every": 3,
+              "multiplier": 1.3,
+              "ignore": 0.35
+            },
+            "counter": "빠른 몬스터와 회복 담당을 함께 배치하세요.",
+            "art": "hunter"
+          },
+          "자경대장": {
+            "role": "전사",
+            "hp": 91,
+            "atk": 15,
+            "def": 10,
+            "spd": 8,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "방패 밀치기",
+              "every": 4,
+              "multiplier": 1.3
+            },
+            "counter": "임프의 마법은 높은 방어를 뚫기 좋습니다.",
+            "art": "guard"
+          },
+          "자경단장 베르크": {
+            "role": "보스",
+            "hp": 320,
+            "atk": 39,
+            "def": 9,
+            "spd": 10,
+            "crit": 0.07,
+            "evade": 0.03,
+            "skill": {
+              "name": "야간 순찰 총력전",
+              "every": 3,
+              "multiplier": 1.65
+            },
+            "counter": "Lv.6 전후 3인 파티와 방어 장비를 권장합니다. 세 번째 공격이 강합니다.",
+            "art": "village-boss"
+          }
+        },
+        "dropRules": {
+          "contentVersion": 15,
+          "bossUnlockBattles": 500,
+          "bossEncounterChance": 0.015,
+          "normalEquipmentChance": 0.004,
+          "bossEquipmentChance": 0.025,
+          "bossLegendaryChance": 0.015,
+          "groundWeights": [
+            0.45,
+            0.35,
+            0.2
+          ],
+          "groundSearchChance": 0.1,
+          "groundLootChance": 0.18
+        }
+      }
+    },
+    {
+      "id": "farm_road",
+      "name": "변두리 소국",
+      "description": "밭 몇 개와 용병대로 버티는 변두리 소국. 왕실의 보급품을 회사 매출로 전환하고 첫 해외 지점을 여세요.",
+      "unlock_order": 2,
+      "recommended_power": 100,
+      "battle_seconds": 2,
+      "xp_per_kill": 48,
+      "gold_per_kill": 0,
+      "enemy_names": [
+        "농부",
+        "짐꾼",
+        "행상인 호위",
+        "마을 경비병"
+      ],
+      "loot": [
+        {
+          "id": "마대 천",
+          "source": "scavenge",
+          "chance": 0.45,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "가죽 조각",
+          "source": "scavenge",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "은화 주머니",
+          "source": "scavenge",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "곡물 배급표",
+          "source": "kill",
+          "enemy": "농부",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "날 선 낫 조각",
+          "source": "kill",
+          "enemy": "농부",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "농부의 낫",
+          "source": "kill",
+          "enemy": "농부",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "소국 수확 장갑",
+          "source": "kill",
+          "enemy": "농부",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "운송장 묶음",
+          "source": "kill",
+          "enemy": "짐꾼",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "짐꾼 어깨끈",
+          "source": "kill",
+          "enemy": "짐꾼",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "과적 운반대",
+          "source": "kill",
+          "enemy": "짐꾼",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "짐꾼 운송 망치",
+          "source": "kill",
+          "enemy": "짐꾼",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "호위 계약서",
+          "source": "kill",
+          "enemy": "행상인 호위",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "경량 화살촉",
+          "source": "kill",
+          "enemy": "행상인 호위",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "사냥꾼 부적",
+          "source": "kill",
+          "enemy": "행상인 호위",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "선불 호위 외투",
+          "source": "kill",
+          "enemy": "행상인 호위",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "경비대 호루라기",
+          "source": "kill",
+          "enemy": "마을 경비병",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "가죽 방패끈",
+          "source": "kill",
+          "enemy": "마을 경비병",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "가죽 조끼",
+          "source": "kill",
+          "enemy": "마을 경비병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "검문 면제 목걸이",
+          "source": "kill",
+          "enemy": "마을 경비병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "곡물 배급표",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "날 선 낫 조각",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "농부의 낫",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "소국 수확 장갑",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "운송장 묶음",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "짐꾼 어깨끈",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "과적 운반대",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "짐꾼 운송 망치",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "호위 계약서",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "경량 화살촉",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "사냥꾼 부적",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "선불 호위 외투",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "경비대 호루라기",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "가죽 방패끈",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "가죽 조끼",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "검문 면제 목걸이",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "브란의 계약 파기검",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "무기한 호위 계약서",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "*",
+          "chance": 0.085,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "용병대장 브란",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "boss_name": "용병대장 브란",
+      "boss_power": 165,
+      "chapter": {
+        "version": 15,
+        "subtitle": "제2장 · 소국 시장 진출",
+        "objective": "속도와 생존력을 갖추고 용병대장 브란 처치",
+        "level": [
+          8,
+          18
+        ],
+        "bossGate": 500,
+        "bossChance": 0.015,
+        "color": "#e4bb67",
+        "art": "farm",
+        "search": "뒤집힌 마차와 수확이 끝난 밭을 수색한다",
+        "move": "보급 마차의 바퀴 자국을 따라 이동한다",
+        "profiles": {
+          "농부": {
+            "role": "투사",
+            "hp": 120,
+            "atk": 30,
+            "def": 8,
+            "spd": 9,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "풍년 베기",
+              "every": 3,
+              "multiplier": 1.5
+            },
+            "counter": "회복 담당을 넣어 연속 전투를 버티세요.",
+            "art": "farmer"
+          },
+          "짐꾼": {
+            "role": "수호자",
+            "hp": 185,
+            "atk": 23,
+            "def": 14,
+            "spd": 6,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "긴급 간식",
+              "every": 4,
+              "multiplier": 1,
+              "heal": 0.12
+            },
+            "counter": "자가 회복 전에 공격을 집중하세요.",
+            "art": "porter"
+          },
+          "행상인 호위": {
+            "role": "궁수",
+            "hp": 99,
+            "atk": 35,
+            "def": 7,
+            "spd": 18,
+            "crit": 0.13,
+            "evade": 0.08,
+            "skill": {
+              "name": "선금 일격",
+              "every": 2,
+              "multiplier": 1.3,
+              "ignore": 0.25
+            },
+            "counter": "도발 탱커로 약한 직원을 보호하세요.",
+            "art": "escort"
+          },
+          "마을 경비병": {
+            "role": "전사",
+            "hp": 155,
+            "atk": 28,
+            "def": 18,
+            "spd": 10,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "검문 강화",
+              "every": 4,
+              "multiplier": 1.5
+            },
+            "counter": "마법 공격으로 단단한 방어를 공략하세요.",
+            "art": "guard"
+          },
+          "용병대장 브란": {
+            "role": "보스",
+            "hp": 510,
+            "atk": 49,
+            "def": 19,
+            "spd": 16,
+            "crit": 0.1,
+            "evade": 0.06,
+            "skill": {
+              "name": "위약금 청구",
+              "every": 3,
+              "multiplier": 1.65,
+              "ignore": 0.2
+            },
+            "counter": "탱커·회복 담당을 포함한 Lv.14 전후 파티를 권장합니다.",
+            "art": "mercenary-boss"
+          }
+        },
+        "dropRules": {
+          "contentVersion": 15,
+          "bossUnlockBattles": 500,
+          "bossEncounterChance": 0.015,
+          "normalEquipmentChance": 0.004,
+          "bossEquipmentChance": 0.025,
+          "bossLegendaryChance": 0.015,
+          "groundWeights": [
+            0.45,
+            0.35,
+            0.2
+          ],
+          "groundSearchChance": 0.1,
+          "groundLootChance": 0.18
+        }
+      }
+    },
+    {
+      "id": "border_outpost",
+      "name": "작은 왕국",
+      "description": "작지만 정규군과 기사단을 갖춘 왕국. 전직한 직원들과 왕실의 단단한 방어선을 돌파하세요.",
+      "unlock_order": 3,
+      "recommended_power": 190,
+      "battle_seconds": 2,
+      "xp_per_kill": 86,
+      "gold_per_kill": 0,
+      "enemy_names": [
+        "신참 병사",
+        "석궁병",
+        "초소 경비대",
+        "하급 기사"
+      ],
+      "loot": [
+        {
+          "id": "철편",
+          "source": "scavenge",
+          "chance": 0.45,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕국 동전",
+          "source": "scavenge",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "단단한 가죽",
+          "source": "scavenge",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "신병 인식표",
+          "source": "kill",
+          "enemy": "신참 병사",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "훈련 일지",
+          "source": "kill",
+          "enemy": "신참 병사",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "병사의 검",
+          "source": "kill",
+          "enemy": "신참 병사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "신병 생존 조끼",
+          "source": "kill",
+          "enemy": "신참 병사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "석궁 걸쇠",
+          "source": "kill",
+          "enemy": "석궁병",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "관통 볼트",
+          "source": "kill",
+          "enemy": "석궁병",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "초소 관통 석궁",
+          "source": "kill",
+          "enemy": "석궁병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "탄도 계산 렌즈",
+          "source": "kill",
+          "enemy": "석궁병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "초소 열쇠",
+          "source": "kill",
+          "enemy": "초소 경비대",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "규율 수첩",
+          "source": "kill",
+          "enemy": "초소 경비대",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "경비병 철갑",
+          "source": "kill",
+          "enemy": "초소 경비대",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "경계 근무 철퇴",
+          "source": "kill",
+          "enemy": "초소 경비대",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕국 문양 조각",
+          "source": "kill",
+          "enemy": "하급 기사",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "기사 서약문",
+          "source": "kill",
+          "enemy": "하급 기사",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕국 훈장",
+          "source": "kill",
+          "enemy": "하급 기사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "기사 서약 갑옷",
+          "source": "kill",
+          "enemy": "하급 기사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "신병 인식표",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "훈련 일지",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "병사의 검",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "신병 생존 조끼",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "석궁 걸쇠",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "관통 볼트",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "초소 관통 석궁",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "탄도 계산 렌즈",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "초소 열쇠",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "규율 수첩",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "경비병 철갑",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "경계 근무 철퇴",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕국 문양 조각",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "기사 서약문",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "왕국 훈장",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "기사 서약 갑옷",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "부관의 결재 대검",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "반려 불가 철갑",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "*",
+          "chance": 0.1,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "왕국 기사단 부관",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "boss_name": "왕국 기사단 부관",
+      "boss_power": 290,
+      "chapter": {
+        "version": 15,
+        "subtitle": "제3장 · 왕실 납품 계약",
+        "objective": "첫 전직과 장비 강화 후 기사단 부관 처치",
+        "level": [
+          18,
+          30
+        ],
+        "bossGate": 500,
+        "bossChance": 0.015,
+        "color": "#94afcb",
+        "art": "outpost",
+        "search": "무너진 석벽과 폐기된 군수 상자를 수색한다",
+        "move": "초소 순찰 교대의 빈틈을 따라 전진한다",
+        "profiles": {
+          "신참 병사": {
+            "role": "전사",
+            "hp": 210,
+            "atk": 45,
+            "def": 21,
+            "spd": 12,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "배운 대로 찌르기",
+              "every": 3,
+              "multiplier": 1.5
+            },
+            "counter": "방어 장비 강화와 전직을 먼저 확인하세요.",
+            "art": "soldier"
+          },
+          "석궁병": {
+            "role": "궁수",
+            "hp": 161,
+            "atk": 54,
+            "def": 13,
+            "spd": 17,
+            "crit": 0.12,
+            "evade": 0.05,
+            "skill": {
+              "name": "관통 사격",
+              "every": 3,
+              "multiplier": 1.5,
+              "ignore": 0.5
+            },
+            "counter": "관통 공격은 방어만으로 막기 어렵습니다. 체력도 필요합니다.",
+            "art": "crossbow"
+          },
+          "초소 경비대": {
+            "role": "수호자",
+            "hp": 295,
+            "atk": 39,
+            "def": 36,
+            "spd": 8,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "규율 집행",
+              "every": 4,
+              "multiplier": 1.5
+            },
+            "counter": "마법 계열 전직 몬스터를 활용하세요.",
+            "art": "guard"
+          },
+          "하급 기사": {
+            "role": "기사",
+            "hp": 245,
+            "atk": 48,
+            "def": 27,
+            "spd": 13,
+            "crit": 0.08,
+            "evade": 0.04,
+            "skill": {
+              "name": "명예의 결투",
+              "every": 3,
+              "multiplier": 1.4,
+              "heal": 0.06
+            },
+            "counter": "방어·회복·공격 역할을 나누는 편이 유리합니다.",
+            "art": "knight"
+          },
+          "왕국 기사단 부관": {
+            "role": "보스",
+            "hp": 980,
+            "atk": 86,
+            "def": 34,
+            "spd": 14,
+            "crit": 0.1,
+            "evade": 0.04,
+            "skill": {
+              "name": "왕국식 인사평가",
+              "every": 4,
+              "multiplier": 1.9,
+              "ignore": 0.25
+            },
+            "counter": "Lv.26 전후, 전직한 탱커와 회복 담당을 권장합니다.",
+            "art": "outpost-boss"
+          }
+        },
+        "dropRules": {
+          "contentVersion": 15,
+          "bossUnlockBattles": 500,
+          "bossEncounterChance": 0.015,
+          "normalEquipmentChance": 0.004,
+          "bossEquipmentChance": 0.025,
+          "bossLegendaryChance": 0.015,
+          "groundWeights": [
+            0.45,
+            0.35,
+            0.2
+          ],
+          "groundSearchChance": 0.1,
+          "groundLootChance": 0.18
+        }
+      }
+    },
+    {
+      "id": "grand_castle",
+      "name": "거대한 성",
+      "description": "겹겹의 성벽 안에서 근위대와 궁정 치유사가 버팁니다. 두 번째 전직과 역할 분담으로 철벽의 성주를 끌어내세요.",
+      "unlock_order": 4,
+      "recommended_power": 340,
+      "battle_seconds": 2,
+      "xp_per_kill": 168,
+      "gold_per_kill": 0,
+      "enemy_names": [
+        "성문 방패병",
+        "왕성 징세관",
+        "궁정 치유사",
+        "성채 근위대"
+      ],
+      "loot": [
+        {
+          "id": "빛바랜 벽지",
+          "source": "scavenge",
+          "chance": 0.45,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "깨진 샹들리에",
+          "source": "scavenge",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성벽 석재 조각",
+          "source": "scavenge",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성문 열쇠고리",
+          "source": "kill",
+          "enemy": "성문 방패병",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "방패병 견갑",
+          "source": "kill",
+          "enemy": "성문 방패병",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성문 돌파 장화",
+          "source": "kill",
+          "enemy": "성문 방패병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "공성 근무 철퇴",
+          "source": "kill",
+          "enemy": "성문 방패병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕성 세금 고지서",
+          "source": "kill",
+          "enemy": "왕성 징세관",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "징세 인장",
+          "source": "kill",
+          "enemy": "왕성 징세관",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "미납금 징수봉",
+          "source": "kill",
+          "enemy": "왕성 징세관",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "납세 거부 인장",
+          "source": "kill",
+          "enemy": "왕성 징세관",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "궁정 성가 악보",
+          "source": "kill",
+          "enemy": "궁정 치유사",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "치유 향낭",
+          "source": "kill",
+          "enemy": "궁정 치유사",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "야근 면제 성가집",
+          "source": "kill",
+          "enemy": "궁정 치유사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "궁정 응급 외투",
+          "source": "kill",
+          "enemy": "궁정 치유사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성채 임명장",
+          "source": "kill",
+          "enemy": "성채 근위대",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "은빛 방패편",
+          "source": "kill",
+          "enemy": "성채 근위대",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "봉인된 은빛 방패",
+          "source": "kill",
+          "enemy": "성채 근위대",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성채 반격 창",
+          "source": "kill",
+          "enemy": "성채 근위대",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성문 열쇠고리",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "방패병 견갑",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "성문 돌파 장화",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "공성 근무 철퇴",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕성 세금 고지서",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "징세 인장",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "미납금 징수봉",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "납세 거부 인장",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "궁정 성가 악보",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "치유 향낭",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "야근 면제 성가집",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "궁정 응급 외투",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성채 임명장",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "은빛 방패편",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "봉인된 은빛 방패",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성채 반격 창",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "발레리의 성문 절단검",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "기적의 유급 휴가증",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "*",
+          "chance": 0.115,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "철벽의 성주 발레리",
+          "chance": 0.55,
+          "min": 1,
+          "max": 3
+        }
+      ],
+      "boss_name": "철벽의 성주 발레리",
+      "boss_power": 490,
+      "chapter": {
+        "version": 15,
+        "subtitle": "제4장 · 철벽 지점 인수",
+        "objective": "성채의 방어와 회복을 돌파하고 성주 발레리 처치",
+        "level": [
+          30,
+          45
+        ],
+        "bossGate": 500,
+        "bossChance": 0.015,
+        "color": "#aaacd1",
+        "art": "castle",
+        "search": "무너진 외성의 장식과 버려진 회랑을 수색한다",
+        "move": "겹겹의 성문을 지나 대연회장으로 전진한다",
+        "profiles": {
+          "성문 방패병": {
+            "role": "수호자",
+            "hp": 440,
+            "atk": 68,
+            "def": 50,
+            "spd": 9,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "성문 봉쇄",
+              "every": 4,
+              "multiplier": 1.45
+            },
+            "counter": "방어를 무시하는 스킬을 활용하세요.",
+            "art": "castle-guard"
+          },
+          "왕성 징세관": {
+            "role": "주술사",
+            "hp": 310,
+            "atk": 82,
+            "def": 30,
+            "spd": 15,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "미납 가산세",
+              "every": 3,
+              "multiplier": 1.45,
+              "ignore": 0.6
+            },
+            "counter": "체력과 피해 감소를 갖춘 탱커가 유리합니다.",
+            "art": "tax-mage"
+          },
+          "궁정 치유사": {
+            "role": "치유사",
+            "hp": 350,
+            "atk": 61,
+            "def": 29,
+            "spd": 18,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "회복 성가",
+              "every": 3,
+              "multiplier": 0.8,
+              "heal": 0.16
+            },
+            "counter": "공격수가 부족하면 전투가 길어집니다.",
+            "art": "court-healer"
+          },
+          "성채 근위대": {
+            "role": "기사",
+            "hp": 480,
+            "atk": 76,
+            "def": 47,
+            "spd": 12,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "근위대 집행",
+              "every": 4,
+              "multiplier": 1.7,
+              "ignore": 0.2
+            },
+            "counter": "전직과 강화로 긴 전투에 대비하세요.",
+            "art": "castle-knight"
+          },
+          "철벽의 성주 발레리": {
+            "role": "보스",
+            "hp": 1800,
+            "atk": 145,
+            "def": 50,
+            "spd": 20,
+            "crit": 0.12,
+            "evade": 0.06,
+            "skill": {
+              "name": "성주의 비상 동원령",
+              "every": 3,
+              "multiplier": 1.5,
+              "heal": 0.05,
+              "ignore": 0.3
+            },
+            "counter": "Lv.39 전후 4인 파티와 두 번째 전직을 권장합니다. 주기적인 회복과 강공격을 돌파하세요.",
+            "art": "castle-boss"
+          }
+        },
+        "dropRules": {
+          "contentVersion": 15,
+          "bossUnlockBattles": 500,
+          "bossEncounterChance": 0.015,
+          "normalEquipmentChance": 0.004,
+          "bossEquipmentChance": 0.025,
+          "bossLegendaryChance": 0.015,
+          "groundWeights": [
+            0.45,
+            0.35,
+            0.2
+          ],
+          "groundSearchChance": 0.1,
+          "groundLootChance": 0.18
+        }
+      }
+    },
+    {
+      "id": "hero_kingdom",
+      "name": "용사 왕국",
+      "description": "용사가 왕이 되고 영웅들이 군대를 이룬 최종 경쟁사. 용사 왕국을 박멸하고 회사의 새 간판을 거세요.",
+      "unlock_order": 5,
+      "recommended_power": 530,
+      "battle_seconds": 2,
+      "xp_per_kill": 270,
+      "gold_per_kill": 0,
+      "enemy_names": [
+        "왕실 근위병",
+        "궁정 마도사",
+        "왕실 재무관",
+        "은퇴 예정 용사"
+      ],
+      "loot": [
+        {
+          "id": "황동 장식편",
+          "source": "scavenge",
+          "chance": 0.45,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "비단 자투리",
+          "source": "scavenge",
+          "chance": 0.35,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "깨진 왕관 보석",
+          "source": "scavenge",
+          "chance": 0.2,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "근위대 휘장",
+          "source": "kill",
+          "enemy": "왕실 근위병",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "왕실 갑옷 나사",
+          "source": "kill",
+          "enemy": "왕실 근위병",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "근위대 정장 갑옷",
+          "source": "kill",
+          "enemy": "왕실 근위병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕실 정리해고 도끼",
+          "source": "kill",
+          "enemy": "왕실 근위병",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "궁정 주문서",
+          "source": "kill",
+          "enemy": "궁정 마도사",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "정제 마력 결정",
+          "source": "kill",
+          "enemy": "궁정 마도사",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "궁정 비품 지팡이",
+          "source": "kill",
+          "enemy": "궁정 마도사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "마력 감사 렌즈",
+          "source": "kill",
+          "enemy": "궁정 마도사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕실 채권",
+          "source": "kill",
+          "enemy": "왕실 재무관",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "금고 암호판",
+          "source": "kill",
+          "enemy": "왕실 재무관",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "성과급 압류 인장",
+          "source": "kill",
+          "enemy": "왕실 재무관",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕실 예산 방어복",
+          "source": "kill",
+          "enemy": "왕실 재무관",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "용사 경력 증명서",
+          "source": "kill",
+          "enemy": "은퇴 예정 용사",
+          "chance": 0.55,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "금빛 검집 장식",
+          "source": "kill",
+          "enemy": "은퇴 예정 용사",
+          "chance": 0.18,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "명예퇴직 대검",
+          "source": "kill",
+          "enemy": "은퇴 예정 용사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "용사 연금 수령증",
+          "source": "kill",
+          "enemy": "은퇴 예정 용사",
+          "chance": 0.002,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "근위대 휘장",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "왕실 갑옷 나사",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "근위대 정장 갑옷",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕실 정리해고 도끼",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "궁정 주문서",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "정제 마력 결정",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "궁정 비품 지팡이",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "마력 감사 렌즈",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕실 채권",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "금고 암호판",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "성과급 압류 인장",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "왕실 예산 방어복",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "용사 경력 증명서",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.44000000000000006,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "금빛 검집 장식",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.144,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "id": "명예퇴직 대검",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "용사 연금 수령증",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.025,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "아우렐의 사직서",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "용사 박멸 대표이사 인장",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.0075,
+          "min": 1,
+          "max": 1,
+          "pool": "legendary"
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "*",
+          "chance": 0.13,
+          "min": 1,
+          "max": 1
+        },
+        {
+          "id": "강화석",
+          "source": "kill",
+          "enemy": "대표 용사 아우렐",
+          "chance": 0.55,
+          "min": 1,
+          "max": 4
+        }
+      ],
+      "boss_name": "대표 용사 아우렐",
+      "boss_power": 750,
+      "chapter": {
+        "version": 15,
+        "subtitle": "제5장 · 인류 구원 사업 종료",
+        "objective": "최종 파티를 완성해 대표 용사 아우렐 처치",
+        "level": [
+          45,
+          60
+        ],
+        "bossGate": 500,
+        "bossChance": 0.015,
+        "color": "#df998c",
+        "art": "royal",
+        "search": "폐쇄된 상가와 황금 대로의 잔해를 수색한다",
+        "move": "왕도 본사 결재선을 따라 최상층으로 전진한다",
+        "profiles": {
+          "왕실 근위병": {
+            "role": "수호자",
+            "hp": 720,
+            "atk": 105,
+            "def": 69,
+            "spd": 15,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "왕실 경호",
+              "every": 4,
+              "multiplier": 1.6
+            },
+            "counter": "마법과 관통 공격을 파티에 포함하세요.",
+            "art": "royal-guard"
+          },
+          "궁정 마도사": {
+            "role": "마법사",
+            "hp": 465,
+            "atk": 127,
+            "def": 38,
+            "spd": 23,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "왕실 화염 결재",
+              "every": 3,
+              "multiplier": 1.65,
+              "ignore": 0.75
+            },
+            "counter": "방어력보다 체력과 피해 감소가 중요합니다.",
+            "art": "court-mage"
+          },
+          "왕실 재무관": {
+            "role": "치유사",
+            "hp": 540,
+            "atk": 91,
+            "def": 43,
+            "spd": 20,
+            "crit": 0.05,
+            "evade": 0.03,
+            "skill": {
+              "name": "예비비 충당",
+              "every": 3,
+              "multiplier": 1,
+              "heal": 0.14
+            },
+            "counter": "높은 지속 화력으로 회복량을 넘겨야 합니다.",
+            "art": "treasurer"
+          },
+          "은퇴 예정 용사": {
+            "role": "용사",
+            "hp": 630,
+            "atk": 116,
+            "def": 56,
+            "spd": 25,
+            "crit": 0.16,
+            "evade": 0.09,
+            "skill": {
+              "name": "마지막 야근",
+              "every": 3,
+              "multiplier": 1.7
+            },
+            "counter": "모든 역할이 필요합니다. 부상자를 재편하고 출정하세요.",
+            "art": "veteran-hero"
+          },
+          "대표 용사 아우렐": {
+            "role": "보스",
+            "hp": 2500,
+            "atk": 205,
+            "def": 66,
+            "spd": 26,
+            "crit": 0.14,
+            "evade": 0.07,
+            "skill": {
+              "name": "세계를 구하는 일격",
+              "every": 4,
+              "multiplier": 2,
+              "ignore": 0.4,
+              "heal": 0.04
+            },
+            "counter": "Lv.55 이상, 강화된 탱커·지원·공격 파티를 권장합니다. 네 번째 공격을 경계하세요.",
+            "art": "royal-boss"
+          }
+        },
+        "dropRules": {
+          "contentVersion": 15,
+          "bossUnlockBattles": 500,
+          "bossEncounterChance": 0.015,
+          "normalEquipmentChance": 0.004,
+          "bossEquipmentChance": 0.025,
+          "bossLegendaryChance": 0.015,
+          "groundWeights": [
+            0.45,
+            0.35,
+            0.2
+          ],
+          "groundSearchChance": 0.1,
+          "groundLootChance": 0.18
+        }
+      }
+    }
+  ],
+  "items": [
+    {
+      "hp": 0,
+      "id": "가죽 조각",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 6,
+      "description": "변두리 소국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 15,
+      "art_key": "ground-farm-1",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 45,
+      "id": "가죽 조끼",
+      "atk": 0,
+      "def": 11,
+      "spd": 0,
+      "crit": 0,
+      "kind": "equipment",
+      "slot": "armor",
+      "evade": 0,
+      "rarity": "고급",
+      "sale_gold": 0,
+      "description": "방어력에 비해 복리후생은 부족했습니다.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "armor-farm-3",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "마을 경비병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "강화석",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 0,
+      "description": "적 처치에서만 나오는 장비 강화 재료. 대장간에서 사용합니다.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "enhancement-stone",
+      "acquisition": {
+        "source": "kill",
+        "enemy": "*"
+      }
+    },
+    {
+      "hp": 0,
+      "id": "거친 천",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 3,
+      "description": "산골 마을의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 8,
+      "art_key": "ground-village-1",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 80,
+      "id": "경비병 철갑",
+      "atk": 0,
+      "def": 20,
+      "spd": -1,
+      "crit": 0,
+      "kind": "equipment",
+      "slot": "armor",
+      "evade": 0,
+      "rarity": "희귀",
+      "sale_gold": 0,
+      "description": "무겁지만 초과 근무에 강합니다.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "armor-outpost-2",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "초소 경비대",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "나무 몽둥이",
+      "atk": 10,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "equipment",
+      "slot": "weapon",
+      "evade": 0,
+      "rarity": "고급",
+      "sale_gold": 0,
+      "description": "인사 대신 몽둥이를 건넵니다.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "weapon-village-1",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "나무꾼",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "나무 조각",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 2,
+      "description": "산골 마을의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 5,
+      "art_key": "ground-village-0",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 0,
+      "id": "낡은 동전",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 4,
+      "description": "산골 마을의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 10,
+      "art_key": "ground-village-2",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 0,
+      "id": "농부의 낫",
+      "atk": 16,
+      "def": 0,
+      "spd": 0,
+      "crit": 0.025,
+      "kind": "equipment",
+      "slot": "weapon",
+      "evade": 0,
+      "rarity": "고급",
+      "sale_gold": 0,
+      "description": "수확 대상 변경 신청 완료.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "weapon-farm-0",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "농부",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 30,
+      "id": "누더기 조끼",
+      "atk": 0,
+      "def": 6,
+      "spd": 0,
+      "crit": 0,
+      "kind": "equipment",
+      "slot": "armor",
+      "evade": 0,
+      "rarity": "고급",
+      "sale_gold": 0,
+      "description": "법정 근무 시간만큼 오래 버티는 조끼.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "armor-village-3",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "자경대장",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "단단한 가죽",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 10,
+      "description": "작은 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 25,
+      "art_key": "ground-outpost-2",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 20,
+      "id": "돌부적",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "equipment",
+      "slot": "accessory",
+      "evade": 0.025,
+      "rarity": "고급",
+      "sale_gold": 0,
+      "description": "사냥꾼의 행운은 이제 회사 자산입니다.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "accessory-village-2",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "마을 사냥꾼",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "마대 천",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 5,
+      "description": "변두리 소국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 13,
+      "art_key": "ground-farm-0",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 0,
+      "id": "마른 약초",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 3,
+      "description": "마을 사냥꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "human_damage": 0,
+      "sell_seconds": 8,
+      "art_key": "material-village-2-0",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "마을 사냥꾼",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "hp": 0,
+      "id": "병사의 검",
+      "atk": 24,
+      "def": 3,
+      "spd": 0,
+      "crit": 0,
+      "kind": "equipment",
+      "slot": "weapon",
+      "evade": 0,
+      "rarity": "희귀",
+      "sale_gold": 0,
+      "description": "훈련보다 실전에 더 빨리 투입됐습니다.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "weapon-outpost-0",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "신참 병사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "사냥꾼 부적",
+      "atk": 0,
+      "def": 0,
+      "spd": 3,
+      "crit": 0.04,
+      "kind": "equipment",
+      "slot": "accessory",
+      "evade": 0,
+      "rarity": "고급",
+      "sale_gold": 0,
+      "description": "호위 계약의 작은 글씨는 읽지 마세요.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "accessory-farm-2",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "행상인 호위",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "왕국 동전",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 9,
+      "description": "작은 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 23,
+      "art_key": "ground-outpost-1",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 0,
+      "id": "왕국 문양 조각",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 11,
+      "description": "하급 기사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "human_damage": 0,
+      "sell_seconds": 28,
+      "art_key": "material-outpost-3-0",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "하급 기사",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "hp": 35,
+      "id": "왕국 훈장",
+      "atk": 7,
+      "def": 7,
+      "spd": 0,
+      "crit": 0,
+      "kind": "equipment",
+      "slot": "accessory",
+      "evade": 0,
+      "rarity": "희귀",
+      "sale_gold": 0,
+      "description": "회사 게시판의 이달의 사원 칸에 걸어두세요.",
+      "human_damage": 0,
+      "sell_seconds": 0,
+      "art_key": "accessory-outpost-3",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "하급 기사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "hp": 0,
+      "id": "은화 주머니",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 7,
+      "description": "변두리 소국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 18,
+      "art_key": "ground-farm-2",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "scavenge"
+      }
+    },
+    {
+      "hp": 0,
+      "id": "철편",
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "kind": "material",
+      "slot": null,
+      "evade": 0,
+      "rarity": "재료",
+      "sale_gold": 8,
+      "description": "작은 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "human_damage": 0,
+      "sell_seconds": 20,
+      "art_key": "ground-outpost-0",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "scavenge"
+      }
+    },
+    {
+      "id": "연습용 표적 조각",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 3,
+      "sell_seconds": 8,
+      "description": "산골 청년 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-village-0-0",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "산골 청년",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "id": "청년회 회비 봉투",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 5,
+      "sell_seconds": 13,
+      "description": "산골 청년 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-village-0-1",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "산골 청년",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "id": "청년회 돌팔매",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "고급",
+      "hp": 0,
+      "atk": 7,
+      "def": 0,
+      "spd": 1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "회비 미납자를 찾을 때 쓰던 투석구.",
+      "art_key": "weapon-village-0",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "산골 청년",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "청년회 출근표",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "고급",
+      "hp": 18,
+      "atk": 0,
+      "def": 0,
+      "spd": 1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "첫 출근부터 인간 대신 몬스터가 찍혔습니다.",
+      "art_key": "accessory-village-0",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "산골 청년",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "나무꾼 도끼날",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 3,
+      "sell_seconds": 8,
+      "description": "나무꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-village-1-0",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "나무꾼",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "id": "송진 묻은 장갑",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 5,
+      "sell_seconds": 13,
+      "description": "나무꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-village-1-1",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "나무꾼",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "id": "송진 작업복",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "고급",
+      "hp": 30,
+      "atk": 0,
+      "def": 5,
+      "spd": 1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "끈끈한 동료애를 물리적으로 표현합니다.",
+      "art_key": "armor-village-1",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "나무꾼",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "사냥꾼 활시위",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 5,
+      "sell_seconds": 13,
+      "description": "마을 사냥꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-village-2-1",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "마을 사냥꾼",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "id": "은닉처 단궁",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "고급",
+      "hp": 0,
+      "atk": 8,
+      "def": 0,
+      "spd": 0,
+      "crit": 0.04,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "발견한 시점부터 회사 비품입니다.",
+      "art_key": "weapon-village-2",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "마을 사냥꾼",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "자경단 완장",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 3,
+      "sell_seconds": 8,
+      "description": "자경대장 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-village-3-0",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "자경대장",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "id": "근무 교대표",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 5,
+      "sell_seconds": 13,
+      "description": "자경대장 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-village-3-1",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "자경대장",
+        "boss": "자경단장 베르크"
+      }
+    },
+    {
+      "id": "정시 순찰 완장",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "고급",
+      "hp": 20,
+      "atk": 0,
+      "def": 4,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "순찰 종료 시간만큼은 철저하게 지켰습니다.",
+      "art_key": "accessory-village-3",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "자경대장",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "베르크의 퇴근 종",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "전설",
+      "hp": 25,
+      "atk": 18,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "종이 울리면 인간의 근무가 끝납니다.",
+      "art_key": "weapon-village-legendary",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "자경단장 베르크",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "민원 반사 조끼",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "전설",
+      "hp": 65,
+      "atk": 0,
+      "def": 12,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "접수된 민원은 담당 용사에게 반송됩니다.",
+      "art_key": "armor-village-legendary",
+      "acquisition": {
+        "site": "mountain_village",
+        "source": "kill",
+        "enemy": "자경단장 베르크",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "곡물 배급표",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 7,
+      "sell_seconds": 18,
+      "description": "농부 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-0-0",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "농부",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "날 선 낫 조각",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 9,
+      "sell_seconds": 23,
+      "description": "농부 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-0-1",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "농부",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "소국 수확 장갑",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "고급",
+      "hp": 0,
+      "atk": 6,
+      "def": 0,
+      "spd": 2,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "경작지는 작아도 악행의 꿈은 큽니다.",
+      "art_key": "accessory-farm-0",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "농부",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "운송장 묶음",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 7,
+      "sell_seconds": 18,
+      "description": "짐꾼 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-1-0",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "짐꾼",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "짐꾼 어깨끈",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 9,
+      "sell_seconds": 23,
+      "description": "짐꾼 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-1-1",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "짐꾼",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "과적 운반대",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "고급",
+      "hp": 75,
+      "atk": 0,
+      "def": 8,
+      "spd": -1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "적재 한도보다 생존 의지가 중요합니다.",
+      "art_key": "armor-farm-1",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "짐꾼",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "짐꾼 운송 망치",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "고급",
+      "hp": 0,
+      "atk": 18,
+      "def": 0,
+      "spd": -1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "파손 주의 표시는 상대에게 붙입니다.",
+      "art_key": "weapon-farm-1",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "짐꾼",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "호위 계약서",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 7,
+      "sell_seconds": 18,
+      "description": "행상인 호위 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-2-0",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "행상인 호위",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "경량 화살촉",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 9,
+      "sell_seconds": 23,
+      "description": "행상인 호위 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-2-1",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "행상인 호위",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "선불 호위 외투",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "고급",
+      "hp": 35,
+      "atk": 0,
+      "def": 8,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0.03,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "대금은 먼저, 방어는 나중에.",
+      "art_key": "armor-farm-2",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "행상인 호위",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "경비대 호루라기",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 7,
+      "sell_seconds": 18,
+      "description": "마을 경비병 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-3-0",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "마을 경비병",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "가죽 방패끈",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 9,
+      "sell_seconds": 23,
+      "description": "마을 경비병 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-farm-3-1",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "마을 경비병",
+        "boss": "용병대장 브란"
+      }
+    },
+    {
+      "id": "검문 면제 목걸이",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "고급",
+      "hp": 45,
+      "atk": 0,
+      "def": 5,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "뇌물은 회사 경비로 처리해 드립니다.",
+      "art_key": "accessory-farm-3",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "마을 경비병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "브란의 계약 파기검",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "전설",
+      "hp": 0,
+      "atk": 29,
+      "def": 0,
+      "spd": 0,
+      "crit": 0.045,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "위약금은 인간 측에서 부담합니다.",
+      "art_key": "weapon-farm-legendary",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "용병대장 브란",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "무기한 호위 계약서",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "전설",
+      "hp": 65,
+      "atk": 0,
+      "def": 8,
+      "spd": 2,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "계약 기간: 몬스터가 원할 때까지.",
+      "art_key": "accessory-farm-legendary",
+      "acquisition": {
+        "site": "farm_road",
+        "source": "kill",
+        "enemy": "용병대장 브란",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "신병 인식표",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 11,
+      "sell_seconds": 28,
+      "description": "신참 병사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-outpost-0-0",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "신참 병사",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "id": "훈련 일지",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 13,
+      "sell_seconds": 33,
+      "description": "신참 병사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-outpost-0-1",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "신참 병사",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "id": "신병 생존 조끼",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "희귀",
+      "hp": 95,
+      "atk": 0,
+      "def": 14,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "훈련소보다 회사의 안전 교육이 낫습니다.",
+      "art_key": "armor-outpost-0",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "신참 병사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "석궁 걸쇠",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 11,
+      "sell_seconds": 28,
+      "description": "석궁병 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-outpost-1-0",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "석궁병",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "id": "관통 볼트",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 13,
+      "sell_seconds": 33,
+      "description": "석궁병 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-outpost-1-1",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "석궁병",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "id": "초소 관통 석궁",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "희귀",
+      "hp": 0,
+      "atk": 27,
+      "def": 0,
+      "spd": -1,
+      "crit": 0.045,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "왕국 보안 체계를 관통하는 회사 비품.",
+      "art_key": "weapon-outpost-1",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "석궁병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "탄도 계산 렌즈",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "희귀",
+      "hp": 0,
+      "atk": 7,
+      "def": 0,
+      "spd": 0,
+      "crit": 0.055,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "인간의 급소를 결재선처럼 정확히 찾습니다.",
+      "art_key": "accessory-outpost-1",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "석궁병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "초소 열쇠",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 11,
+      "sell_seconds": 28,
+      "description": "초소 경비대 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-outpost-2-0",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "초소 경비대",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "id": "규율 수첩",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 13,
+      "sell_seconds": 33,
+      "description": "초소 경비대 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-outpost-2-1",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "초소 경비대",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "id": "경계 근무 철퇴",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "희귀",
+      "hp": 0,
+      "atk": 25,
+      "def": 5,
+      "spd": -1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "밤샘 근무의 무게가 실렸습니다.",
+      "art_key": "weapon-outpost-2",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "초소 경비대",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "기사 서약문",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 13,
+      "sell_seconds": 33,
+      "description": "하급 기사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-outpost-3-1",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "하급 기사",
+        "boss": "왕국 기사단 부관"
+      }
+    },
+    {
+      "id": "기사 서약 갑옷",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "희귀",
+      "hp": 55,
+      "atk": 0,
+      "def": 22,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "서약의 수혜자가 회사로 바뀌었습니다.",
+      "art_key": "armor-outpost-3",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "하급 기사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "부관의 결재 대검",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "전설",
+      "hp": 0,
+      "atk": 43,
+      "def": 7,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "한 번 휘두르면 결재선이 짧아집니다.",
+      "art_key": "weapon-outpost-legendary",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "왕국 기사단 부관",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "반려 불가 철갑",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "전설",
+      "hp": 135,
+      "atk": 0,
+      "def": 29,
+      "spd": -1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "인간의 공격 요청을 반려하는 데 특화됐습니다.",
+      "art_key": "armor-outpost-legendary",
+      "acquisition": {
+        "site": "border_outpost",
+        "source": "kill",
+        "enemy": "왕국 기사단 부관",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "빛바랜 벽지",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 11,
+      "sell_seconds": 28,
+      "description": "거대한 성의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "art_key": "ground-castle-0",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "scavenge"
+      }
+    },
+    {
+      "id": "깨진 샹들리에",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 12,
+      "sell_seconds": 30,
+      "description": "거대한 성의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "art_key": "ground-castle-1",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "scavenge"
+      }
+    },
+    {
+      "id": "성벽 석재 조각",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 13,
+      "sell_seconds": 33,
+      "description": "거대한 성의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "art_key": "ground-castle-2",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "scavenge"
+      }
+    },
+    {
+      "id": "성문 열쇠고리",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 15,
+      "sell_seconds": 38,
+      "description": "성문 방패병 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-0-0",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성문 방패병",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "방패병 견갑",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 17,
+      "sell_seconds": 43,
+      "description": "성문 방패병 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-0-1",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성문 방패병",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "성문 돌파 장화",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "희귀",
+      "hp": 125,
+      "atk": 0,
+      "def": 27,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0.02,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "노크는 생략해도 됩니다.",
+      "art_key": "armor-castle-0",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성문 방패병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "공성 근무 철퇴",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "희귀",
+      "hp": 0,
+      "atk": 44,
+      "def": 6,
+      "spd": -1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "거대한 성에도 퇴근 시간은 있습니다.",
+      "art_key": "weapon-castle-0",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성문 방패병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "왕성 세금 고지서",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 15,
+      "sell_seconds": 38,
+      "description": "왕성 징세관 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-1-0",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "왕성 징세관",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "징세 인장",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 17,
+      "sell_seconds": 43,
+      "description": "왕성 징세관 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-1-1",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "왕성 징세관",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "미납금 징수봉",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "희귀",
+      "hp": 0,
+      "atk": 41,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0.04,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "세금 대상은 전 인류입니다.",
+      "art_key": "weapon-castle-1",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "왕성 징세관",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "납세 거부 인장",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "희귀",
+      "hp": 0,
+      "atk": 11,
+      "def": 10,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "해당 세금은 몬스터에게 적용되지 않습니다.",
+      "art_key": "accessory-castle-1",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "왕성 징세관",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "궁정 성가 악보",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 15,
+      "sell_seconds": 38,
+      "description": "궁정 치유사 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-2-0",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "궁정 치유사",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "치유 향낭",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 17,
+      "sell_seconds": 43,
+      "description": "궁정 치유사 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-2-1",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "궁정 치유사",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "야근 면제 성가집",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "희귀",
+      "hp": 110,
+      "atk": 0,
+      "def": 9,
+      "spd": 3,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "읽는다고 야근이 사라지지는 않습니다.",
+      "art_key": "accessory-castle-2",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "궁정 치유사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "궁정 응급 외투",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "희귀",
+      "hp": 165,
+      "atk": 0,
+      "def": 23,
+      "spd": 2,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "치료 담당의 생존도 복지입니다.",
+      "art_key": "armor-castle-2",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "궁정 치유사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "성채 임명장",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 15,
+      "sell_seconds": 38,
+      "description": "성채 근위대 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-3-0",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성채 근위대",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "은빛 방패편",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 17,
+      "sell_seconds": 43,
+      "description": "성채 근위대 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-castle-3-1",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성채 근위대",
+        "boss": "철벽의 성주 발레리"
+      }
+    },
+    {
+      "id": "봉인된 은빛 방패",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "희귀",
+      "hp": 90,
+      "atk": 0,
+      "def": 35,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "해제 비밀번호: 정시 퇴근.",
+      "art_key": "armor-castle-3",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성채 근위대",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "성채 반격 창",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "희귀",
+      "hp": 55,
+      "atk": 39,
+      "def": 0,
+      "spd": 0,
+      "crit": 0.04,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "서류 접수 창구와는 관계없습니다.",
+      "art_key": "weapon-castle-3",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "성채 근위대",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "발레리의 성문 절단검",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "전설",
+      "hp": 0,
+      "atk": 65,
+      "def": 8,
+      "spd": 0,
+      "crit": 0.035,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "성문 인수 절차를 단축하는 도구입니다.",
+      "art_key": "weapon-castle-legendary",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "철벽의 성주 발레리",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "기적의 유급 휴가증",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "전설",
+      "hp": 180,
+      "atk": 0,
+      "def": 14,
+      "spd": 4,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "서류상으로만 존재하던 전설의 복지.",
+      "art_key": "accessory-castle-legendary",
+      "acquisition": {
+        "site": "grand_castle",
+        "source": "kill",
+        "enemy": "철벽의 성주 발레리",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "황동 장식편",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 14,
+      "sell_seconds": 35,
+      "description": "용사 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "art_key": "ground-royal-0",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "scavenge"
+      }
+    },
+    {
+      "id": "비단 자투리",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 15,
+      "sell_seconds": 38,
+      "description": "용사 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "art_key": "ground-royal-1",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "scavenge"
+      }
+    },
+    {
+      "id": "깨진 왕관 보석",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 16,
+      "sell_seconds": 40,
+      "description": "용사 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.",
+      "art_key": "ground-royal-2",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "scavenge"
+      }
+    },
+    {
+      "id": "근위대 휘장",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 19,
+      "sell_seconds": 48,
+      "description": "왕실 근위병 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-0-0",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 근위병",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "왕실 갑옷 나사",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 21,
+      "sell_seconds": 53,
+      "description": "왕실 근위병 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-0-1",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 근위병",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "근위대 정장 갑옷",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "영웅",
+      "hp": 190,
+      "atk": 0,
+      "def": 44,
+      "spd": -1,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "드레스 코드는 중갑입니다.",
+      "art_key": "armor-royal-0",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 근위병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "왕실 정리해고 도끼",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "영웅",
+      "hp": 0,
+      "atk": 63,
+      "def": 9,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "인사권을 물리적으로 행사합니다.",
+      "art_key": "weapon-royal-0",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 근위병",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "궁정 주문서",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 19,
+      "sell_seconds": 48,
+      "description": "궁정 마도사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-1-0",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "궁정 마도사",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "정제 마력 결정",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 21,
+      "sell_seconds": 53,
+      "description": "궁정 마도사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-1-1",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "궁정 마도사",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "궁정 비품 지팡이",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "영웅",
+      "hp": 0,
+      "atk": 60,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0.07,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "반출 금지 도장은 이미 찍혀 있습니다.",
+      "art_key": "weapon-royal-1",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "궁정 마도사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "마력 감사 렌즈",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "영웅",
+      "hp": 0,
+      "atk": 17,
+      "def": 0,
+      "spd": 4,
+      "crit": 0.035,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "불필요한 영웅 마력을 찾아냅니다.",
+      "art_key": "accessory-royal-1",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "궁정 마도사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "왕실 채권",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 19,
+      "sell_seconds": 48,
+      "description": "왕실 재무관 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-2-0",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 재무관",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "금고 암호판",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 21,
+      "sell_seconds": 53,
+      "description": "왕실 재무관 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-2-1",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 재무관",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "성과급 압류 인장",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "영웅",
+      "hp": 115,
+      "atk": 16,
+      "def": 12,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "올해의 성과급은 본사가 회수합니다.",
+      "art_key": "accessory-royal-2",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 재무관",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "왕실 예산 방어복",
+      "kind": "equipment",
+      "slot": "armor",
+      "rarity": "영웅",
+      "hp": 170,
+      "atk": 0,
+      "def": 47,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "어떤 공격에도 예산 삭감만큼은 견딥니다.",
+      "art_key": "armor-royal-2",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "왕실 재무관",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "용사 경력 증명서",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 19,
+      "sell_seconds": 48,
+      "description": "은퇴 예정 용사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-3-0",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "은퇴 예정 용사",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "금빛 검집 장식",
+      "kind": "material",
+      "slot": null,
+      "rarity": "재료",
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 21,
+      "sell_seconds": 53,
+      "description": "은퇴 예정 용사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.",
+      "art_key": "material-royal-3-1",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "은퇴 예정 용사",
+        "boss": "대표 용사 아우렐"
+      }
+    },
+    {
+      "id": "명예퇴직 대검",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "영웅",
+      "hp": 0,
+      "atk": 67,
+      "def": 0,
+      "spd": -1,
+      "crit": 0.06,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "퇴직 사유: 몬스터 측 경영상 판단.",
+      "art_key": "weapon-royal-3",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "은퇴 예정 용사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "용사 연금 수령증",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "영웅",
+      "hp": 155,
+      "atk": 0,
+      "def": 15,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0.035,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "연금 수령인은 회사로 변경됐습니다.",
+      "art_key": "accessory-royal-3",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "은퇴 예정 용사",
+        "bossExclusive": false
+      }
+    },
+    {
+      "id": "아우렐의 사직서",
+      "kind": "equipment",
+      "slot": "weapon",
+      "rarity": "전설",
+      "hp": 0,
+      "atk": 91,
+      "def": 0,
+      "spd": 0,
+      "crit": 0.04,
+      "evade": 0,
+      "human_damage": 0.09,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "세계를 구할 사람이 퇴사했습니다.",
+      "art_key": "weapon-royal-legendary",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "대표 용사 아우렐",
+        "bossExclusive": true
+      }
+    },
+    {
+      "id": "용사 박멸 대표이사 인장",
+      "kind": "equipment",
+      "slot": "accessory",
+      "rarity": "전설",
+      "hp": 240,
+      "atk": 22,
+      "def": 18,
+      "spd": 0,
+      "crit": 0,
+      "evade": 0,
+      "human_damage": 0,
+      "sale_gold": 0,
+      "sell_seconds": 0,
+      "description": "도장 한 번에 세계의 고용 관계가 바뀝니다.",
+      "art_key": "accessory-royal-legendary",
+      "acquisition": {
+        "site": "hero_kingdom",
+        "source": "kill",
+        "enemy": "대표 용사 아우렐",
+        "bossExclusive": true
+      }
+    }
+  ],
+  "recipes": [
+    {
+      "id": "scrap_bundle",
+      "inputs": {
+        "거친 천": 2,
+        "나무 조각": 2,
+        "낡은 동전": 4
+      },
+      "sale_gold": 30,
+      "output_qty": 1,
+      "sort_order": 10,
+      "output_item": "잡화 꾸러미",
+      "sell_seconds": 75,
+      "craft_seconds": 90,
+      "workshop_level": 1
+    },
+    {
+      "id": "herb_pack",
+      "inputs": {
+        "거친 천": 1,
+        "마른 약초": 3
+      },
+      "sale_gold": 42,
+      "output_qty": 1,
+      "sort_order": 20,
+      "output_item": "약초 포대",
+      "sell_seconds": 105,
+      "craft_seconds": 126,
+      "workshop_level": 1
+    },
+    {
+      "id": "leather_kit",
+      "inputs": {
+        "마대 천": 3,
+        "가죽 조각": 4
+      },
+      "sale_gold": 80,
+      "output_qty": 1,
+      "sort_order": 30,
+      "output_item": "가죽 공구집",
+      "sell_seconds": 200,
+      "craft_seconds": 240,
+      "workshop_level": 1
+    },
+    {
+      "id": "supply_bag",
+      "inputs": {
+        "거친 천": 4,
+        "가죽 조각": 6,
+        "은화 주머니": 1
+      },
+      "sale_gold": 110,
+      "output_qty": 1,
+      "sort_order": 40,
+      "output_item": "보급용 가방",
+      "sell_seconds": 275,
+      "craft_seconds": 330,
+      "workshop_level": 1
+    },
+    {
+      "id": "iron_toolset",
+      "inputs": {
+        "철편": 5,
+        "단단한 가죽": 2
+      },
+      "sale_gold": 180,
+      "output_qty": 1,
+      "sort_order": 50,
+      "output_item": "철제 공구세트",
+      "sell_seconds": 450,
+      "craft_seconds": 540,
+      "workshop_level": 1
+    },
+    {
+      "id": "fake_medal",
+      "inputs": {
+        "철편": 3,
+        "왕국 동전": 1,
+        "왕국 문양 조각": 4
+      },
+      "sale_gold": 260,
+      "output_qty": 1,
+      "sort_order": 60,
+      "output_item": "왕국 위조 훈장",
+      "sell_seconds": 650,
+      "craft_seconds": 780,
+      "workshop_level": 1
+    },
+    {
+      "id": "campaign_mountain_village_1",
+      "output_item": "산골 판촉 꾸러미",
+      "output_qty": 1,
+      "inputs": {
+        "나무 조각": 2,
+        "연습용 표적 조각": 3,
+        "청년회 회비 봉투": 1
+      },
+      "sale_gold": 32,
+      "craft_seconds": 87,
+      "sell_seconds": 77,
+      "workshop_level": 1,
+      "sort_order": 110
+    },
+    {
+      "id": "campaign_mountain_village_2",
+      "output_item": "야외 근무 키트",
+      "output_qty": 1,
+      "inputs": {
+        "거친 천": 2,
+        "나무꾼 도끼날": 3,
+        "송진 묻은 장갑": 1
+      },
+      "sale_gold": 36,
+      "craft_seconds": 98,
+      "sell_seconds": 87,
+      "workshop_level": 1,
+      "sort_order": 111
+    },
+    {
+      "id": "campaign_mountain_village_3",
+      "output_item": "자경단 위장 세트",
+      "output_qty": 1,
+      "inputs": {
+        "낡은 동전": 2,
+        "마른 약초": 3,
+        "사냥꾼 활시위": 1
+      },
+      "sale_gold": 40,
+      "craft_seconds": 108,
+      "sell_seconds": 96,
+      "workshop_level": 1,
+      "sort_order": 112
+    },
+    {
+      "id": "campaign_mountain_village_4",
+      "output_item": "민원 파쇄 묶음",
+      "output_qty": 1,
+      "inputs": {
+        "나무 조각": 2,
+        "자경단 완장": 3,
+        "근무 교대표": 1
+      },
+      "sale_gold": 32,
+      "craft_seconds": 87,
+      "sell_seconds": 77,
+      "workshop_level": 1,
+      "sort_order": 113
+    },
+    {
+      "id": "campaign_farm_road_1",
+      "output_item": "수확물 위탁 상자",
+      "output_qty": 1,
+      "inputs": {
+        "마대 천": 2,
+        "곡물 배급표": 3,
+        "날 선 낫 조각": 1
+      },
+      "sale_gold": 72,
+      "craft_seconds": 182,
+      "sell_seconds": 159,
+      "workshop_level": 1,
+      "sort_order": 120
+    },
+    {
+      "id": "campaign_farm_road_2",
+      "output_item": "용병 복지 꾸러미",
+      "output_qty": 1,
+      "inputs": {
+        "가죽 조각": 2,
+        "운송장 묶음": 3,
+        "짐꾼 어깨끈": 1
+      },
+      "sale_gold": 76,
+      "craft_seconds": 192,
+      "sell_seconds": 168,
+      "workshop_level": 1,
+      "sort_order": 121
+    },
+    {
+      "id": "campaign_farm_road_3",
+      "output_item": "보급품 재포장 세트",
+      "output_qty": 1,
+      "inputs": {
+        "은화 주머니": 2,
+        "호위 계약서": 3,
+        "경량 화살촉": 1
+      },
+      "sale_gold": 79,
+      "craft_seconds": 200,
+      "sell_seconds": 174,
+      "workshop_level": 1,
+      "sort_order": 122
+    },
+    {
+      "id": "campaign_farm_road_4",
+      "output_item": "위장 호위 증명서",
+      "output_qty": 1,
+      "inputs": {
+        "마대 천": 2,
+        "경비대 호루라기": 3,
+        "가죽 방패끈": 1
+      },
+      "sale_gold": 72,
+      "craft_seconds": 182,
+      "sell_seconds": 159,
+      "workshop_level": 1,
+      "sort_order": 123
+    },
+    {
+      "id": "campaign_border_outpost_1",
+      "output_item": "변경 수리 공구함",
+      "output_qty": 1,
+      "inputs": {
+        "철편": 2,
+        "신병 인식표": 3,
+        "훈련 일지": 1
+      },
+      "sale_gold": 112,
+      "craft_seconds": 263,
+      "sell_seconds": 224,
+      "workshop_level": 2,
+      "sort_order": 130
+    },
+    {
+      "id": "campaign_border_outpost_2",
+      "output_item": "왕국 출장 증빙",
+      "output_qty": 1,
+      "inputs": {
+        "왕국 동전": 2,
+        "석궁 걸쇠": 3,
+        "관통 볼트": 1
+      },
+      "sale_gold": 115,
+      "craft_seconds": 270,
+      "sell_seconds": 230,
+      "workshop_level": 2,
+      "sort_order": 131
+    },
+    {
+      "id": "campaign_border_outpost_3",
+      "output_item": "초소 보안 꾸러미",
+      "output_qty": 1,
+      "inputs": {
+        "단단한 가죽": 2,
+        "초소 열쇠": 3,
+        "규율 수첩": 1
+      },
+      "sale_gold": 119,
+      "craft_seconds": 279,
+      "sell_seconds": 238,
+      "workshop_level": 2,
+      "sort_order": 132
+    },
+    {
+      "id": "campaign_border_outpost_4",
+      "output_item": "기사단 모조 기념품",
+      "output_qty": 1,
+      "inputs": {
+        "철편": 2,
+        "왕국 문양 조각": 3,
+        "기사 서약문": 1
+      },
+      "sale_gold": 112,
+      "craft_seconds": 263,
+      "sell_seconds": 224,
+      "workshop_level": 2,
+      "sort_order": 133
+    },
+    {
+      "id": "campaign_grand_castle_1",
+      "output_item": "왕성 인테리어 꾸러미",
+      "output_qty": 1,
+      "inputs": {
+        "빛바랜 벽지": 2,
+        "성문 열쇠고리": 3,
+        "방패병 견갑": 1
+      },
+      "sale_gold": 151,
+      "craft_seconds": 327,
+      "sell_seconds": 272,
+      "workshop_level": 2,
+      "sort_order": 140
+    },
+    {
+      "id": "campaign_grand_castle_2",
+      "output_item": "세무 대응 증빙 세트",
+      "output_qty": 1,
+      "inputs": {
+        "깨진 샹들리에": 2,
+        "왕성 세금 고지서": 3,
+        "징세 인장": 1
+      },
+      "sale_gold": 155,
+      "craft_seconds": 335,
+      "sell_seconds": 279,
+      "workshop_level": 2,
+      "sort_order": 141
+    },
+    {
+      "id": "campaign_grand_castle_3",
+      "output_item": "궁정 복지 꾸러미",
+      "output_qty": 1,
+      "inputs": {
+        "성벽 석재 조각": 2,
+        "궁정 성가 악보": 3,
+        "치유 향낭": 1
+      },
+      "sale_gold": 158,
+      "craft_seconds": 342,
+      "sell_seconds": 285,
+      "workshop_level": 2,
+      "sort_order": 142
+    },
+    {
+      "id": "campaign_grand_castle_4",
+      "output_item": "성채 위장 근무복",
+      "output_qty": 1,
+      "inputs": {
+        "빛바랜 벽지": 2,
+        "성채 임명장": 3,
+        "은빛 방패편": 1
+      },
+      "sale_gold": 151,
+      "craft_seconds": 327,
+      "sell_seconds": 272,
+      "workshop_level": 2,
+      "sort_order": 143
+    },
+    {
+      "id": "campaign_hero_kingdom_1",
+      "output_item": "왕도 고급 판촉물",
+      "output_qty": 1,
+      "inputs": {
+        "황동 장식편": 2,
+        "근위대 휘장": 3,
+        "왕실 갑옷 나사": 1
+      },
+      "sale_gold": 191,
+      "craft_seconds": 379,
+      "sell_seconds": 306,
+      "workshop_level": 3,
+      "sort_order": 150
+    },
+    {
+      "id": "campaign_hero_kingdom_2",
+      "output_item": "왕실 정비 세트",
+      "output_qty": 1,
+      "inputs": {
+        "비단 자투리": 2,
+        "궁정 주문서": 3,
+        "정제 마력 결정": 1
+      },
+      "sale_gold": 194,
+      "craft_seconds": 385,
+      "sell_seconds": 311,
+      "workshop_level": 3,
+      "sort_order": 151
+    },
+    {
+      "id": "campaign_hero_kingdom_3",
+      "output_item": "궁정 결재 대행 서류",
+      "output_qty": 1,
+      "inputs": {
+        "깨진 왕관 보석": 2,
+        "왕실 채권": 3,
+        "금고 암호판": 1
+      },
+      "sale_gold": 198,
+      "craft_seconds": 393,
+      "sell_seconds": 317,
+      "workshop_level": 3,
+      "sort_order": 152
+    },
+    {
+      "id": "campaign_hero_kingdom_4",
+      "output_item": "용사 명예퇴직 패키지",
+      "output_qty": 1,
+      "inputs": {
+        "황동 장식편": 2,
+        "용사 경력 증명서": 3,
+        "금빛 검집 장식": 1
+      },
+      "sale_gold": 191,
+      "craft_seconds": 379,
+      "sell_seconds": 306,
+      "workshop_level": 3,
+      "sort_order": 153
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "hero-extermination-simulation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node campaign.test.mjs && node economy.test.mjs",
+    "test:ui": "node campaign-ui.test.mjs",
+    "probe:progression": "node progression.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "playwright": "1.55.1"
+  }
+}

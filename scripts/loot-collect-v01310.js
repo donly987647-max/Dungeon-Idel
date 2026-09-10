@@ -44,6 +44,7 @@ collectSiteLoot = async function(siteId){
     collectionResultModal(siteId,{durationSeconds,xp,loot});
   }catch(err){
     try{await api('state');render()}catch(_){}
+    if(String(err.message).includes('storage_full'))warehouseModal();
     toast(errorKo(err.message));
   }finally{
     busy=false;

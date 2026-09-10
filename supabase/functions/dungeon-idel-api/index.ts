@@ -18,7 +18,7 @@ const queueCapacity=(lv:number)=>Math.max(5,Number(lv||1)+4)
 const capacities=(pl:any)=>({facilityCosts:{quarters:facilityCost('quarters',pl.quarters_level||1),tavern:facilityCost('tavern',pl.tavern_level||1),storage:facilityCost('storage',pl.storage_level||1),workshop:facilityCost('workshop',pl.workshop_level||1),shop:facilityCost('shop',pl.shop_level||1)},storageCapacity:storageCapacity(pl.storage_level||1),quartersCapacity:quartersCapacity(pl.quarters_level||1),craftCapacity:queueCapacity(pl.workshop_level||1),shopCapacity:queueCapacity(pl.shop_level||1)})
 
 async function getAuthUser(req:Request){const h=req.headers.get('authorization')||'';const token=h.toLowerCase().startsWith('bearer ')?h.slice(7).trim():'';if(!token)return null;const {data,error}=await db.auth.getUser(token);if(error||!data.user)return null;return data.user}
-async function ensurePlayer(player:string){const {data:existing,error}=await db.from('game_players').select('device_id').eq('device_id',player).maybeSingle();if(error)throw error;if(existing)return;const {error:pe}=await db.from('game_players').insert({device_id:player,device_secret_hash:null});if(pe)throw pe;const {error:me}=await db.from('game_monsters').insert({player_id:player,name:'슬라임',family:'slime',form_id:'slime',evolution_tier:0,level:1,xp:0,talent:88,trait:'질긴 가죽',power_base:48,hp_base:145,atk_base:15,def_base:11,spd_base:9,crit_base:0.04,evade_base:0.03,personality:'침착',growth_grade:'B'});if(me)throw me}
+async function ensurePlayer(player:string){const {error}=await db.rpc('game_initialize_company',{p_player:player});if(error)throw error}
 
 async function state(player:string){
   await db.rpc('game_tick_all')
@@ -89,7 +89,7 @@ Deno.serve(async(req:Request)=>{
   if(action==='state')return json({ok:true,state:await state(player)})
   if(action==='state-lite')return json({ok:true,state:await stateLite(player)})
   if(action==='deploy'){
-   const siteId=String(body.siteId||''),idsRaw=Array.isArray(body.monsterIds)?body.monsterIds:[body.monsterId],monsterIds=[...new Set(idsRaw.map((x:any)=>String(x||'')).filter(Boolean))];if(monsterIds.length<1||monsterIds.length>4)return json({error:'party_size'},400)
+   const siteId=String(body.siteId||''),idsRaw=Array.isArray(body.monsterIds)?body.monsterIds:[body.monsterId],monsterIds=[...new Set<string>(idsRaw.map((x:any)=>String(x||'')).filter(Boolean))];if(monsterIds.length<1||monsterIds.length>4)return json({error:'party_size'},400)
    const [{data:site},{data:mons},{data:activeExps}]=await Promise.all([db.from('game_hunt_sites').select('*').eq('id',siteId).maybeSingle(),db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).in('id',monsterIds),db.from('game_expeditions').select('id').eq('player_id',player).eq('active',true)])
    if(!site||!mons||mons.length!==monsterIds.length)return json({error:'invalid_target'},400)
    if(site.unlock_order>1){const {data:prev}=await db.from('game_hunt_sites').select('id').eq('unlock_order',site.unlock_order-1).maybeSingle();const {data:pr}=prev?await db.from('game_stage_progress').select('boss_cleared').eq('player_id',player).eq('site_id',prev.id).maybeSingle():{data:null} as any;if(!pr?.boss_cleared)return json({error:'locked'},400)}
@@ -99,7 +99,7 @@ Deno.serve(async(req:Request)=>{
   }
   if(action==='recall'){const id=String(body.expeditionId||'');const {error}=await db.from('game_expeditions').update({active:false,phase:'복귀',updated_at:new Date().toISOString()}).eq('id',id).eq('player_id',player);if(error)throw error;return json({ok:true,state:await state(player)})}
   if(action==='collect'){const id=body.expeditionId?String(body.expeditionId):null;const {data,error}=await db.rpc('game_collect_loot',{p_player:player,p_expedition:id});if(error){if(String(error.message||'').includes('storage_full'))return json({error:'storage_full'},400);throw error}return json({ok:true,collected:data||{},state:await state(player)})}
-  if(action==='craft'){const qty=Math.max(1,Math.floor(Number(body.quantity||1)));const {error}=await db.rpc('game_start_craft',{p_player:player,p_recipe:String(body.recipeId||''),p_qty:qty});if(error){const msg=String(error.message||'');for(const code of ['recipe_missing','craft_queue_full','material_short','quantity_invalid'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,state:await state(player)})}
+  if(action==='craft'){const qty=Math.max(1,Math.floor(Number(body.quantity||1)));const {error}=await db.rpc('game_start_craft',{p_player:player,p_recipe:String(body.recipeId||''),p_qty:qty});if(error){const msg=String(error.message||'');for(const code of ['recipe_missing','craft_queue_full','material_short','quantity_invalid','workshop_level'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,state:await state(player)})}
   if(action==='sell'){const qty=Math.max(1,Math.floor(Number(body.quantity||1)));const {error}=await db.rpc('game_start_sell',{p_player:player,p_item:String(body.itemId||''),p_qty:qty});if(error){const msg=String(error.message||'');for(const code of ['not_sellable','sell_queue_full','item_missing','quantity_invalid'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,state:await state(player)})}
   if(action==='equip'){const monsterId=String(body.monsterId||''),itemId=String(body.itemId||'');const {error}=await db.rpc('game_equip_item',{p_player:player,p_monster:monsterId,p_item:itemId});if(error){const msg=String(error.message||'');if(msg.includes('not_equipment'))return json({error:'not_equipment'},400);if(msg.includes('item_missing'))return json({error:'item_missing'},400);if(msg.includes('monster_missing'))return json({error:'invalid_target'},400);throw error}return json({ok:true,state:await state(player)})}
   if(action==='unequip'){const monsterId=String(body.monsterId||''),slot=String(body.slot||'');const {error}=await db.rpc('game_unequip_item',{p_player:player,p_monster:monsterId,p_slot:slot});if(error)throw error;return json({ok:true,state:await state(player)})}
@@ -117,9 +117,10 @@ Deno.serve(async(req:Request)=>{
    const id=String(body.monsterId||'');const {data,error}=await db.rpc('game_release_monster',{p_player:player,p_monster:id});if(error){const msg=String(error.message||'');for(const code of ['monster_missing','monster_busy','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,release:data||{},state:await state(player)})
   }
   if(action==='upgrade'){
-   const facility=String(body.facility||''),field:{[k:string]:string}={quarters:'quarters_level',tavern:'tavern_level',storage:'storage_level',workshop:'workshop_level',shop:'shop_level'},key=field[facility];if(!key)return json({error:'facility'},400)
-   const {data:p,error:pe}=await db.from('game_players').select('*').eq('device_id',player).single();if(pe)throw pe;const lv=Number(p[key]||1),max=facility==='quarters'?8:5;if(lv>=max)return json({error:'max_level'},400);const cost=facilityCost(facility,lv);if(p.gold<cost)return json({error:'gold_short'},400)
-   const {error}=await db.from('game_players').update({gold:p.gold-cost,[key]:lv+1,updated_at:new Date().toISOString()}).eq('device_id',player);if(error)throw error;return json({ok:true,state:await state(player)})
+   const facility=String(body.facility||'');
+   const {error}=await db.rpc('game_upgrade_facility',{p_player:player,p_facility:facility,p_expected_level:body.expectedLevel==null?null:Number(body.expectedLevel)});
+   if(error){const msg=String(error.message||'');for(const code of ['facility_changed','facility','max_level','gold_short','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}
+   return json({ok:true,state:await state(player)})
   }
   return json({error:'unknown_action'},400)
  }catch(e){console.error(e);return json({error:'server_error',detail:String((e as Error)?.message||e)},500)}

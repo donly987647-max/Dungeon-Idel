@@ -5,7 +5,7 @@
  */
 (()=>{
   const slotByLabel={무기:'weapon',방어구:'armor',장신구:'accessory'};
-  const rarityRank={영웅:4,희귀:3,고급:2,일반:1};
+  const rarityRank={전설:5,영웅:4,희귀:3,고급:2,일반:1};
   const enhanceMul=lv=>1+Math.max(0,Number(lv||0))*.08;
 
   function bonusText(d,level=0){
@@ -34,11 +34,12 @@
   window.gearPickerModal=async function(monsterId,slot){
     const m=(S?.monsters||[]).find(x=>x.id===monsterId);
     if(!m||!['weapon','armor','accessory'].includes(slot))return;
+    if(activeOf(monsterId)){toast('장비를 바꾸려면 먼저 파티를 본부로 복귀시켜 주세요.');return;}
     let owned=[];
     try{owned=await ownedEquipment(slot)}catch(_){toast('장비 보관함을 불러오지 못했습니다.');return}
     const current=equippedFor(monsterId).find(x=>x.slot===slot);
     const currentDef=current&&itemDef(current.item_id),currentLevel=Number(current?.enhance_level||0);
-    const rows=owned.length?owned.map(({row,def,level})=>`<button class="gear-choice ${rarityClass(def?.rarity)} ${level?'enhanced':''}" data-equipment-action="equip" data-monster="${esc(monsterId)}" data-item="${esc(row.item_id)}" data-level="${level}"><span class="gear-choice-icon">${itemSvg(itemAsset(row.item_id))}${level?`<i class="gear-enhance-badge">+${level}</i>`:''}</span><span class="gear-choice-copy"><b>${esc(row.item_id)}${level?` <em>+${level}</em>`:''}</b><small>${esc(def?.rarity||'일반')} · ${esc(bonusText(def,level))}</small><em>보유 ${fmt(row.qty)}개${level?` · 능력치 +${level*8}%`:''}</em></span><strong>${current?.item_id===row.item_id&&currentLevel===level?'장착 중':'장착'}</strong></button>`).join(''):`<div class="equipment-empty"><b>보유 중인 ${slotName(slot)}가 없습니다.</b><small>박멸 작전에서 장비를 획득하면 이곳에 표시됩니다.</small></div>`;
+    const rows=owned.length?owned.map(({row,def,level})=>`<button class="gear-choice ${rarityClass(def?.rarity)} ${level?'enhanced':''}" data-equipment-action="equip" data-monster="${esc(monsterId)}" data-item="${esc(row.item_id)}" data-level="${level}"><span class="gear-choice-icon">${itemSvg(itemAsset(row.item_id))}${level?`<i class="gear-enhance-badge">+${level}</i>`:''}</span><span class="gear-choice-copy"><b>${esc(row.item_id)}${level?` <em>+${level}</em>`:''}</b><small>${esc(def?.rarity||'일반')} · ${esc(bonusText(def,level))}</small>${window.CampaignLoot?.comparison(m,def,level)||''}<em>보유 ${fmt(row.qty)}개${level?` · 능력치 +${level*8}%`:''}</em></span><strong>${current?.item_id===row.item_id&&currentLevel===level?'장착 중':'장착'}</strong></button>`).join(''):`<div class="equipment-empty"><b>보유 중인 ${slotName(slot)}가 없습니다.</b><small>박멸 작전에서 장비를 획득하면 이곳에 표시됩니다.</small></div>`;
 
     modal(`<div class="sheet-head"><div><div class="section-kicker">EQUIPMENT LOADOUT</div><h2>${esc(m.name)} · ${slotName(slot)}</h2><p>보유 장비를 선택해 즉시 장착하거나 현재 장비를 해제합니다.</p></div><button class="close-btn" data-action="close">×</button></div>
       <section class="current-equipment-card ${currentDef?rarityClass(currentDef.rarity):'empty'}">
@@ -56,7 +57,7 @@
     if(!inv||!d?.slot)return;
     modal(`<div class="sheet-head"><div><div class="section-kicker">EQUIPMENT STORAGE</div><h2>${esc(itemId)}</h2><p>${esc(d.rarity||'일반')} · ${slotName(d.slot)} · 일반 장비 ${fmt(inv.qty)}개</p></div><button class="close-btn" data-action="close">×</button></div>
       <div class="equipment-detail ${rarityClass(d.rarity)}"><div class="equipment-icon">${itemSvg(itemAsset(itemId))}</div><div><b>${esc(bonusText(d))}</b><p>${esc(d.description||'')}</p></div></div>
-      <div class="equipment-storage-note"><b>장착은 몬스터에서 관리합니다.</b><p>강화된 동일 장비는 몬스터 장비 선택창에서 +레벨별로 따로 표시됩니다.</p></div>
+      ${window.CampaignLoot?.source(itemId)||''}<div class="equipment-storage-note"><b>장착은 몬스터에서 관리합니다.</b><p>강화된 동일 장비는 몬스터 장비 선택창에서 +레벨별로 따로 표시됩니다.</p></div>
       <button class="primary-btn equipment-go-monsters" data-go="monsters">몬스터 목록으로 이동</button>`,'item-detail-sheet-v10 equipment-storage-sheet');
   }
 
