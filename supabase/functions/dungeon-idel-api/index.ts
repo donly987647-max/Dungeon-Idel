@@ -15,12 +15,13 @@ const facilityCost=(facility:string,lv:number)=>{const base:{[k:string]:number}=
 const storageCapacity=(lv:number)=>lv<=1?40:lv===2?80:lv===3?140:lv===4?220:350+Math.max(0,lv-5)*150
 const quartersCapacity=(lv:number)=>3+Math.max(0,lv-1)*2
 const queueCapacity=(lv:number)=>Math.max(5,Number(lv||1)+4)
+const capacities=(pl:any)=>({facilityCosts:{quarters:facilityCost('quarters',pl.quarters_level||1),tavern:facilityCost('tavern',pl.tavern_level||1),storage:facilityCost('storage',pl.storage_level||1),workshop:facilityCost('workshop',pl.workshop_level||1),shop:facilityCost('shop',pl.shop_level||1)},storageCapacity:storageCapacity(pl.storage_level||1),quartersCapacity:quartersCapacity(pl.quarters_level||1),craftCapacity:queueCapacity(pl.workshop_level||1),shopCapacity:queueCapacity(pl.shop_level||1)})
 
 async function getAuthUser(req:Request){const h=req.headers.get('authorization')||'';const token=h.toLowerCase().startsWith('bearer ')?h.slice(7).trim():'';if(!token)return null;const {data,error}=await db.auth.getUser(token);if(error||!data.user)return null;return data.user}
-async function ensurePlayer(player:string){const {data:existing,error}=await db.from('game_players').select('device_id').eq('device_id',player).maybeSingle();if(error)throw error;if(existing)return;const {error:pe}=await db.from('game_players').insert({device_id:player,device_secret_hash:null});if(pe)throw pe;const {error:me}=await db.from('game_monsters').insert({player_id:player,name:'보글',family:'slime',form_id:'slime',evolution_tier:0,level:1,xp:0,talent:88,trait:'질긴 가죽',power_base:48,hp_base:145,atk_base:15,def_base:11,spd_base:9,crit_base:0.04,evade_base:0.03,personality:'침착',growth_grade:'B'});if(me)throw me}
+async function ensurePlayer(player:string){const {data:existing,error}=await db.from('game_players').select('device_id').eq('device_id',player).maybeSingle();if(error)throw error;if(existing)return;const {error:pe}=await db.from('game_players').insert({device_id:player,device_secret_hash:null});if(pe)throw pe;const {error:me}=await db.from('game_monsters').insert({player_id:player,name:'슬라임',family:'slime',form_id:'slime',evolution_tier:0,level:1,xp:0,talent:88,trait:'질긴 가죽',power_base:48,hp_base:145,atk_base:15,def_base:11,spd_base:9,crit_base:0.04,evade_base:0.03,personality:'침착',growth_grade:'B'});if(me)throw me}
 
 async function state(player:string){
-  await ensurePlayer(player);await db.rpc('game_tick_all')
+  await db.rpc('game_tick_all')
   const [p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk]=await Promise.all([
     db.from('game_players').select('*').eq('device_id',player).single(),
     db.from('game_accounts').select('username,created_at,last_login_at').eq('user_id',player).maybeSingle(),
@@ -43,7 +44,26 @@ async function state(player:string){
   const prog=new Map((sp.data||[]).map((x:any)=>[x.site_id,x]))
   const sites=(s.data||[]).map((x:any,idx:number)=>{const prev=idx>0?(s.data||[])[idx-1]:null;const unlocked=idx===0||!!prog.get(prev?.id)?.boss_cleared;return {...x,unlocked,progress:prog.get(x.id)||{normal_wins:0,boss_ready:false,boss_cleared:false,boss_attempts:0}}})
   const pl:any=p.data
-  return {account:a.data||null,player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],sites,inventory:i.data||[],equipment:q.data||[],itemDefs:d.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],recipes:r.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],evolutionDefs:ev.data||[],skillDefs:sk.data||[],facilityCosts:{quarters:facilityCost('quarters',pl.quarters_level||1),tavern:facilityCost('tavern',pl.tavern_level||1),storage:facilityCost('storage',pl.storage_level||1),workshop:facilityCost('workshop',pl.workshop_level||1),shop:facilityCost('shop',pl.shop_level||1)},storageCapacity:storageCapacity(pl.storage_level||1),quartersCapacity:quartersCapacity(pl.quarters_level||1),craftCapacity:queueCapacity(pl.workshop_level||1),shopCapacity:queueCapacity(pl.shop_level||1),serverNow:new Date().toISOString()}
+  return {account:a.data||null,player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],sites,inventory:i.data||[],equipment:q.data||[],itemDefs:d.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],recipes:r.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],evolutionDefs:ev.data||[],skillDefs:sk.data||[],...capacities(pl),serverNow:new Date().toISOString()}
+}
+
+async function stateLite(player:string){
+  await db.rpc('game_tick_all')
+  const [p,m,c,e,i,q,em,sp,cj,sj]=await Promise.all([
+    db.from('game_players').select('*').eq('device_id',player).single(),
+    db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).order('created_at'),
+    db.from('game_candidates').select('*').eq('player_id',player).order('created_at'),
+    db.from('game_expeditions').select('*').eq('player_id',player).order('started_at',{ascending:false}),
+    db.from('game_inventory').select('*').eq('player_id',player).order('item_id'),
+    db.from('game_monster_equipment').select('*').eq('player_id',player).order('equipped_at'),
+    db.from('game_expedition_members').select('*').eq('player_id',player).order('position'),
+    db.from('game_stage_progress').select('*').eq('player_id',player),
+    db.from('game_craft_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
+    db.from('game_sell_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30)
+  ])
+  const all=[p,m,c,e,i,q,em,sp,cj,sj],err=all.find(x=>x.error)?.error;if(err)throw err
+  const pl:any=p.data
+  return {player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],inventory:i.data||[],equipment:q.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],...capacities(pl),serverNow:new Date().toISOString()}
 }
 
 Deno.serve(async(req:Request)=>{
@@ -64,8 +84,10 @@ Deno.serve(async(req:Request)=>{
    const {data:login,error:le}=await db.auth.signInWithPassword({email:authUser.user.email,password:authPassword(pin)});if(le||!login.session)return json({error:'invalid_credentials'},401)
    await db.from('game_accounts').update({last_login_at:new Date().toISOString()}).eq('user_id',account.user_id);return json({ok:true,username,session:login.session})
   }
-  const user=await getAuthUser(req);if(!user)return json({error:'unauthorized'},401);const player=user.id;await ensurePlayer(player);await db.from('game_accounts').update({last_login_at:new Date().toISOString()}).eq('user_id',player)
+  const user=await getAuthUser(req);if(!user)return json({error:'unauthorized'},401);const player=user.id
+  if(action!=='state-lite')await ensurePlayer(player)
   if(action==='state')return json({ok:true,state:await state(player)})
+  if(action==='state-lite')return json({ok:true,state:await stateLite(player)})
   if(action==='deploy'){
    const siteId=String(body.siteId||''),idsRaw=Array.isArray(body.monsterIds)?body.monsterIds:[body.monsterId],monsterIds=[...new Set(idsRaw.map((x:any)=>String(x||'')).filter(Boolean))];if(monsterIds.length<1||monsterIds.length>4)return json({error:'party_size'},400)
    const [{data:site},{data:mons},{data:activeExps}]=await Promise.all([db.from('game_hunt_sites').select('*').eq('id',siteId).maybeSingle(),db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).in('id',monsterIds),db.from('game_expeditions').select('id').eq('player_id',player).eq('active',true)])
