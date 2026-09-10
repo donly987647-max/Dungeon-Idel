@@ -1,4 +1,4 @@
-name: Verify v0.7.0 Frontend
+name: Production Frontend Smoke
 
 on:
   push:
@@ -11,23 +11,74 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
-      - name: Verify public Vercel build
+      - name: Verify public production frontend
         shell: bash
         run: |
           set -euo pipefail
           URL='https://hero-extermination-inc.vercel.app'
-          for i in {1..12}; do
+
+          # Give Vercel Git deployment a short window to promote the latest main build.
+          for i in {1..18}; do
             curl -fsSL "$URL" -o /tmp/index.html || true
-            if grep -q '용사 박멸 주식회사 v0.7.0' /tmp/index.html 2>/dev/null; then break; fi
+            if grep -q '용사 박멸 주식회사' /tmp/index.html 2>/dev/null \
+              && grep -q 'ui-v01312.css' /tmp/index.html 2>/dev/null \
+              && ! grep -q 'ui-v0139.css' /tmp/index.html 2>/dev/null; then
+              break
+            fi
             sleep 5
           done
-          grep -q '용사 박멸 주식회사 v0.7.0' /tmp/index.html
-          grep -q 'bottom-nav' /tmp/index.html
-          curl -fsSL "$URL/app.css?v=0700" -o /tmp/app.css
-          curl -fsSL "$URL/app.js?v=0700" -o /tmp/app.js
-          grep -q 'site-card' /tmp/app.css
-          grep -q 'function siteCard' /tmp/app.js
-          node --check /tmp/app.js
-          echo 'V070_PUBLIC_FRONTEND_OK=1'
+
+          grep -q '용사 박멸 주식회사' /tmp/index.html
+          grep -q 'boot-shell' /tmp/index.html
+          grep -q 'ui-v01312.css' /tmp/index.html
+          grep -q 'scripts/stability-v0133.js' /tmp/index.html
+          grep -q 'scripts/v0131-hunt-status.js' /tmp/index.html
+          grep -q 'scripts/forge-v0132.js' /tmp/index.html
+          grep -q 'scripts/sprites-v0137.js' /tmp/index.html
+          if grep -q 'ui-v0139.css' /tmp/index.html; then
+            echo 'obsolete ui-v0139.css is still loaded' >&2
+            exit 1
+          fi
+
+          # Critical UI assets must be reachable and non-empty.
+          for asset in \
+            assets/brand-seal.svg \
+            assets/icon-recruit.svg \
+            assets/icon-ops.svg \
+            assets/icon-storage.svg \
+            assets/icon-workshop.svg \
+            assets/icon-shop.svg \
+            assets/icon-forge.svg \
+            assets/ui/facility-scenes-v0139.png; do
+            curl -fsSL "$URL/$asset" -o /tmp/asset
+            test -s /tmp/asset
+          done
+
+          # Check the deployed JavaScript, not only repository source.
+          for js in \
+            app.js \
+            scripts/stability-v0133.js \
+            scripts/v0131-hunt-status.js \
+            scripts/forge-v0132.js \
+            scripts/interaction-v0136.js \
+            scripts/sprites-v0137.js \
+            scripts/economy-v0128.js \
+            scripts/loot-collect-v01310.js; do
+            out="/tmp/$(basename "$js")"
+            curl -fsSL "$URL/$js" -o "$out"
+            node --check "$out"
+          done
+
+          grep -q "state-lite" /tmp/stability-v0133.js
+          if grep -q 'setInterval(decorate,700)' /tmp/v0131-hunt-status.js; then
+            echo 'legacy hunt decorate interval returned' >&2
+            exit 1
+          fi
+          if grep -q 'setInterval(decorate,700)' /tmp/forge-v0132.js; then
+            echo 'legacy forge decorate interval returned' >&2
+            exit 1
+          fi
+
+          echo 'PRODUCTION_FRONTEND_SMOKE_OK=1'
