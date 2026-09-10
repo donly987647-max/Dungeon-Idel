@@ -1,6 +1,6 @@
 # Dungeon-Idel
 
-몬스터를 영입해 인간 지역에 장기 파견하는 서버 지속형 방치 RPG 전용 레포지토리입니다.
+몬스터 직원을 영입하고 인간 지역의 박멸 계약을 수행하는 모바일 우선 방치형 RPG **용사 박멸 주식회사**의 기준 저장소입니다.
 
 ## Canonical project
 
@@ -8,42 +8,52 @@
 
 ## Current version
 
-- Game: `v0.6.0`
-- Frontend: `index.html`, `app.css`, `app.js`
-- Authentication: Supabase Auth 기반 `아이디 + 비밀번호`
+- Game: `v0.12.7`
+- Frontend: `index.html`, `app.css`, `app.js` 및 버전별 UI/장비 스크립트
+- Authentication: 사원명 + 숫자 4자리 PIN 기반 로그인/가입 UI
 - Backend: Supabase Postgres + Edge Functions
-- Server simulation: DB scheduler가 브라우저가 닫혀 있어도 활성 원정을 계속 처리
-- Account save: Supabase Auth user UUID별 독립 진행 데이터
+- Server simulation: 서버 지속형 모집/작전/전투 진행 구조
+- Account save: 계정별 독립 진행 데이터
 
-## Public game
+## Production
 
-- Web host Edge Function: `dungeon-idel`
-- Game API Edge Function: `dungeon-idel-api`
+- Vercel project: `hero-extermination-inc`
+- Production URL: `https://hero-extermination-inc.vercel.app`
+- Canonical branch: `main`
 
-## Account flow
+## Current gameplay
 
-1. 사용자가 아이디와 비밀번호로 회원가입
-2. 서버에서 Supabase Auth 계정을 생성하고 아이디를 계정 UUID와 연결
-3. 로그인 후 JWT 세션으로 게임 API 인증
-4. 해당 계정 UUID의 몬스터/원정/전리품/재화만 로드
-5. 다른 기기에서도 같은 아이디/비밀번호로 동일한 진행상황 이용
+- 초기 몬스터 1마리 구조
+- 숙소 기본 수용량 1
+- 몬스터 후보 4시간 주기 갱신
+- 몬스터 모집 atomic 처리
+- 몬스터 상세에서 무기·방어구·장신구 장착/해제
+- 창고 장비는 정보 확인용이며 장착은 몬스터 상세에서 관리
+- 역할 기반 파티 구성
+- 탱커 / 마법사 / 힐러 계열 종족 확장
+- 박멸 작전 및 지속형 턴 전투
+- 약 2초 간격의 턴 전투 표현
+- 전투 HP 0 처리 및 결과 저장 보정
+- 신규 전문 몬스터 로스터 v0.12.7 반영
 
-현재 아이디는 3~20자의 영문, 숫자, 밑줄(`_`)을 허용하며 비밀번호는 8~72자입니다. 내부적으로 로그인용 가상 이메일 식별자를 사용하지만 플레이어 UI에는 이메일을 요구하지 않습니다.
+## Main flow
 
-## Core gameplay
-
-- 초기 몬스터: 슬라임 `보글` 1마리
-- 초기 숙소 수용량: 1
-- 후보 도착: 서버 시간 기준 4시간마다
-- 사냥터: 산골 마을 → 농촌 길목 → 변경 초소
-- 사냥터 클릭 → 몬스터 선택 → 서버 지속 사냥
-- 경험치/레벨/킬/골드: 서버에 즉시 반영
-- 아이템: 원정별 미수령 전리품으로 누적 후 플레이어가 일괄 수령
-- 사냥 관전: 픽셀 자동전투 화면 제공
+1. 사원명과 PIN으로 로그인 또는 회사 등록
+2. 본부에서 재화·악명·몬스터·작전·화물 상태 확인
+3. 몬스터 모집 및 상세 관리
+4. 장비 슬롯을 눌러 보유 장비 장착/교체/해제
+5. 역할을 고려해 박멸 파티 구성
+6. 인간 지역 박멸 작전 진행
+7. 전투 결과와 획득 보상을 계정 진행 데이터에 반영
 
 ## Backend source
 
 - `supabase/functions/dungeon-idel-api/`
 - `supabase/functions/dungeon-idel/`
+- `supabase/migrations/`
 
-서비스 역할 키는 클라이언트에 노출하지 않습니다. 계정 생성과 게임 상태 변경은 서버 Edge Function을 통해 처리합니다.
+서비스 역할 키 등 서버 비밀정보는 클라이언트에 노출하지 않습니다. 계정 생성과 게임 상태 변경은 서버 API를 통해 처리합니다.
+
+## Release note
+
+`v0.12.7`은 신규 전문 몬스터 로스터를 추가한 릴리스입니다. 운영 클라이언트와 DB 로스터의 버전 불일치가 발생하지 않도록 릴리스 안전 패치를 함께 사용합니다.
