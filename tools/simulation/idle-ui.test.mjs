@@ -47,6 +47,7 @@ try{
  await test('service ranks, both reserved evolution routes and automatic policy are interactive',async()=>{
   await page.evaluate(()=>employeeModal(S.monsters[0].id));assert((await page.locator('.office-service').textContent()).includes('500 / 800'));assert.equal(await page.locator('.office-route').count(),2);
   const chosen=await page.locator('.office-route').last().getAttribute('data-evolution');await page.locator('.office-route').last().click();await page.waitForFunction(id=>document.querySelector(`.office-route[data-evolution="${id}"]`)?.getAttribute('aria-pressed')==='true',chosen);
+  await page.evaluate(()=>{S.monsters[0].growth_grade='A';S.monsters[0].service_points=810;OfficeUI.refresh()});assert((await page.locator('.office-service').textContent()).includes('810 / 2,000'),'open promotion progress refreshes');
   await close();await page.locator('[data-idle-action="policy"]').click();await page.locator('[data-idle-policy="auto_advance"]').uncheck();await page.waitForFunction(()=>S.player.auto_advance===false);await close();
  });
  await test('defense tab, live movement, boss failure, stage switch and upgrade affordance stay current',async()=>{
