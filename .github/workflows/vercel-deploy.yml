@@ -2,6 +2,9 @@ name: Deploy Hero Extermination Inc to Vercel
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.vercel-deploy-trigger'
 
 permissions:
   contents: read
@@ -43,6 +46,7 @@ jobs:
         run: |
           curl -fsSL "$VERCEL_PRODUCTION_URL" -o /tmp/index.html
           grep -q '용사 박멸 주식회사' /tmp/index.html
+          grep -q 'v0.12.7' /tmp/index.html
           if grep -q 'const html=String.raw' /tmp/index.html; then
             echo 'Raw source leaked into rendered HTML.'
             exit 3
