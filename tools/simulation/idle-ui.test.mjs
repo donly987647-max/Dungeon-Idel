@@ -23,6 +23,7 @@ async function layout(label){assert.deepEqual(await page.evaluate(()=>{const out
 let passed=0;async function test(name,fn){await fn();passed++;console.log('PASS',name);}
 try{
  await page.goto(process.env.QA_BASE_URL||'http://127.0.0.1:8125',{waitUntil:'networkidle'});await install();
+ if(process.env.QA_POLL_INTERVAL_MS)await page.evaluate(ms=>setInterval(()=>window.__frontendPollNow?.(),ms),Number(process.env.QA_POLL_INTERVAL_MS));
  await test('headquarters NEW appears beside facility titles and in a visible notice rail',async()=>{
   assert.equal(await page.locator('.office-notices').count(),1);assert.equal(await page.locator('[data-campaign-guide]').count(),1);
   assert((await page.locator('.facility-row.recruit .office-new-badge').textContent()).includes('NEW'));
@@ -47,7 +48,7 @@ try{
  await test('service ranks, both reserved evolution routes and automatic policy are interactive',async()=>{
   await page.evaluate(()=>employeeModal(S.monsters[0].id));assert((await page.locator('.office-service').textContent()).includes('500 / 800'));assert.equal(await page.locator('.office-route').count(),2);
   const chosen=await page.locator('.office-route').last().getAttribute('data-evolution');await page.locator('.office-route').last().click();await page.waitForFunction(id=>document.querySelector(`.office-route[data-evolution="${id}"]`)?.getAttribute('aria-pressed')==='true',chosen);
-  await page.evaluate(()=>{S.monsters[0].growth_grade='A';S.monsters[0].service_points=810;OfficeUI.refresh()});assert((await page.locator('.office-service').textContent()).includes('810 / 2,000'),'open promotion progress refreshes');
+  state.monsters[0].growth_grade='A';state.monsters[0].service_points=810;await page.evaluate(()=>window.__frontendPollNow());await page.waitForFunction(()=>document.querySelector('.office-service')?.textContent.includes('810 / 2,000'));assert((await page.locator('.office-service').textContent()).includes('810 / 2,000'),'open promotion progress refreshes');
   await close();await page.locator('[data-idle-action="policy"]').click();await page.locator('[data-idle-policy="auto_advance"]').uncheck();await page.waitForFunction(()=>S.player.auto_advance===false);await close();
  });
  await test('defense tab, live movement, boss failure, stage switch and upgrade affordance stay current',async()=>{
@@ -64,18 +65,19 @@ try{
   await install();await page.evaluate(()=>{screen='defense';render()});assert.equal(await page.locator('[data-defense-action="boss"]').textContent(),'보스 연속 도전');
   await page.getByLabel('던전방어 단계',{exact:true}).selectOption('1');await page.waitForFunction(()=>S.defense.stage===1);
   await page.locator('[data-defense-action="upgrade"][data-kind="traps"]').click();await page.waitForFunction(()=>S.defense.traps===2);assert((await page.locator('.defense-upgrades article').first().textContent()).includes('Lv.2'));
-  await page.evaluate(()=>{S.player.gold=0;OfficeUI.refresh()});assert(await page.locator('[data-defense-action="upgrade"][data-kind="traps"]').isDisabled());
+  state.player.gold=0;await page.evaluate(()=>window.__frontendPollNow());await page.waitForFunction(()=>document.querySelector('[data-defense-action="upgrade"][data-kind="traps"]')?.disabled);assert(await page.locator('[data-defense-action="upgrade"][data-kind="traps"]').isDisabled());
   for(const width of [360,390,768,1280]){await page.setViewportSize({width,height:900});await page.evaluate(()=>{document.activeElement?.blur();document.querySelector('#view').scrollTo({top:0,left:0,behavior:'instant'});});await page.waitForFunction(()=>document.querySelector('#view').scrollTop<1);await layout('defense '+width);await page.screenshot({path:`${output}/defense-${width}.png`,fullPage:true});}
   assert((await page.locator('.defense-rewards').textContent()).includes('경험치는 지급하지 않습니다'));
  });
  await test('all sprite stages load and server events cause attack, hit and healing animations',async()=>{
   await page.evaluate(()=>Promise.all(['base','tier1','tier2'].map(name=>new Promise((resolve,reject)=>{const i=new Image();i.onload=resolve;i.onerror=()=>reject(Error(name+' missing'));i.src=`assets/art-v016/monsters-${name}.png`}))));
-  await page.evaluate(()=>{
-   closeModal(true);const ids=S.monsters.slice(0,4).map(m=>m.id),e={id:'test-battle',site_id:S.sites[0].id,monster_id:ids[0],active:true,idle_actions:1,phase:'전투',battle_state:{active:true,enemy:S.sites[0].enemy_names[0],enemyHp:80,enemyMaxHp:160,partyHp:Object.fromEntries(ids.map(id=>[id,100])),partyMaxHp:Object.fromEntries(ids.map(id=>[id,200]))},battle_log:[{type:'battle-turn',side:'party',damage:12,skills:[{monsterId:ids[3],effect:'heal'}]}],event_state:{type:'battle-turn',text:'전투 중'},pending_loot:{}};
-   S.expeditions=[e];S.expeditionMembers=ids.map((id,i)=>({expedition_id:e.id,monster_id:id,position:i+1}));watchModal(e.id);
-  });
-  assert((await page.locator('.office-strike').count())>0);assert((await page.locator('.office-heal').count())>0);assert((await page.locator('.office-hit').count())>0);
-  await page.evaluate(()=>{const e=S.expeditions[0];e.idle_actions++;e.battle_log=[{type:'battle-turn',side:'enemy',targetId:e.monster_id,damage:12}];syncWatchPanel()});assert((await page.locator('#livePartyCluster .office-hit').count())>0);
+  const ids=state.monsters.slice(0,4).map(m=>m.id),expedition={id:'test-battle',site_id:state.sites[0].id,monster_id:ids[0],active:true,idle_actions:1,phase:'전투',battle_state:{active:true,enemy:state.sites[0].enemy_names[0],enemyHp:80,enemyMaxHp:160,partyHp:Object.fromEntries(ids.map(id=>[id,100])),partyMaxHp:Object.fromEntries(ids.map(id=>[id,200]))},battle_log:[{type:'battle-turn',side:'party',damage:12,skills:[{monsterId:ids[3],effect:'heal'}]}],event_state:{type:'battle-turn',text:'전투 중'},pending_loot:{}};
+  state.expeditions=[expedition];state.expeditionMembers=ids.map((id,i)=>({expedition_id:expedition.id,monster_id:id,position:i+1}));
+  await page.evaluate(()=>window.__frontendPollNow());await page.waitForFunction(()=>S.expeditions[0]?.id==='test-battle');
+  await page.evaluate(()=>{closeModal(true);watchModal('test-battle')});
+  assert((await page.evaluate(()=>['.office-strike','.office-heal','.office-hit'].every(selector=>document.querySelector(selector)))),'server party event animates attack, healing and enemy hit');
+  expedition.idle_actions++;expedition.battle_log=[{type:'battle-turn',side:'enemy',targetId:expedition.monster_id,damage:12}];
+  await page.evaluate(()=>window.__frontendPollNow());await page.waitForFunction(()=>S.expeditions[0]?.idle_actions===2);assert((await page.locator('#livePartyCluster .office-hit').count())>0);
   await page.setViewportSize({width:390,height:844});await layout('battle');await page.screenshot({path:`${output}/battle-390.png`,fullPage:true});
   await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.office-monster>i').first().evaluate(e=>getComputedStyle(e).animationName),'none');
  });
