@@ -11,7 +11,7 @@
   function source(itemId){
     const d=itemDef(itemId),a=d?.acquisition,site=(S?.sites||[]).find(s=>s.id===a?.site);
     if(!site)return '';
-    const text=a.source==='scavenge'?'바닥 수색 전용':a.bossExclusive?`${site.boss_name} 전용`:[a.enemy,a.boss].filter(Boolean).join(' · ')||a.enemy||'적 처치';
+    const text=a.source==='craft'?'제작소 조합 전용':a.legacy?'이전 세대 장비 · 보유분 사용 가능':a.source==='scavenge'?'바닥 수색 전용':a.bossExclusive?`${site.boss_name} 전용`:[a.enemy,a.boss].filter(Boolean).join(' · ')||a.enemy||'적 처치';
     return `<div class="campaign-source"><small>획득처</small><b>${esc(site.name)} · ${esc(text)}</b><button class="campaign-info-link" data-campaign-action="intel" data-site="${esc(site.id)}">획득 확률과 공략 보기</button></div>`;
   }
   function comparison(m,def,level){

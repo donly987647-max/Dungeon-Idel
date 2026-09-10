@@ -27,6 +27,7 @@
   }
   function apply(){
     if(!S)return;
+    if(window.OfficeUI?.enabled()){OfficeUI.refresh();return;}
     const currentMonsters=ids(S.monsters),currentCandidates=ids(S.candidates);
     const seenMonsters=baseline('monsters',currentMonsters),seenCandidates=baseline('candidates',currentCandidates);
     const newMonsters=currentMonsters.filter(id=>!seenMonsters.includes(id));

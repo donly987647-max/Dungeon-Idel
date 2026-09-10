@@ -6,13 +6,15 @@ const url=Deno.env.get('SUPABASE_URL')!
 const secrets=JSON.parse(Deno.env.get('SUPABASE_SECRET_KEYS')||'{}')
 const secretKey=secrets.default||Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 const db=createClient(url,secretKey,{auth:{persistSession:false,autoRefreshToken:false}})
+// Keep player login sessions out of the shared service-role database client.
+const signIn=(email:string,password:string)=>createClient(url,secretKey,{auth:{persistSession:false,autoRefreshToken:false}}).auth.signInWithPassword({email,password})
 const normUser=(v:string)=>v.trim().normalize('NFC')
 const validUsername=(v:string)=>/^[가-힣]{2,12}$/u.test(v)
 const validPin=(v:string)=>/^\d{4}$/.test(v)
 const authPassword=(pin:string)=>`Hero!${pin}#Corp2026`
 const authEmail=()=>`player-${crypto.randomUUID()}@players.dungeon-idel.game`
 const facilityCost=(facility:string,lv:number)=>{const base:{[k:string]:number}={quarters:900,tavern:1800,storage:1200,workshop:1600,shop:1500};return Math.floor((base[facility]||999999)*Math.pow(3,Math.max(0,lv-1)))}
-const storageCapacity=(lv:number)=>lv<=1?40:lv===2?80:lv===3?140:lv===4?220:350+Math.max(0,lv-5)*150
+const storageCapacity=(lv:number)=>lv<=1?160:lv===2?240:lv===3?360:lv===4?520:750
 const quartersCapacity=(lv:number)=>3+Math.max(0,lv-1)*2
 const queueCapacity=(lv:number)=>Math.max(5,Number(lv||1)+4)
 const capacities=(pl:any)=>({facilityCosts:{quarters:facilityCost('quarters',pl.quarters_level||1),tavern:facilityCost('tavern',pl.tavern_level||1),storage:facilityCost('storage',pl.storage_level||1),workshop:facilityCost('workshop',pl.workshop_level||1),shop:facilityCost('shop',pl.shop_level||1)},storageCapacity:storageCapacity(pl.storage_level||1),quartersCapacity:quartersCapacity(pl.quarters_level||1),craftCapacity:queueCapacity(pl.workshop_level||1),shopCapacity:queueCapacity(pl.shop_level||1)})
@@ -21,8 +23,8 @@ async function getAuthUser(req:Request){const h=req.headers.get('authorization')
 async function ensurePlayer(player:string){const {error}=await db.rpc('game_initialize_company',{p_player:player});if(error)throw error}
 
 async function state(player:string){
-  await db.rpc('game_tick_all')
-  const [p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk]=await Promise.all([
+  const {error:tickError}=await db.rpc('game_tick_all');if(tickError)throw tickError
+  const [p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk,df]=await Promise.all([
     db.from('game_players').select('*').eq('device_id',player).single(),
     db.from('game_accounts').select('username,created_at,last_login_at').eq('user_id',player).maybeSingle(),
     db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).order('created_at'),
@@ -38,18 +40,19 @@ async function state(player:string){
     db.from('game_craft_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
     db.from('game_sell_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
     db.from('game_evolution_defs').select('*').order('tier').order('target_name'),
-    db.from('game_skill_defs').select('*').order('name')
+    db.from('game_skill_defs').select('*').order('name'),
+    db.rpc('game_defense_snapshot',{p_player:player})
   ])
-  const all=[p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk],err=all.find(x=>x.error)?.error;if(err)throw err
+  const all=[p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk,df],err=all.find(x=>x.error)?.error;if(err)throw err
   const prog=new Map((sp.data||[]).map((x:any)=>[x.site_id,x]))
   const sites=(s.data||[]).map((x:any,idx:number)=>{const prev=idx>0?(s.data||[])[idx-1]:null;const unlocked=idx===0||!!prog.get(prev?.id)?.boss_cleared;return {...x,unlocked,progress:prog.get(x.id)||{normal_wins:0,boss_ready:false,boss_cleared:false,boss_attempts:0}}})
   const pl:any=p.data
-  return {account:a.data||null,player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],sites,inventory:i.data||[],equipment:q.data||[],itemDefs:d.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],recipes:r.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],evolutionDefs:ev.data||[],skillDefs:sk.data||[],...capacities(pl),serverNow:new Date().toISOString()}
+  return {account:a.data||null,player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],sites,inventory:i.data||[],equipment:q.data||[],itemDefs:d.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],recipes:r.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],evolutionDefs:ev.data||[],skillDefs:sk.data||[],defense:df.data||null,...capacities(pl),serverNow:new Date().toISOString()}
 }
 
 async function stateLite(player:string){
-  await db.rpc('game_tick_all')
-  const [p,m,c,e,i,q,em,sp,cj,sj]=await Promise.all([
+  const {error:tickError}=await db.rpc('game_tick_all');if(tickError)throw tickError
+  const [p,m,c,e,i,q,em,sp,cj,sj,df]=await Promise.all([
     db.from('game_players').select('*').eq('device_id',player).single(),
     db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).order('created_at'),
     db.from('game_candidates').select('*').eq('player_id',player).order('created_at'),
@@ -59,11 +62,12 @@ async function stateLite(player:string){
     db.from('game_expedition_members').select('*').eq('player_id',player).order('position'),
     db.from('game_stage_progress').select('*').eq('player_id',player),
     db.from('game_craft_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
-    db.from('game_sell_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30)
+    db.from('game_sell_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
+    db.rpc('game_defense_snapshot',{p_player:player})
   ])
-  const all=[p,m,c,e,i,q,em,sp,cj,sj],err=all.find(x=>x.error)?.error;if(err)throw err
+  const all=[p,m,c,e,i,q,em,sp,cj,sj,df],err=all.find(x=>x.error)?.error;if(err)throw err
   const pl:any=p.data
-  return {player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],inventory:i.data||[],equipment:q.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],...capacities(pl),serverNow:new Date().toISOString()}
+  return {player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],inventory:i.data||[],equipment:q.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],defense:df.data||null,...capacities(pl),serverNow:new Date().toISOString()}
 }
 
 Deno.serve(async(req:Request)=>{
@@ -75,17 +79,23 @@ Deno.serve(async(req:Request)=>{
    const {data:taken,error:te}=await db.from('game_accounts').select('user_id').eq('username_norm',username).maybeSingle();if(te)throw te;if(taken)return json({error:'username_taken'},409)
    const email=authEmail(),password=authPassword(pin);const {data:created,error:ce}=await db.auth.admin.createUser({email,password,email_confirm:true,user_metadata:{username}});if(ce||!created.user)throw ce||new Error('auth_create_failed')
    const uid=created.user.id;const {error:ae}=await db.from('game_accounts').insert({user_id:uid,username});if(ae){await db.auth.admin.deleteUser(uid);throw ae}await ensurePlayer(uid)
-   const {data:login,error:le}=await db.auth.signInWithPassword({email,password});if(le||!login.session)throw le||new Error('auth_login_failed');return json({ok:true,username,session:login.session})
+   const {data:login,error:le}=await signIn(email,password);if(le||!login.session)throw le||new Error('auth_login_failed');return json({ok:true,username,session:login.session})
   }
   if(action==='login'){
    const username=normUser(String(body.username||'')),pin=String(body.password||'');if(!validUsername(username)||!validPin(pin))return json({error:'invalid_credentials'},401)
    const {data:account,error:ae}=await db.from('game_accounts').select('user_id').eq('username_norm',username).maybeSingle();if(ae)throw ae;if(!account)return json({error:'invalid_credentials'},401)
    const {data:authUser,error:ue}=await db.auth.admin.getUserById(account.user_id);if(ue||!authUser.user?.email)return json({error:'invalid_credentials'},401)
-   const {data:login,error:le}=await db.auth.signInWithPassword({email:authUser.user.email,password:authPassword(pin)});if(le||!login.session)return json({error:'invalid_credentials'},401)
+   const {data:login,error:le}=await signIn(authUser.user.email,authPassword(pin));if(le||!login.session)return json({error:'invalid_credentials'},401)
    await db.from('game_accounts').update({last_login_at:new Date().toISOString()}).eq('user_id',account.user_id);return json({ok:true,username,session:login.session})
   }
   const user=await getAuthUser(req);if(!user)return json({error:'unauthorized'},401);const player=user.id
   if(action!=='state-lite')await ensurePlayer(player)
+  if(action==='idle-policy'||action==='plan-evolution'||action==='defense-command'||action==='defense-upgrade'){
+   const rpc=action==='idle-policy'?'game_set_idle_policy':action==='plan-evolution'?'game_plan_evolution':action==='defense-command'?'game_defense_command':'game_defense_upgrade';
+   const args=action==='idle-policy'?{p_player:player,p_settings:body.settings||{}}:action==='plan-evolution'?{p_player:player,p_monster:String(body.monsterId||''),p_evolution:String(body.evolutionId||'')}:action==='defense-command'?{p_player:player,p_action:String(body.command||''),p_stage:body.stage==null?null:Number(body.stage)}:{p_player:player,p_kind:String(body.kind||''),p_expected:Number(body.expectedLevel)};
+   const {data,error}=await db.rpc(rpc,args);if(error){for(const code of ['gold_short','facility_changed','max_level','locked','evolution_invalid','invalid_action','invalid_settings','facility'])if(error.message.includes(code))return json({error:code},400);throw error}
+   return json({ok:true,result:data,state:await state(player)})
+  }
   if(action==='state')return json({ok:true,state:await state(player)})
   if(action==='state-lite')return json({ok:true,state:await stateLite(player)})
   if(action==='deploy'){

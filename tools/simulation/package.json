@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node campaign.test.mjs && node economy.test.mjs",
-    "test:ui": "node campaign-ui.test.mjs",
-    "probe:progression": "node progression.mjs"
+    "test": "node campaign.test.mjs && node economy.test.mjs && node idle.test.mjs && node defense.test.mjs",
+    "test:ui": "node idle-ui.test.mjs",
+    "probe:progression": "node progression.mjs",
+    "probe:idle": "node idle-progression.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.8",

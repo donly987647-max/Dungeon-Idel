@@ -14,6 +14,8 @@
       const base=Math.max(1,s.atk*(1+s.human)-profile.def*.55);
       const proc=Math.max(1,s.atk*(1+s.human)*Number(k?.damage_multiplier||1)-profile.def*(k?.effect_type==='magic'?.38:.55)*(1-clamp(k?.defense_ignore,0,.9)));
       damage+=(base*(1-p)+proc*p)*hit*crit;
+      if(k?.effect_type==='heal_all')healing+=alive.reduce((v,x)=>v+x.stats.hp,0)*Number(k.heal_ratio||0)*p;
+      if(k?.effect_type==='drain')healing+=proc*Number(k.heal_ratio||0)*p;
       if(k?.effect_type==='heal')healing+=Math.max(...alive.map(x=>x.stats.hp))*Number(k.heal_ratio||0)*p;
     });
     const enemyHealing=enemyHp*Number(enemySkill.heal||0)*skillFraction;
@@ -26,12 +28,12 @@
       return m.hp/Math.max(1,incoming-healing*share*.65);
     });
     const margin=Math.min(...survival)/Math.max(1,rounds),hpRatio=alive.reduce((v,m)=>v+m.hp,0)/alive.reduce((v,m)=>v+m.stats.hp,0);
-    const hasHealer=alive.some(m=>m.skill?.effect_type==='heal'),hasTank=alive.some(m=>m.skill?.effect_type==='tank');
+    const hasHealer=alive.some(m=>['heal','heal_all'].includes(m.skill?.effect_type)),hasTank=alive.some(m=>Number(m.skill?.taunt_weight)>1);
     let key=margin>=1.6&&hpRatio>.7&&alive.length===party.length?'good':margin>=.85&&hpRatio>.4?'warn':'danger';
     if(!Number.isFinite(rounds))key='danger';
     const reasons=[];
-    if(alive.length<party.length)reasons.push('전투불능 직원이 있습니다. 파티를 재편하세요.');
-    if(hpRatio<.7)reasons.push('누적 부상이 큽니다. 회복을 기다리거나 파티를 재편하세요.');
+    if(alive.length<party.length)reasons.push('전투불능 직원은 12행동 뒤 자동 부활합니다.');
+    if(hpRatio<.7)reasons.push('누적 부상이 큽니다. 회복 담당의 스킬과 자동 부활로 회복합니다.');
     if(!hasTank)reasons.push('도발 탱커가 없으면 체력이 약한 직원에게 공격이 분산됩니다.');
     if(!hasHealer)reasons.push('회복 담당을 넣으면 긴 전투와 연속 탐험에 유리합니다.');
     if(!Number.isFinite(rounds)||rounds>16)reasons.push('화력이 부족합니다. 전직·무기 강화·마법 공격수를 확인하세요.');

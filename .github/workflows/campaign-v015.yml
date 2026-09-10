@@ -2,7 +2,7 @@ name: Campaign and Economy QA
 on:
   push:
     branches: [main, 'codex/gameplay-overhaul']
-    paths: ['app.js', 'index.html', 'scripts/**', 'ui-v015.css', 'assets/art-v015/**', 'content/**', 'supabase/**', 'tools/simulation/**', '.github/workflows/campaign-v015.yml']
+    paths: ['app.js', 'index.html', 'scripts/**', 'ui-*.css', 'assets/art-v015/**', 'assets/art-v016/**', 'content/**', 'supabase/**', 'tools/simulation/**', '.github/workflows/campaign-v015.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -16,12 +16,12 @@ jobs:
         with:
           node-version: '22'
       - run: npm ci --prefix tools/simulation
-      - name: Actual SQL combat, loot and economy checks
+      - name: Actual SQL combat, idle economy, recovery and defense checks
         run: npm test --prefix tools/simulation
       - name: Install browser
         working-directory: tools/simulation
         run: npx playwright install --with-deps chromium
-      - name: Responsive campaign and economy interface
+      - name: Responsive idle company and defense interface
         env:
           QA_BROWSER_CHANNEL: chromium
         run: |

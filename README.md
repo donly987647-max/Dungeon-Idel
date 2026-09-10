@@ -1,59 +1,48 @@
-# Dungeon-Idel
+# 용사 박멸 주식회사
 
-몬스터 직원을 영입하고 인간 지역의 박멸 계약을 수행하는 모바일 우선 방치형 RPG **용사 박멸 주식회사**의 기준 저장소입니다.
+몬스터 직원을 영입하고 인간 지역을 탐험하며 본사 지하를 방어하는 모바일 방치형 RPG.
+현재 버전은 **v0.16.0**이다. 이 저장소와 `main` 브랜치가 기준본이다.
 
-## Canonical project
+- 운영: https://hero-extermination-inc.vercel.app
+- 프런트엔드: 정적 HTML, JavaScript, CSS
+- 서버: Supabase Postgres, Edge API, 10초 주기 작업
+- 인증: 사원명과 4자리 PIN, 계정별 독립 진행
 
-이 레포를 이 프로젝트의 유일한 기준본으로 사용합니다. `Topdown-roguelite`에는 더 이상 이 게임 신규 개발을 반영하지 않습니다.
+## 게임 구조
 
-## Current version
+새 회사는 0G와 직원 1명으로 시작한다. 회복 담당·마법사·수비 담당을 무료 영입할 수 있으며,
+기본 숙소는 3명이다. 파티를 출정시키면 운송·회사 상품 생산·판매·정산·장착·전직·챕터 진출을
+서버가 처리한다. 운영 방침과 전직 경로를 미리 지정할 수 있다.
 
-- Game: `v0.12.7`
-- Frontend: `index.html`, `app.css`, `app.js` 및 버전별 UI/장비 스크립트
-- Authentication: 사원명 + 숫자 4자리 PIN 기반 로그인/가입 UI
-- Backend: Supabase Postgres + Edge Functions
-- Server simulation: 서버 지속형 모집/작전/전투 진행 구조
-- Account save: 계정별 독립 진행 데이터
+쓰러진 직원은 원정 행동 12회 후 부활하며, 전멸한 파티는 15행동 재정비 후 자동 재출정한다.
+완료 전투마다 근속 공적이 쌓여 C→B(200)→A(800)→S(2,000)로 승급한다.
+9계열마다 두 차례의 분기 전직과 회사 보직에 맞춘 스킬·그래픽이 있다.
 
-## Production
+5챕터마다 18종, 총 90종의 현역 장비가 있다. 무기·방어구·장신구마다 일반 1종,
+희귀 2종, 영웅 2종, 전설 1종이다. 일반은 일반 적 드롭, 희귀·영웅은 전용 희소 재료를
+조합해서 제작하며 전설은 보스에게서만 나온다. 과거 장비와 기존 이용자의 자산은 유지된다.
 
-- Vercel project: `hero-extermination-inc`
-- Production URL: `https://hero-extermination-inc.vercel.app`
-- Canonical branch: `main`
+던전방어에서는 미출정 직원이 이동하는 용사를 저지한다. 용사는 반격하지 않으며,
+마왕방 도달 전에 웨이브를 전멸시켜야 보상을 받는다. XP는 없고 전리품 확률은 탐험의 25%다.
+50개 단계, 이전 단계 반복, 보스 연속 도전, 골드로 강화하는 네 가지 설비가 있다.
+보스에 실패하면 연속 도전은 OFF가 되고 직전 단계를 반복한다.
 
-## Current gameplay
+## 개발과 검사
 
-- 초기 몬스터 1마리 구조
-- 숙소 기본 수용량 1
-- 몬스터 후보 4시간 주기 갱신
-- 몬스터 모집 atomic 처리
-- 몬스터 상세에서 무기·방어구·장신구 장착/해제
-- 창고 장비는 정보 확인용이며 장착은 몬스터 상세에서 관리
-- 역할 기반 파티 구성
-- 탱커 / 마법사 / 힐러 계열 종족 확장
-- 박멸 작전 및 지속형 턴 전투
-- 약 2초 간격의 턴 전투 표현
-- 전투 HP 0 처리 및 결과 저장 보정
-- 신규 전문 몬스터 로스터 v0.12.7 반영
+```sh
+npm ci --prefix tools/simulation
+node tools/build-idle-v016.mjs
+npm test --prefix tools/simulation
+python3 -m http.server 8125 --bind 127.0.0.1
+# 다른 터미널
+npm run test:ui --prefix tools/simulation
+# 장시간 실제 SQL 진행 비교
+npm run probe:idle --prefix tools/simulation
+```
 
-## Main flow
+데이터 원본은 `content/`, 서버 함수는 `supabase/gameplay/`이며 생성된 변경은
+`supabase/migrations/20260910152957_v016_idle_company.sql`에 있다.
+이미 적용한 과거 마이그레이션은 수정하지 않는다.
+검증 범위와 합성 실험의 한계는 `docs/idle-v016-verification.md`를 참고한다.
 
-1. 사원명과 PIN으로 로그인 또는 회사 등록
-2. 본부에서 재화·악명·몬스터·작전·화물 상태 확인
-3. 몬스터 모집 및 상세 관리
-4. 장비 슬롯을 눌러 보유 장비 장착/교체/해제
-5. 역할을 고려해 박멸 파티 구성
-6. 인간 지역 박멸 작전 진행
-7. 전투 결과와 획득 보상을 계정 진행 데이터에 반영
-
-## Backend source
-
-- `supabase/functions/dungeon-idel-api/`
-- `supabase/functions/dungeon-idel/`
-- `supabase/migrations/`
-
-서비스 역할 키 등 서버 비밀정보는 클라이언트에 노출하지 않습니다. 계정 생성과 게임 상태 변경은 서버 API를 통해 처리합니다.
-
-## Release note
-
-`v0.12.7`은 신규 전문 몬스터 로스터를 추가한 릴리스입니다. 운영 클라이언트와 DB 로스터의 버전 불일치가 발생하지 않도록 릴리스 안전 패치를 함께 사용합니다.
+서비스 역할 키와 서버 비밀정보는 클라이언트나 저장소에 기록하지 않는다.
