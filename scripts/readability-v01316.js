@@ -1,4 +1,4 @@
-/* v0.13.17 — readable primary flow for monster, hunt and battle screens */
+/* v0.13.18 — readable primary flow for monster, hunt and battle screens */
 (()=>{
   const text=(el,fallback='-')=>(el?.textContent||'').trim()||fallback;
   const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -74,13 +74,7 @@
     if(!sheet||sheet.dataset.readabilityLoot==='1')return;
     const chips=[...sheet.querySelectorAll('.loot-rule-chip')].filter(x=>!x.closest('.secondary-details'));
     if(!chips.length)return;
-    chips.forEach(chip=>{
-      const details=document.createElement('details');
-      details.className='secondary-details loot-secondary';
-      details.innerHTML='<summary>전리품 획득 규칙</summary><div class="secondary-content"></div>';
-      chip.parentNode.insertBefore(details,chip);
-      details.querySelector('.secondary-content').append(chip);
-    });
+    chips.forEach(chip=>chip.remove());
     sheet.dataset.readabilityLoot='1';
   }
 
@@ -117,6 +111,8 @@
     }
     const partyHead=sheet.querySelector('.party-select-head b');
     if(partyHead)partyHead.textContent='출동 파티 편성';
+    const partyMeta=sheet.querySelector('.party-select-head small');
+    if(partyMeta)partyMeta.textContent=`던전당 최대 4명 · 현재 ${Math.min(4,(partyPick||[]).length)}/4`;
     sheet.dataset.huntSimple='1';
   }
 
@@ -125,9 +121,7 @@
     const scene=sheet.querySelector('#battleScene');
     const center=scene?.querySelector('.battle-center-event');
     const floats=scene?.querySelector('#liveCombatFloats');
-    if(center&&floats){
-      center.append(floats);
-    }
+    if(center&&floats)center.append(floats);
 
     const body=sheet.querySelector('.battle-report-body');
     const summary=body?.querySelector('.battle-summary.detailed');
