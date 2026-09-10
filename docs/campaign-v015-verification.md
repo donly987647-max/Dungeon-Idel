@@ -1,6 +1,6 @@
 # v0.15 서버 개편 검증 기록
 
-현재 상태: 로컬 개발. 운영 배포와 전체 게임 개편 완료를 의미하지 않는다.
+현재 상태: v0.15 운영 배포 및 검증 완료. 아래 합성 실험 조건과 한계를 함께 읽는다.
 
 ## 콘텐츠와 서버 동작
 
@@ -63,4 +63,6 @@
 
 ## 배포 확인
 
-로컬 검증 완료. 운영에 `v015_campaign_content`와 `v015_campaign_runtime`을 적용했고, Edge `dungeon-idel-api` v12를 배포했다. 배포된 index.ts/deno.json의 원본 일치와 인증 없는 요청의 401 응답을 확인했다. 기존 개인 데이터는 보존했고 운영 이용자 성적은 수집하지 않았다. GitHub/Vercel 프런트엔드 검증은 이어서 수행한다.
+로컬 검증 완료. 운영에 `v015_campaign_content`와 `v015_campaign_runtime`을 적용했고, Edge `dungeon-idel-api` v12를 배포했다. 배포된 index.ts/deno.json의 원본 일치와 인증 없는 요청의 401 응답을 확인했다. 기존 개인 데이터는 보존했고 운영 이용자 성적은 수집하지 않았다. GitHub 릴리스 `5c5a3567ae6fb6a8271a3e9c3d41f930542042eb`와 로컬 트리가 일치하며 Vercel 운영 배포 `dpl_2UVYDbJK6yFKjkHLih4aDpJuWHfn`이 READY다.
+
+실제 주소에서 HTML·로드되는 코드/스타일·새 WebP 7개의 바이트 일치와 새 UI 및 기존 원정 회귀를 확인했다. GitHub Campaign/Economy, Expedition(소스·배포), Production Smoke, Source QA, Syntax 6개 검사 모두 성공했다. 운영 API에서 검증 전용 계정으로 가입·로그인·초기 슬라임·무료 지원 영입·3인 파견·상태 갱신·복귀를 확인했다. 검증용 인증 계정은 작업 후 삭제했다. 운영 정적 정의는 5챕터·106아이템·26제작법이고 내부 지급/시설 함수는 일반 이용자에게 실행 권한이 없다. 보안 진단은 배포 전과 동일한 기존 항목만 남는다.
