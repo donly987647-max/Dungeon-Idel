@@ -1,0 +1,145 @@
+/* v0.13.9 — generated fantasy pixel UI assets integrated without layout shifts */
+:root{
+  --v0139-menu-icons:url('assets/ui/menu-icons-v0139.png');
+  --v0139-facility-scenes:url('assets/ui/facility-scenes-v0139.png');
+}
+
+/* Facility rows keep the exact legacy geometry. Artwork lives only in the paint layer. */
+.facility-stack .facility-row{
+  min-height:86px!important;
+  grid-template-columns:64px minmax(0,1fr) auto!important;
+  gap:12px!important;
+  padding:9px 12px!important;
+  isolation:isolate;
+  overflow:hidden!important;
+  background-color:#292e2a!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%,200% 400%!important;
+  color:#eef1eb!important;
+}
+.facility-stack .facility-row.dorm{background-image:linear-gradient(90deg,rgba(14,18,15,.80) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.66) 100%),var(--v0139-facility-scenes)!important;background-position:center,100% 0%!important}
+.facility-stack .facility-row.recruit{background-image:linear-gradient(90deg,rgba(14,18,15,.82) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.68) 100%),var(--v0139-facility-scenes)!important;background-position:center,0% 33.333%!important}
+.facility-stack .facility-row.workshop{background-image:linear-gradient(90deg,rgba(14,18,15,.82) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.68) 100%),var(--v0139-facility-scenes)!important;background-position:center,100% 33.333%!important}
+.facility-stack .facility-row.shop{background-image:linear-gradient(90deg,rgba(14,18,15,.82) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.68) 100%),var(--v0139-facility-scenes)!important;background-position:center,0% 66.667%!important}
+.facility-stack .facility-row.forge{background-image:linear-gradient(90deg,rgba(14,18,15,.82) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.68) 100%),var(--v0139-facility-scenes)!important;background-position:center,100% 66.667%!important}
+.facility-stack .facility-row.storage{background-image:linear-gradient(90deg,rgba(14,18,15,.82) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.68) 100%),var(--v0139-facility-scenes)!important;background-position:center,100% 100%!important}
+.facility-stack .facility-row.ops{background-image:linear-gradient(90deg,rgba(14,18,15,.82) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.68) 100%),var(--v0139-facility-scenes)!important;background-position:center,0% 100%!important}
+.facility-stack .facility-row>img{opacity:0!important;visibility:hidden!important}
+.facility-stack .facility-row::after{
+  content:"";
+  position:absolute;
+  left:17px;top:50%;
+  width:54px;height:54px;
+  transform:translateY(-50%);
+  z-index:1;
+  pointer-events:none;
+  background-image:var(--v0139-menu-icons);
+  background-repeat:no-repeat;
+  background-size:600% 200%;
+  image-rendering:pixelated;
+  filter:drop-shadow(0 3px 2px #000b);
+}
+.facility-stack .facility-row.dorm::after{background-position:60% 0%}
+.facility-stack .facility-row.recruit::after{background-position:20% 0%}
+.facility-stack .facility-row.workshop::after{background-position:100% 0%}
+.facility-stack .facility-row.shop::after{background-position:0% 100%}
+.facility-stack .facility-row.forge::after{background-position:20% 100%}
+.facility-stack .facility-row.storage::after{background-position:40% 100%}
+.facility-stack .facility-row.ops::after{background-position:40% 0%}
+.facility-stack .facility-row::before{z-index:4!important}
+.facility-stack .facility-row>.facility-copy,
+.facility-stack .facility-row>.facility-side{position:relative;z-index:2;min-width:0}
+.facility-stack .facility-row .facility-copy b{font-size:19px!important;line-height:1.1!important;color:#f2f3ef!important;text-shadow:0 2px 3px #000}
+.facility-stack .facility-row .facility-copy small{margin-top:5px!important;font-size:11px!important;line-height:1.25!important;color:#c5ccc5!important;text-shadow:0 1px 2px #000;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.facility-stack .facility-row .facility-side{gap:10px!important}
+.facility-stack .facility-row .facility-side em{font-size:10px!important;color:#e0c18d!important;text-shadow:0 1px 2px #000}
+.facility-stack .facility-row .facility-side i{font-size:24px!important;color:#d8ddd8!important;text-shadow:0 1px 2px #000}
+.facility-stack .facility-row:active,
+.facility-stack .facility-row.ui-pressed{background-color:#323833!important}
+
+/* Main HQ artwork: generated castle scene, with a strong readability wash. */
+.office-banner{
+  background-image:linear-gradient(90deg,rgba(10,13,11,.92) 0%,rgba(10,13,11,.76) 48%,rgba(10,13,11,.42) 100%),var(--v0139-facility-scenes)!important;
+  background-size:100% 100%,200% 400%!important;
+  background-position:center,0% 0%!important;
+  background-repeat:no-repeat!important;
+}
+.office-banner>div,.office-banner>.office-badge{position:relative;z-index:2}
+
+/* Replace CSS-drawn nav pictograms with generated pixel icons without changing hit boxes. */
+.bottom-nav .nav-pict{
+  width:30px!important;height:30px!important;
+  border:0!important;border-radius:0!important;
+  background-color:transparent!important;
+  background-image:var(--v0139-menu-icons)!important;
+  background-repeat:no-repeat!important;
+  background-size:600% 200%!important;
+  box-shadow:none!important;
+  clip-path:none!important;
+  image-rendering:pixelated;
+  filter:brightness(.82) saturate(.82) drop-shadow(0 2px 1px #0009);
+}
+.bottom-nav .nav-pict::before,.bottom-nav .nav-pict::after{display:none!important;content:none!important}
+.bottom-nav .nav-pict.hq{background-position:0% 0%!important}
+.bottom-nav .nav-pict.staff{background-position:20% 0%!important}
+.bottom-nav .nav-pict.target{background-position:40% 0%!important}
+.bottom-nav button.active .nav-pict{filter:brightness(1.18) saturate(1.12) drop-shadow(0 0 5px #dca65c88)}
+
+/* Header metrics use the same art language as the menus. */
+.stat-rail .rail-icon{
+  width:18px!important;height:18px!important;
+  border:0!important;border-radius:0!important;
+  background-color:transparent!important;
+  background-image:var(--v0139-menu-icons)!important;
+  background-repeat:no-repeat!important;
+  background-size:600% 200%!important;
+  box-shadow:none!important;
+  clip-path:none!important;
+  image-rendering:pixelated;
+  filter:brightness(.96) drop-shadow(0 1px 1px #000a);
+}
+.stat-rail .rail-icon::before,.stat-rail .rail-icon::after{display:none!important;content:none!important}
+.stat-rail .rail-icon.skull{background-position:80% 0%!important}
+.stat-rail .rail-icon.staff{background-position:20% 0%!important}
+.stat-rail .rail-icon.target{background-position:40% 0%!important}
+.stat-rail .rail-icon.crate{background-position:40% 100%!important}
+
+/* Pixel icon on common back controls, positioned inside the existing button box. */
+.game-back-btn{position:relative!important;padding-left:29px!important;overflow:hidden}
+.game-back-btn::before{
+  content:"";position:absolute;left:6px;top:50%;width:18px;height:18px;transform:translateY(-50%);
+  background-image:var(--v0139-menu-icons);background-repeat:no-repeat;background-size:600% 200%;background-position:100% 100%;
+  image-rendering:pixelated;pointer-events:none;filter:brightness(1.05) drop-shadow(0 1px 1px #0008)
+}
+
+/* Use a tiny generated chest pictogram for loot-collection actions; layout remains fixed. */
+.chapter-loot-btn{position:relative!important;padding-left:28px!important}
+.chapter-loot-btn::before{
+  content:"";position:absolute;left:5px;top:50%;width:18px;height:18px;transform:translateY(-50%);
+  background-image:var(--v0139-menu-icons);background-repeat:no-repeat;background-size:600% 200%;background-position:40% 100%;
+  image-rendering:pixelated;pointer-events:none;filter:brightness(.95)
+}
+
+@media(max-width:430px){
+  .facility-stack .facility-row{
+    min-height:78px!important;
+    grid-template-columns:56px minmax(0,1fr) auto!important;
+    gap:9px!important;
+    padding:8px 9px!important;
+  }
+  .facility-stack .facility-row::after{left:13px;width:48px;height:48px}
+  .facility-stack .facility-row .facility-copy b{font-size:17px!important}
+  .facility-stack .facility-row .facility-copy small{font-size:10px!important;margin-top:4px!important}
+  .facility-stack .facility-row .facility-side{gap:5px!important}
+  .facility-stack .facility-row .facility-side em{font-size:9px!important}
+  .facility-stack .facility-row .facility-side i{font-size:20px!important}
+  .bottom-nav .nav-pict{width:28px!important;height:28px!important}
+  .chapter-loot-btn{padding-left:25px!important}
+  .chapter-loot-btn::before{left:4px;width:16px;height:16px}
+}
+@media(max-width:360px){
+  .facility-stack .facility-row .facility-side em{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .bottom-nav .nav-pict,.stat-rail .rail-icon{filter:none!important}
+}
