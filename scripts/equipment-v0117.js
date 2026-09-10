@@ -67,7 +67,7 @@
     try{
       const {error}=await sb.rpc('game_equip_item_level',{p_monster:monsterId,p_item:itemId,p_level:Number(level||0)});
       if(error)throw error;
-      await api('state');
+      await api('state-lite');
       employeeModal(monsterId);
       toast(`${itemId}${Number(level)?` +${level}`:''} 장착`);
     }catch(err){

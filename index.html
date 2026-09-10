@@ -4,39 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=5">
 <meta name="theme-color" content="#171321">
-<title>용사 박멸 주식회사 v0.16.1</title>
+<title>용사 박멸 주식회사 v0.17.0</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://xtvhisddjtfnsumprgpm.supabase.co" crossorigin>
 <link rel="preload" as="image" href="assets/art-v014/headquarters.webp" fetchpriority="high">
 <link rel="preload" as="image" href="assets/icon-forge.svg">
 
-<link rel="stylesheet" href="app.css?v=0161a">
-<link rel="stylesheet" href="generated-assets.css?v=0161a">
-<link rel="stylesheet" href="ui-hotfix-v091.css?v=0161a">
-<link rel="stylesheet" href="battle-v092.css?v=0161a">
-<link rel="stylesheet" href="ui-v093.css?v=0161a">
-<link rel="stylesheet" href="ui-v094.css?v=0161a">
-<link rel="stylesheet" href="detail-v010.css?v=0161a">
-<link rel="stylesheet" href="detail-v0101.css?v=0161a">
-<link rel="stylesheet" href="economy-v011.css?v=0161a">
-<link rel="stylesheet" href="economy-v0128.css?v=0161a">
-<link rel="stylesheet" href="equipment-v0117.css?v=0161a">
-<link rel="stylesheet" href="ui-v0129.css?v=0161a">
-<link rel="stylesheet" href="ui-v0130.css?v=0161a">
-<link rel="stylesheet" href="ui-v0131.css?v=0161a">
-<link rel="stylesheet" href="ui-v0132.css?v=0161a">
-<link rel="stylesheet" href="ui-v0133.css?v=0161a">
-<link rel="stylesheet" href="ui-v0136.css?v=0161a">
-<link rel="stylesheet" href="ui-v0137.css?v=0161a">
-<link rel="stylesheet" href="ui-v01312.css?v=0161a">
-<link rel="stylesheet" href="ui-v01316.css?v=0161a">
-<link rel="stylesheet" href="ui-v01317.css?v=0161a">
-<link rel="stylesheet" href="ui-v01318.css?v=0161a">
-<link rel="stylesheet" href="ui-v01319.css?v=0161a">
-<link rel="stylesheet" href="ui-v014.css?v=0161a">
-<link rel="stylesheet" href="ui-v0141.css?v=0161a">
-<link rel="stylesheet" href="ui-v015.css?v=0161a">
-<link rel="stylesheet" href="ui-v016.css?v=0161a">
+<link rel="stylesheet" href="app.css?v=017a">
+<link rel="stylesheet" href="generated-assets.css?v=017a">
+<link rel="stylesheet" href="ui-hotfix-v091.css?v=017a">
+<link rel="stylesheet" href="battle-v092.css?v=017a">
+<link rel="stylesheet" href="ui-v093.css?v=017a">
+<link rel="stylesheet" href="ui-v094.css?v=017a">
+<link rel="stylesheet" href="detail-v010.css?v=017a">
+<link rel="stylesheet" href="detail-v0101.css?v=017a">
+<link rel="stylesheet" href="economy-v011.css?v=017a">
+<link rel="stylesheet" href="economy-v0128.css?v=017a">
+<link rel="stylesheet" href="equipment-v0117.css?v=017a">
+<link rel="stylesheet" href="ui-v0129.css?v=017a">
+<link rel="stylesheet" href="ui-v0130.css?v=017a">
+<link rel="stylesheet" href="ui-v0131.css?v=017a">
+<link rel="stylesheet" href="ui-v0132.css?v=017a">
+<link rel="stylesheet" href="ui-v0133.css?v=017a">
+<link rel="stylesheet" href="ui-v0136.css?v=017a">
+<link rel="stylesheet" href="ui-v0137.css?v=017a">
+<link rel="stylesheet" href="ui-v01312.css?v=017a">
+<link rel="stylesheet" href="ui-v01316.css?v=017a">
+<link rel="stylesheet" href="ui-v01317.css?v=017a">
+<link rel="stylesheet" href="ui-v01318.css?v=017a">
+<link rel="stylesheet" href="ui-v01319.css?v=017a">
+<link rel="stylesheet" href="ui-v014.css?v=017a">
+<link rel="stylesheet" href="ui-v0141.css?v=017a">
+<link rel="stylesheet" href="ui-v015.css?v=017a">
+<link rel="stylesheet" href="ui-v016.css?v=017a">
 <link rel="icon" href="assets/art-v014/monster-seal.svg" type="image/svg+xml">
 </head>
 <body>
@@ -59,7 +59,7 @@
 </section>
 <div id="app" class="hidden">
   <header class="game-header">
-    <div class="corp-bar"><button class="menu-button" data-action="menu" aria-label="메뉴"><i></i><i></i><i></i></button><div class="title-stack"><small>용사 박멸 주식회사 · v0.16.1</small><h1 id="screenTitle">본부</h1></div><div class="vault"><span>금고</span><b id="gold">0</b></div></div>
+    <div class="corp-bar"><button class="menu-button" data-action="menu" aria-label="메뉴"><i></i><i></i><i></i></button><div class="title-stack"><small>용사 박멸 주식회사 · v0.17.0</small><h1 id="screenTitle">본부</h1></div><div class="vault"><span>금고</span><b id="gold">0</b></div></div>
     <button id="briefStrip" class="brief-strip" data-action="brief"><span class="live-dot"></span><b>상황실</b><span id="briefLine">서버 연결 중...</span><i>›</i></button>
   </header>
   <main id="view" class="view">
@@ -74,29 +74,30 @@
 </div>
 <div id="modal" class="modal hidden"></div><div id="toast" class="toast"></div>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
-<script defer src="scripts/stability-v0133.js?v=0161a"></script>
-<script defer src="app.js?v=0161a"></script>
-<script defer src="scripts/equipment-v0117.js?v=0161a"></script>
-<script defer src="scripts/idle-economy-v016.js?v=0161a"></script>
+<script defer src="scripts/stability-v0133.js?v=017a"></script>
+<script defer src="app.js?v=017a"></script>
+<script defer src="scripts/equipment-v0117.js?v=017a"></script>
+<script defer src="scripts/idle-economy-v016.js?v=017a"></script>
 
-<script defer src="scripts/v0129-controls.js?v=0161a"></script>
-<script defer src="scripts/readability-v01316.js?v=0161a"></script>
-<script defer src="scripts/navigation-v0130.js?v=0161a"></script>
-<script defer src="scripts/menu-v01315.js?v=0161a"></script>
-<script defer src="scripts/v0131-hunt-status.js?v=0161a"></script>
-<script defer src="scripts/forge-v0132.js?v=0161a"></script>
-<script defer src="scripts/interaction-v0136.js?v=0161a"></script>
-<script defer src="scripts/sprites-v0137.js?v=0161a"></script>
-<script defer src="scripts/loot-collect-v01310.js?v=0161a"></script>
-<script defer src="scripts/facility-alerts-v01319.js?v=0161a"></script>
-<script defer src="scripts/expedition-v0141.js?v=0161a"></script>
-<script defer src="scripts/campaign-art.js?v=0161a"></script>
-<script defer src="scripts/campaign-loot.js?v=0161a"></script>
-<script defer src="scripts/campaign-math.js?v=0161a"></script>
-<script defer src="scripts/campaign-v015.js?v=0161a"></script>
-<script defer src="scripts/office-roster-v016.js?v=0161a"></script>
-<script defer src="scripts/office-art-v016.js?v=0161a"></script>
-<script defer src="scripts/office-v016.js?v=0161a"></script>
-<script defer src="scripts/defense-v016.js?v=0161a"></script>
+<script defer src="scripts/v0129-controls.js?v=017a"></script>
+<script defer src="scripts/readability-v01316.js?v=017a"></script>
+<script defer src="scripts/navigation-v0130.js?v=017a"></script>
+<script defer src="scripts/menu-v01315.js?v=017a"></script>
+<script defer src="scripts/v0131-hunt-status.js?v=017a"></script>
+<script defer src="scripts/forge-v0132.js?v=017a"></script>
+<script defer src="scripts/interaction-v0136.js?v=017a"></script>
+<script defer src="scripts/sprites-v0137.js?v=017a"></script>
+<script defer src="scripts/loot-collect-v01310.js?v=017a"></script>
+<script defer src="scripts/facility-alerts-v01319.js?v=017a"></script>
+<script defer src="scripts/expedition-v0141.js?v=017a"></script>
+<script defer src="scripts/item-art-v017.js?v=017a"></script>
+<script defer src="scripts/campaign-art.js?v=017a"></script>
+<script defer src="scripts/campaign-loot.js?v=017a"></script>
+<script defer src="scripts/campaign-math.js?v=017a"></script>
+<script defer src="scripts/campaign-v015.js?v=017a"></script>
+<script defer src="scripts/office-roster-v016.js?v=017a"></script>
+<script defer src="scripts/office-art-v016.js?v=017a"></script>
+<script defer src="scripts/office-v016.js?v=017a"></script>
+<script defer src="scripts/defense-v016.js?v=017a"></script>
 </body>
 </html>

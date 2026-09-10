@@ -56,7 +56,7 @@ try{
   // Only the client animation clock advances, so a poll cannot reset our test timestamp.
   const moves=await page.evaluate(async()=>{
    const frame=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))),realNow=Date.now,at=Date.parse(S.defense.wave.at);
-   const left=()=>parseFloat(document.querySelector('.defense-hero').style.left);
+   const left=()=>document.querySelector('.defense-hero').getBoundingClientRect().left;
    try{Date.now=()=>at;await frame();const before=left();Date.now=()=>at+1000;await window.__frontendPollNow?.();await frame();return left()>before+.5;}finally{Date.now=realNow;}
   });assert(moves,'hero position interpolates between server actions');
   await page.locator('[data-defense-action="boss"]').click();await page.waitForFunction(()=>S.defense.boss_auto);assert.equal(await page.locator('.defense-hero').count(),3,'same-wave rerender retains heroes');

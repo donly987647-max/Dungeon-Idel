@@ -1,0 +1,1267 @@
+{
+  "version": 17,
+  "columns": 5,
+  "rows": 5,
+  "items": {
+    "가죽 조각": {
+      "sheet": "items-01",
+      "col": 0,
+      "row": 0
+    },
+    "가죽 조끼": {
+      "sheet": "items-01",
+      "col": 1,
+      "row": 0
+    },
+    "강화석": {
+      "sheet": "items-01",
+      "col": 2,
+      "row": 0
+    },
+    "거친 천": {
+      "sheet": "items-01",
+      "col": 3,
+      "row": 0
+    },
+    "경비병 철갑": {
+      "sheet": "items-01",
+      "col": 4,
+      "row": 0
+    },
+    "나무 몽둥이": {
+      "sheet": "items-01",
+      "col": 0,
+      "row": 1
+    },
+    "나무 조각": {
+      "sheet": "items-01",
+      "col": 1,
+      "row": 1
+    },
+    "낡은 동전": {
+      "sheet": "items-01",
+      "col": 2,
+      "row": 1
+    },
+    "농부의 낫": {
+      "sheet": "items-01",
+      "col": 3,
+      "row": 1
+    },
+    "누더기 조끼": {
+      "sheet": "items-01",
+      "col": 4,
+      "row": 1
+    },
+    "단단한 가죽": {
+      "sheet": "items-01",
+      "col": 0,
+      "row": 2
+    },
+    "돌부적": {
+      "sheet": "items-01",
+      "col": 1,
+      "row": 2
+    },
+    "마대 천": {
+      "sheet": "items-01",
+      "col": 2,
+      "row": 2
+    },
+    "마른 약초": {
+      "sheet": "items-01",
+      "col": 3,
+      "row": 2
+    },
+    "병사의 검": {
+      "sheet": "items-01",
+      "col": 4,
+      "row": 2
+    },
+    "사냥꾼 부적": {
+      "sheet": "items-01",
+      "col": 0,
+      "row": 3
+    },
+    "왕국 동전": {
+      "sheet": "items-01",
+      "col": 1,
+      "row": 3
+    },
+    "왕국 문양 조각": {
+      "sheet": "items-01",
+      "col": 2,
+      "row": 3
+    },
+    "왕국 훈장": {
+      "sheet": "items-01",
+      "col": 3,
+      "row": 3
+    },
+    "은화 주머니": {
+      "sheet": "items-01",
+      "col": 4,
+      "row": 3
+    },
+    "철편": {
+      "sheet": "items-01",
+      "col": 0,
+      "row": 4
+    },
+    "연습용 표적 조각": {
+      "sheet": "items-01",
+      "col": 1,
+      "row": 4
+    },
+    "청년회 회비 봉투": {
+      "sheet": "items-01",
+      "col": 2,
+      "row": 4
+    },
+    "청년회 돌팔매": {
+      "sheet": "items-01",
+      "col": 3,
+      "row": 4
+    },
+    "청년회 출근표": {
+      "sheet": "items-01",
+      "col": 4,
+      "row": 4
+    },
+    "나무꾼 도끼날": {
+      "sheet": "items-02",
+      "col": 0,
+      "row": 0
+    },
+    "송진 묻은 장갑": {
+      "sheet": "items-02",
+      "col": 1,
+      "row": 0
+    },
+    "송진 작업복": {
+      "sheet": "items-02",
+      "col": 2,
+      "row": 0
+    },
+    "사냥꾼 활시위": {
+      "sheet": "items-02",
+      "col": 3,
+      "row": 0
+    },
+    "은닉처 단궁": {
+      "sheet": "items-02",
+      "col": 4,
+      "row": 0
+    },
+    "자경단 완장": {
+      "sheet": "items-02",
+      "col": 0,
+      "row": 1
+    },
+    "근무 교대표": {
+      "sheet": "items-02",
+      "col": 1,
+      "row": 1
+    },
+    "정시 순찰 완장": {
+      "sheet": "items-02",
+      "col": 2,
+      "row": 1
+    },
+    "베르크의 퇴근 종": {
+      "sheet": "items-02",
+      "col": 3,
+      "row": 1
+    },
+    "민원 반사 조끼": {
+      "sheet": "items-02",
+      "col": 4,
+      "row": 1
+    },
+    "곡물 배급표": {
+      "sheet": "items-02",
+      "col": 0,
+      "row": 2
+    },
+    "날 선 낫 조각": {
+      "sheet": "items-02",
+      "col": 1,
+      "row": 2
+    },
+    "소국 수확 장갑": {
+      "sheet": "items-02",
+      "col": 2,
+      "row": 2
+    },
+    "운송장 묶음": {
+      "sheet": "items-02",
+      "col": 3,
+      "row": 2
+    },
+    "짐꾼 어깨끈": {
+      "sheet": "items-02",
+      "col": 4,
+      "row": 2
+    },
+    "과적 운반대": {
+      "sheet": "items-02",
+      "col": 0,
+      "row": 3
+    },
+    "짐꾼 운송 망치": {
+      "sheet": "items-02",
+      "col": 1,
+      "row": 3
+    },
+    "호위 계약서": {
+      "sheet": "items-02",
+      "col": 2,
+      "row": 3
+    },
+    "경량 화살촉": {
+      "sheet": "items-02",
+      "col": 3,
+      "row": 3
+    },
+    "선불 호위 외투": {
+      "sheet": "items-02",
+      "col": 4,
+      "row": 3
+    },
+    "경비대 호루라기": {
+      "sheet": "items-02",
+      "col": 0,
+      "row": 4
+    },
+    "가죽 방패끈": {
+      "sheet": "items-02",
+      "col": 1,
+      "row": 4
+    },
+    "검문 면제 목걸이": {
+      "sheet": "items-02",
+      "col": 2,
+      "row": 4
+    },
+    "브란의 계약 파기검": {
+      "sheet": "items-02",
+      "col": 3,
+      "row": 4
+    },
+    "무기한 호위 계약서": {
+      "sheet": "items-02",
+      "col": 4,
+      "row": 4
+    },
+    "신병 인식표": {
+      "sheet": "items-03",
+      "col": 0,
+      "row": 0
+    },
+    "훈련 일지": {
+      "sheet": "items-03",
+      "col": 1,
+      "row": 0
+    },
+    "신병 생존 조끼": {
+      "sheet": "items-03",
+      "col": 2,
+      "row": 0
+    },
+    "석궁 걸쇠": {
+      "sheet": "items-03",
+      "col": 3,
+      "row": 0
+    },
+    "관통 볼트": {
+      "sheet": "items-03",
+      "col": 4,
+      "row": 0
+    },
+    "초소 관통 석궁": {
+      "sheet": "items-03",
+      "col": 0,
+      "row": 1
+    },
+    "탄도 계산 렌즈": {
+      "sheet": "items-03",
+      "col": 1,
+      "row": 1
+    },
+    "초소 열쇠": {
+      "sheet": "items-03",
+      "col": 2,
+      "row": 1
+    },
+    "규율 수첩": {
+      "sheet": "items-03",
+      "col": 3,
+      "row": 1
+    },
+    "경계 근무 철퇴": {
+      "sheet": "items-03",
+      "col": 4,
+      "row": 1
+    },
+    "기사 서약문": {
+      "sheet": "items-03",
+      "col": 0,
+      "row": 2
+    },
+    "기사 서약 갑옷": {
+      "sheet": "items-03",
+      "col": 1,
+      "row": 2
+    },
+    "부관의 결재 대검": {
+      "sheet": "items-03",
+      "col": 2,
+      "row": 2
+    },
+    "반려 불가 철갑": {
+      "sheet": "items-03",
+      "col": 3,
+      "row": 2
+    },
+    "빛바랜 벽지": {
+      "sheet": "items-03",
+      "col": 4,
+      "row": 2
+    },
+    "깨진 샹들리에": {
+      "sheet": "items-03",
+      "col": 0,
+      "row": 3
+    },
+    "성벽 석재 조각": {
+      "sheet": "items-03",
+      "col": 1,
+      "row": 3
+    },
+    "성문 열쇠고리": {
+      "sheet": "items-03",
+      "col": 2,
+      "row": 3
+    },
+    "방패병 견갑": {
+      "sheet": "items-03",
+      "col": 3,
+      "row": 3
+    },
+    "성문 돌파 장화": {
+      "sheet": "items-03",
+      "col": 4,
+      "row": 3
+    },
+    "공성 근무 철퇴": {
+      "sheet": "items-03",
+      "col": 0,
+      "row": 4
+    },
+    "왕성 세금 고지서": {
+      "sheet": "items-03",
+      "col": 1,
+      "row": 4
+    },
+    "징세 인장": {
+      "sheet": "items-03",
+      "col": 2,
+      "row": 4
+    },
+    "미납금 징수봉": {
+      "sheet": "items-03",
+      "col": 3,
+      "row": 4
+    },
+    "납세 거부 인장": {
+      "sheet": "items-03",
+      "col": 4,
+      "row": 4
+    },
+    "궁정 성가 악보": {
+      "sheet": "items-04",
+      "col": 0,
+      "row": 0
+    },
+    "치유 향낭": {
+      "sheet": "items-04",
+      "col": 1,
+      "row": 0
+    },
+    "야근 면제 성가집": {
+      "sheet": "items-04",
+      "col": 2,
+      "row": 0
+    },
+    "궁정 응급 외투": {
+      "sheet": "items-04",
+      "col": 3,
+      "row": 0
+    },
+    "성채 임명장": {
+      "sheet": "items-04",
+      "col": 4,
+      "row": 0
+    },
+    "은빛 방패편": {
+      "sheet": "items-04",
+      "col": 0,
+      "row": 1
+    },
+    "봉인된 은빛 방패": {
+      "sheet": "items-04",
+      "col": 1,
+      "row": 1
+    },
+    "성채 반격 창": {
+      "sheet": "items-04",
+      "col": 2,
+      "row": 1
+    },
+    "발레리의 성문 절단검": {
+      "sheet": "items-04",
+      "col": 3,
+      "row": 1
+    },
+    "기적의 유급 휴가증": {
+      "sheet": "items-04",
+      "col": 4,
+      "row": 1
+    },
+    "황동 장식편": {
+      "sheet": "items-04",
+      "col": 0,
+      "row": 2
+    },
+    "비단 자투리": {
+      "sheet": "items-04",
+      "col": 1,
+      "row": 2
+    },
+    "깨진 왕관 보석": {
+      "sheet": "items-04",
+      "col": 2,
+      "row": 2
+    },
+    "근위대 휘장": {
+      "sheet": "items-04",
+      "col": 3,
+      "row": 2
+    },
+    "왕실 갑옷 나사": {
+      "sheet": "items-04",
+      "col": 4,
+      "row": 2
+    },
+    "근위대 정장 갑옷": {
+      "sheet": "items-04",
+      "col": 0,
+      "row": 3
+    },
+    "왕실 정리해고 도끼": {
+      "sheet": "items-04",
+      "col": 1,
+      "row": 3
+    },
+    "궁정 주문서": {
+      "sheet": "items-04",
+      "col": 2,
+      "row": 3,
+      "sourceRect": [
+        516.6,
+        752.4,
+        235.8,
+        250.8
+      ]
+    },
+    "정제 마력 결정": {
+      "sheet": "items-04",
+      "col": 3,
+      "row": 3
+    },
+    "궁정 비품 지팡이": {
+      "sheet": "items-04",
+      "col": 4,
+      "row": 3
+    },
+    "마력 감사 렌즈": {
+      "sheet": "items-04",
+      "col": 0,
+      "row": 4
+    },
+    "왕실 채권": {
+      "sheet": "items-04",
+      "col": 1,
+      "row": 4
+    },
+    "금고 암호판": {
+      "sheet": "items-04",
+      "col": 2,
+      "row": 4
+    },
+    "성과급 압류 인장": {
+      "sheet": "items-04",
+      "col": 3,
+      "row": 4
+    },
+    "왕실 예산 방어복": {
+      "sheet": "items-04",
+      "col": 4,
+      "row": 4
+    },
+    "용사 경력 증명서": {
+      "sheet": "items-05",
+      "col": 0,
+      "row": 0
+    },
+    "금빛 검집 장식": {
+      "sheet": "items-05",
+      "col": 1,
+      "row": 0
+    },
+    "명예퇴직 대검": {
+      "sheet": "items-05",
+      "col": 2,
+      "row": 0
+    },
+    "용사 연금 수령증": {
+      "sheet": "items-05",
+      "col": 3,
+      "row": 0
+    },
+    "아우렐의 사직서": {
+      "sheet": "items-05",
+      "col": 4,
+      "row": 0
+    },
+    "용사 박멸 대표이사 인장": {
+      "sheet": "items-05",
+      "col": 0,
+      "row": 1
+    },
+    "산골 수습 몽둥이": {
+      "sheet": "items-05",
+      "col": 1,
+      "row": 1
+    },
+    "산골 수습 작업복": {
+      "sheet": "items-05",
+      "col": 2,
+      "row": 1
+    },
+    "산골 수습 출근증": {
+      "sheet": "items-05",
+      "col": 3,
+      "row": 1
+    },
+    "산골 침투 몽둥이": {
+      "sheet": "items-05",
+      "col": 4,
+      "row": 1
+    },
+    "산골 침투 작업복": {
+      "sheet": "items-05",
+      "col": 0,
+      "row": 2
+    },
+    "산골 침투 출근증": {
+      "sheet": "items-05",
+      "col": 1,
+      "row": 2
+    },
+    "산골 수호 몽둥이": {
+      "sheet": "items-05",
+      "col": 2,
+      "row": 2
+    },
+    "산골 수호 작업복": {
+      "sheet": "items-05",
+      "col": 3,
+      "row": 2
+    },
+    "산골 수호 출근증": {
+      "sheet": "items-05",
+      "col": 4,
+      "row": 2
+    },
+    "산골 특무 몽둥이": {
+      "sheet": "items-05",
+      "col": 0,
+      "row": 3
+    },
+    "산골 특무 작업복": {
+      "sheet": "items-05",
+      "col": 1,
+      "row": 3
+    },
+    "산골 특무 출근증": {
+      "sheet": "items-05",
+      "col": 2,
+      "row": 3
+    },
+    "산골 야간 몽둥이": {
+      "sheet": "items-05",
+      "col": 3,
+      "row": 3
+    },
+    "산골 야간 작업복": {
+      "sheet": "items-05",
+      "col": 4,
+      "row": 3
+    },
+    "산골 야간 출근증": {
+      "sheet": "items-05",
+      "col": 0,
+      "row": 4
+    },
+    "산골 대표 몽둥이": {
+      "sheet": "items-05",
+      "col": 1,
+      "row": 4
+    },
+    "산골 대표 작업복": {
+      "sheet": "items-05",
+      "col": 2,
+      "row": 4
+    },
+    "산골 대표 출근증": {
+      "sheet": "items-05",
+      "col": 3,
+      "row": 4
+    },
+    "산골 자경단 인장": {
+      "sheet": "items-05",
+      "col": 4,
+      "row": 4
+    },
+    "산골 새벽의 심장": {
+      "sheet": "items-06",
+      "col": 0,
+      "row": 0
+    },
+    "소국 수습 보급검": {
+      "sheet": "items-06",
+      "col": 1,
+      "row": 0
+    },
+    "소국 수습 호위복": {
+      "sheet": "items-06",
+      "col": 2,
+      "row": 0
+    },
+    "소국 수습 계약패": {
+      "sheet": "items-06",
+      "col": 3,
+      "row": 0
+    },
+    "소국 침투 보급검": {
+      "sheet": "items-06",
+      "col": 4,
+      "row": 0
+    },
+    "소국 침투 호위복": {
+      "sheet": "items-06",
+      "col": 0,
+      "row": 1
+    },
+    "소국 침투 계약패": {
+      "sheet": "items-06",
+      "col": 1,
+      "row": 1
+    },
+    "소국 수호 보급검": {
+      "sheet": "items-06",
+      "col": 2,
+      "row": 1
+    },
+    "소국 수호 호위복": {
+      "sheet": "items-06",
+      "col": 3,
+      "row": 1
+    },
+    "소국 수호 계약패": {
+      "sheet": "items-06",
+      "col": 4,
+      "row": 1
+    },
+    "소국 특무 보급검": {
+      "sheet": "items-06",
+      "col": 0,
+      "row": 2
+    },
+    "소국 특무 호위복": {
+      "sheet": "items-06",
+      "col": 1,
+      "row": 2
+    },
+    "소국 특무 계약패": {
+      "sheet": "items-06",
+      "col": 2,
+      "row": 2
+    },
+    "소국 야간 보급검": {
+      "sheet": "items-06",
+      "col": 3,
+      "row": 2
+    },
+    "소국 야간 호위복": {
+      "sheet": "items-06",
+      "col": 4,
+      "row": 2
+    },
+    "소국 야간 계약패": {
+      "sheet": "items-06",
+      "col": 0,
+      "row": 3
+    },
+    "소국 대표 보급검": {
+      "sheet": "items-06",
+      "col": 1,
+      "row": 3
+    },
+    "소국 대표 호위복": {
+      "sheet": "items-06",
+      "col": 2,
+      "row": 3
+    },
+    "소국 대표 계약패": {
+      "sheet": "items-06",
+      "col": 3,
+      "row": 3
+    },
+    "소국 용병 계약핵": {
+      "sheet": "items-06",
+      "col": 4,
+      "row": 3
+    },
+    "소국 맹세의 심장": {
+      "sheet": "items-06",
+      "col": 0,
+      "row": 4
+    },
+    "왕국 수습 결재검": {
+      "sheet": "items-06",
+      "col": 1,
+      "row": 4
+    },
+    "왕국 수습 기사갑주": {
+      "sheet": "items-06",
+      "col": 2,
+      "row": 4
+    },
+    "왕국 수습 인사인장": {
+      "sheet": "items-06",
+      "col": 3,
+      "row": 4
+    },
+    "왕국 침투 결재검": {
+      "sheet": "items-06",
+      "col": 4,
+      "row": 4
+    },
+    "왕국 침투 기사갑주": {
+      "sheet": "items-07",
+      "col": 0,
+      "row": 0
+    },
+    "왕국 침투 인사인장": {
+      "sheet": "items-07",
+      "col": 1,
+      "row": 0
+    },
+    "왕국 수호 결재검": {
+      "sheet": "items-07",
+      "col": 2,
+      "row": 0
+    },
+    "왕국 수호 기사갑주": {
+      "sheet": "items-07",
+      "col": 3,
+      "row": 0
+    },
+    "왕국 수호 인사인장": {
+      "sheet": "items-07",
+      "col": 4,
+      "row": 0
+    },
+    "왕국 특무 결재검": {
+      "sheet": "items-07",
+      "col": 0,
+      "row": 1
+    },
+    "왕국 특무 기사갑주": {
+      "sheet": "items-07",
+      "col": 1,
+      "row": 1
+    },
+    "왕국 특무 인사인장": {
+      "sheet": "items-07",
+      "col": 2,
+      "row": 1
+    },
+    "왕국 야간 결재검": {
+      "sheet": "items-07",
+      "col": 3,
+      "row": 1
+    },
+    "왕국 야간 기사갑주": {
+      "sheet": "items-07",
+      "col": 4,
+      "row": 1
+    },
+    "왕국 야간 인사인장": {
+      "sheet": "items-07",
+      "col": 0,
+      "row": 2
+    },
+    "왕국 대표 결재검": {
+      "sheet": "items-07",
+      "col": 1,
+      "row": 2
+    },
+    "왕국 대표 기사갑주": {
+      "sheet": "items-07",
+      "col": 2,
+      "row": 2
+    },
+    "왕국 대표 인사인장": {
+      "sheet": "items-07",
+      "col": 3,
+      "row": 2
+    },
+    "왕국 기사단 인장": {
+      "sheet": "items-07",
+      "col": 4,
+      "row": 2
+    },
+    "왕국 명예의 심장": {
+      "sheet": "items-07",
+      "col": 0,
+      "row": 3
+    },
+    "성채 수습 공성망치": {
+      "sheet": "items-07",
+      "col": 1,
+      "row": 3
+    },
+    "성채 수습 근위갑주": {
+      "sheet": "items-07",
+      "col": 2,
+      "row": 3
+    },
+    "성채 수습 휴가증": {
+      "sheet": "items-07",
+      "col": 3,
+      "row": 3
+    },
+    "성채 침투 공성망치": {
+      "sheet": "items-07",
+      "col": 4,
+      "row": 3
+    },
+    "성채 침투 근위갑주": {
+      "sheet": "items-07",
+      "col": 0,
+      "row": 4
+    },
+    "성채 침투 휴가증": {
+      "sheet": "items-07",
+      "col": 1,
+      "row": 4
+    },
+    "성채 수호 공성망치": {
+      "sheet": "items-07",
+      "col": 2,
+      "row": 4
+    },
+    "성채 수호 근위갑주": {
+      "sheet": "items-07",
+      "col": 3,
+      "row": 4
+    },
+    "성채 수호 휴가증": {
+      "sheet": "items-07",
+      "col": 4,
+      "row": 4
+    },
+    "성채 특무 공성망치": {
+      "sheet": "items-08",
+      "col": 0,
+      "row": 0
+    },
+    "성채 특무 근위갑주": {
+      "sheet": "items-08",
+      "col": 1,
+      "row": 0
+    },
+    "성채 특무 휴가증": {
+      "sheet": "items-08",
+      "col": 2,
+      "row": 0
+    },
+    "성채 야간 공성망치": {
+      "sheet": "items-08",
+      "col": 3,
+      "row": 0
+    },
+    "성채 야간 근위갑주": {
+      "sheet": "items-08",
+      "col": 4,
+      "row": 0
+    },
+    "성채 야간 휴가증": {
+      "sheet": "items-08",
+      "col": 0,
+      "row": 1
+    },
+    "성채 대표 공성망치": {
+      "sheet": "items-08",
+      "col": 1,
+      "row": 1
+    },
+    "성채 대표 근위갑주": {
+      "sheet": "items-08",
+      "col": 2,
+      "row": 1
+    },
+    "성채 대표 휴가증": {
+      "sheet": "items-08",
+      "col": 3,
+      "row": 1
+    },
+    "성채 근위대 인장": {
+      "sheet": "items-08",
+      "col": 4,
+      "row": 1
+    },
+    "성채 철벽의 심장": {
+      "sheet": "items-08",
+      "col": 0,
+      "row": 2
+    },
+    "왕도 수습 박멸검": {
+      "sheet": "items-08",
+      "col": 1,
+      "row": 2
+    },
+    "왕도 수습 대표갑주": {
+      "sheet": "items-08",
+      "col": 2,
+      "row": 2
+    },
+    "왕도 수습 법인인장": {
+      "sheet": "items-08",
+      "col": 3,
+      "row": 2
+    },
+    "왕도 침투 박멸검": {
+      "sheet": "items-08",
+      "col": 4,
+      "row": 2
+    },
+    "왕도 침투 대표갑주": {
+      "sheet": "items-08",
+      "col": 0,
+      "row": 3
+    },
+    "왕도 침투 법인인장": {
+      "sheet": "items-08",
+      "col": 1,
+      "row": 3
+    },
+    "왕도 수호 박멸검": {
+      "sheet": "items-08",
+      "col": 2,
+      "row": 3
+    },
+    "왕도 수호 대표갑주": {
+      "sheet": "items-08",
+      "col": 3,
+      "row": 3
+    },
+    "왕도 수호 법인인장": {
+      "sheet": "items-08",
+      "col": 4,
+      "row": 3
+    },
+    "왕도 특무 박멸검": {
+      "sheet": "items-08",
+      "col": 0,
+      "row": 4
+    },
+    "왕도 특무 대표갑주": {
+      "sheet": "items-08",
+      "col": 1,
+      "row": 4
+    },
+    "왕도 특무 법인인장": {
+      "sheet": "items-08",
+      "col": 2,
+      "row": 4
+    },
+    "왕도 야간 박멸검": {
+      "sheet": "items-08",
+      "col": 3,
+      "row": 4
+    },
+    "왕도 야간 대표갑주": {
+      "sheet": "items-08",
+      "col": 4,
+      "row": 4
+    },
+    "왕도 야간 법인인장": {
+      "sheet": "items-09",
+      "col": 0,
+      "row": 0
+    },
+    "왕도 대표 박멸검": {
+      "sheet": "items-09",
+      "col": 1,
+      "row": 0
+    },
+    "왕도 대표 대표갑주": {
+      "sheet": "items-09",
+      "col": 2,
+      "row": 0
+    },
+    "왕도 대표 법인인장": {
+      "sheet": "items-09",
+      "col": 3,
+      "row": 0
+    },
+    "왕도 영웅 인장": {
+      "sheet": "items-09",
+      "col": 4,
+      "row": 0
+    },
+    "왕도 여명의 심장": {
+      "sheet": "items-09",
+      "col": 0,
+      "row": 1
+    },
+    "잡화 꾸러미": {
+      "sheet": "items-09",
+      "col": 1,
+      "row": 1
+    },
+    "약초 포대": {
+      "sheet": "items-09",
+      "col": 2,
+      "row": 1
+    },
+    "가죽 공구집": {
+      "sheet": "items-09",
+      "col": 3,
+      "row": 1
+    },
+    "보급용 가방": {
+      "sheet": "items-09",
+      "col": 4,
+      "row": 1
+    },
+    "철제 공구세트": {
+      "sheet": "items-09",
+      "col": 0,
+      "row": 2
+    },
+    "왕국 위조 훈장": {
+      "sheet": "items-09",
+      "col": 1,
+      "row": 2
+    },
+    "산골 판촉 꾸러미": {
+      "sheet": "items-09",
+      "col": 2,
+      "row": 2
+    },
+    "야외 근무 키트": {
+      "sheet": "items-09",
+      "col": 3,
+      "row": 2
+    },
+    "자경단 위장 세트": {
+      "sheet": "items-09",
+      "col": 4,
+      "row": 2
+    },
+    "민원 파쇄 묶음": {
+      "sheet": "items-09",
+      "col": 0,
+      "row": 3
+    },
+    "수확물 위탁 상자": {
+      "sheet": "items-09",
+      "col": 1,
+      "row": 3
+    },
+    "용병 복지 꾸러미": {
+      "sheet": "items-09",
+      "col": 2,
+      "row": 3
+    },
+    "보급품 재포장 세트": {
+      "sheet": "items-09",
+      "col": 3,
+      "row": 3
+    },
+    "위장 호위 증명서": {
+      "sheet": "items-09",
+      "col": 4,
+      "row": 3
+    },
+    "변경 수리 공구함": {
+      "sheet": "items-09",
+      "col": 0,
+      "row": 4
+    },
+    "왕국 출장 증빙": {
+      "sheet": "items-09",
+      "col": 1,
+      "row": 4
+    },
+    "초소 보안 꾸러미": {
+      "sheet": "items-09",
+      "col": 2,
+      "row": 4
+    },
+    "기사단 모조 기념품": {
+      "sheet": "items-09",
+      "col": 3,
+      "row": 4
+    },
+    "왕성 인테리어 꾸러미": {
+      "sheet": "items-09",
+      "col": 4,
+      "row": 4
+    },
+    "세무 대응 증빙 세트": {
+      "sheet": "items-10",
+      "col": 0,
+      "row": 0,
+      "sourceRect": [
+        0.0,
+        0,
+        250.8,
+        350
+      ]
+    },
+    "궁정 복지 꾸러미": {
+      "sheet": "items-10",
+      "col": 1,
+      "row": 0,
+      "sourceRect": [
+        250.8,
+        0,
+        250.8,
+        350
+      ]
+    },
+    "성채 위장 근무복": {
+      "sheet": "items-10",
+      "col": 2,
+      "row": 0,
+      "sourceRect": [
+        501.6,
+        0,
+        250.8,
+        350
+      ]
+    },
+    "왕도 고급 판촉물": {
+      "sheet": "items-10",
+      "col": 3,
+      "row": 0,
+      "sourceRect": [
+        752.4,
+        0,
+        250.8,
+        350
+      ]
+    },
+    "왕실 정비 세트": {
+      "sheet": "items-10",
+      "col": 4,
+      "row": 0,
+      "sourceRect": [
+        1003.2,
+        0,
+        250.8,
+        350
+      ]
+    },
+    "궁정 결재 대행 서류": {
+      "sheet": "items-10",
+      "col": 0,
+      "row": 1,
+      "sourceRect": [
+        0.0,
+        350,
+        250.8,
+        320
+      ]
+    },
+    "용사 명예퇴직 패키지": {
+      "sheet": "items-10",
+      "col": 1,
+      "row": 1,
+      "sourceRect": [
+        250.8,
+        350,
+        250.8,
+        320
+      ]
+    }
+  },
+  "sheets": [
+    {
+      "id": "items-01",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 가죽 조각 (material, object, 재료). 변두리 소국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 1, column 2: 가죽 조끼 (equipment, armor, 고급). 방어력에 비해 복리후생은 부족했습니다.\nRow 1, column 3: 강화석 (material, object, 재료). 적 처치에서만 나오는 장비 강화 재료. 대장간에서 사용합니다.\nRow 1, column 4: 거친 천 (material, object, 재료). 산골 마을의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 1, column 5: 경비병 철갑 (equipment, armor, 희귀). 무겁지만 초과 근무에 강합니다.\nRow 2, column 1: 나무 몽둥이 (equipment, weapon, 고급). 인사 대신 몽둥이를 건넵니다.\nRow 2, column 2: 나무 조각 (material, object, 재료). 산골 마을의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 2, column 3: 낡은 동전 (material, object, 재료). 산골 마을의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 2, column 4: 농부의 낫 (equipment, weapon, 고급). 수확 대상 변경 신청 완료.\nRow 2, column 5: 누더기 조끼 (equipment, armor, 고급). 법정 근무 시간만큼 오래 버티는 조끼.\nRow 3, column 1: 단단한 가죽 (material, object, 재료). 작은 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 3, column 2: 돌부적 (equipment, accessory, 고급). 사냥꾼의 행운은 이제 회사 자산입니다.\nRow 3, column 3: 마대 천 (material, object, 재료). 변두리 소국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 3, column 4: 마른 약초 (material, object, 재료). 마을 사냥꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 3, column 5: 병사의 검 (equipment, weapon, 희귀). 훈련보다 실전에 더 빨리 투입됐습니다.\nRow 4, column 1: 사냥꾼 부적 (equipment, accessory, 고급). 호위 계약의 작은 글씨는 읽지 마세요.\nRow 4, column 2: 왕국 동전 (material, object, 재료). 작은 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 4, column 3: 왕국 문양 조각 (material, object, 재료). 하급 기사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 4: 왕국 훈장 (equipment, accessory, 희귀). 회사 게시판의 이달의 사원 칸에 걸어두세요.\nRow 4, column 5: 은화 주머니 (material, object, 재료). 변두리 소국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 5, column 1: 철편 (material, object, 재료). 작은 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 5, column 2: 연습용 표적 조각 (material, object, 재료). 산골 청년 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 3: 청년회 회비 봉투 (material, object, 재료). 산골 청년 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 4: 청년회 돌팔매 (equipment, weapon, 고급). 회비 미납자를 찾을 때 쓰던 투석구.\nRow 5, column 5: 청년회 출근표 (equipment, accessory, 고급). 첫 출근부터 인간 대신 몬스터가 찍혔습니다.\n"
+    },
+    {
+      "id": "items-02",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 나무꾼 도끼날 (material, object, 재료). 나무꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 2: 송진 묻은 장갑 (material, object, 재료). 나무꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 3: 송진 작업복 (equipment, armor, 고급). 끈끈한 동료애를 물리적으로 표현합니다.\nRow 1, column 4: 사냥꾼 활시위 (material, object, 재료). 마을 사냥꾼 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 5: 은닉처 단궁 (equipment, weapon, 고급). 발견한 시점부터 회사 비품입니다.\nRow 2, column 1: 자경단 완장 (material, object, 재료). 자경대장 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 2, column 2: 근무 교대표 (material, object, 재료). 자경대장 전용 전리품. 자경단장 베르크도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 2, column 3: 정시 순찰 완장 (equipment, accessory, 고급). 순찰 종료 시간만큼은 철저하게 지켰습니다.\nRow 2, column 4: 베르크의 퇴근 종 (equipment, weapon, 전설). 종이 울리면 인간의 근무가 끝납니다.\nRow 2, column 5: 민원 반사 조끼 (equipment, armor, 전설). 접수된 민원은 담당 용사에게 반송됩니다.\nRow 3, column 1: 곡물 배급표 (material, object, 재료). 농부 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 3, column 2: 날 선 낫 조각 (material, object, 재료). 농부 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 3, column 3: 소국 수확 장갑 (equipment, accessory, 고급). 경작지는 작아도 악행의 꿈은 큽니다.\nRow 3, column 4: 운송장 묶음 (material, object, 재료). 짐꾼 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 3, column 5: 짐꾼 어깨끈 (material, object, 재료). 짐꾼 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 1: 과적 운반대 (equipment, armor, 고급). 적재 한도보다 생존 의지가 중요합니다.\nRow 4, column 2: 짐꾼 운송 망치 (equipment, weapon, 고급). 파손 주의 표시는 상대에게 붙입니다.\nRow 4, column 3: 호위 계약서 (material, object, 재료). 행상인 호위 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 4: 경량 화살촉 (material, object, 재료). 행상인 호위 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 5: 선불 호위 외투 (equipment, armor, 고급). 대금은 먼저, 방어는 나중에.\nRow 5, column 1: 경비대 호루라기 (material, object, 재료). 마을 경비병 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 2: 가죽 방패끈 (material, object, 재료). 마을 경비병 전용 전리품. 용병대장 브란도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 3: 검문 면제 목걸이 (equipment, accessory, 고급). 뇌물은 회사 경비로 처리해 드립니다.\nRow 5, column 4: 브란의 계약 파기검 (equipment, weapon, 전설). 위약금은 인간 측에서 부담합니다.\nRow 5, column 5: 무기한 호위 계약서 (equipment, accessory, 전설). 계약 기간: 몬스터가 원할 때까지.\n"
+    },
+    {
+      "id": "items-03",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 신병 인식표 (material, object, 재료). 신참 병사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 2: 훈련 일지 (material, object, 재료). 신참 병사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 3: 신병 생존 조끼 (equipment, armor, 희귀). 훈련소보다 회사의 안전 교육이 낫습니다.\nRow 1, column 4: 석궁 걸쇠 (material, object, 재료). 석궁병 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 5: 관통 볼트 (material, object, 재료). 석궁병 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 2, column 1: 초소 관통 석궁 (equipment, weapon, 희귀). 왕국 보안 체계를 관통하는 회사 비품.\nRow 2, column 2: 탄도 계산 렌즈 (equipment, accessory, 희귀). 인간의 급소를 결재선처럼 정확히 찾습니다.\nRow 2, column 3: 초소 열쇠 (material, object, 재료). 초소 경비대 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 2, column 4: 규율 수첩 (material, object, 재료). 초소 경비대 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 2, column 5: 경계 근무 철퇴 (equipment, weapon, 희귀). 밤샘 근무의 무게가 실렸습니다.\nRow 3, column 1: 기사 서약문 (material, object, 재료). 하급 기사 전용 전리품. 왕국 기사단 부관도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 3, column 2: 기사 서약 갑옷 (equipment, armor, 희귀). 서약의 수혜자가 회사로 바뀌었습니다.\nRow 3, column 3: 부관의 결재 대검 (equipment, weapon, 전설). 한 번 휘두르면 결재선이 짧아집니다.\nRow 3, column 4: 반려 불가 철갑 (equipment, armor, 전설). 인간의 공격 요청을 반려하는 데 특화됐습니다.\nRow 3, column 5: 빛바랜 벽지 (material, object, 재료). 거대한 성의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 4, column 1: 깨진 샹들리에 (material, object, 재료). 거대한 성의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 4, column 2: 성벽 석재 조각 (material, object, 재료). 거대한 성의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 4, column 3: 성문 열쇠고리 (material, object, 재료). 성문 방패병 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 4: 방패병 견갑 (material, object, 재료). 성문 방패병 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 5: 성문 돌파 장화 (equipment, armor, 희귀). 노크는 생략해도 됩니다.\nRow 5, column 1: 공성 근무 철퇴 (equipment, weapon, 희귀). 거대한 성에도 퇴근 시간은 있습니다.\nRow 5, column 2: 왕성 세금 고지서 (material, object, 재료). 왕성 징세관 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 3: 징세 인장 (material, object, 재료). 왕성 징세관 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 4: 미납금 징수봉 (equipment, weapon, 희귀). 세금 대상은 전 인류입니다.\nRow 5, column 5: 납세 거부 인장 (equipment, accessory, 희귀). 해당 세금은 몬스터에게 적용되지 않습니다.\n"
+    },
+    {
+      "id": "items-04",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 궁정 성가 악보 (material, object, 재료). 궁정 치유사 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 2: 치유 향낭 (material, object, 재료). 궁정 치유사 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 3: 야근 면제 성가집 (equipment, accessory, 희귀). 읽는다고 야근이 사라지지는 않습니다.\nRow 1, column 4: 궁정 응급 외투 (equipment, armor, 희귀). 치료 담당의 생존도 복지입니다.\nRow 1, column 5: 성채 임명장 (material, object, 재료). 성채 근위대 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 2, column 1: 은빛 방패편 (material, object, 재료). 성채 근위대 전용 전리품. 철벽의 성주 발레리도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 2, column 2: 봉인된 은빛 방패 (equipment, armor, 희귀). 해제 비밀번호: 정시 퇴근.\nRow 2, column 3: 성채 반격 창 (equipment, weapon, 희귀). 서류 접수 창구와는 관계없습니다.\nRow 2, column 4: 발레리의 성문 절단검 (equipment, weapon, 전설). 성문 인수 절차를 단축하는 도구입니다.\nRow 2, column 5: 기적의 유급 휴가증 (equipment, accessory, 전설). 서류상으로만 존재하던 전설의 복지.\nRow 3, column 1: 황동 장식편 (material, object, 재료). 용사 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 3, column 2: 비단 자투리 (material, object, 재료). 용사 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 3, column 3: 깨진 왕관 보석 (material, object, 재료). 용사 왕국의 바닥 수색에서만 발견됩니다. 가공하거나 상점에서 판매할 수 있습니다.\nRow 3, column 4: 근위대 휘장 (material, object, 재료). 왕실 근위병 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 3, column 5: 왕실 갑옷 나사 (material, object, 재료). 왕실 근위병 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 1: 근위대 정장 갑옷 (equipment, armor, 영웅). 드레스 코드는 중갑입니다.\nRow 4, column 2: 왕실 정리해고 도끼 (equipment, weapon, 영웅). 인사권을 물리적으로 행사합니다.\nRow 4, column 3: 궁정 주문서 (material, object, 재료). 궁정 마도사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 4: 정제 마력 결정 (material, object, 재료). 궁정 마도사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 4, column 5: 궁정 비품 지팡이 (equipment, weapon, 영웅). 반출 금지 도장은 이미 찍혀 있습니다.\nRow 5, column 1: 마력 감사 렌즈 (equipment, accessory, 영웅). 불필요한 영웅 마력을 찾아냅니다.\nRow 5, column 2: 왕실 채권 (material, object, 재료). 왕실 재무관 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 3: 금고 암호판 (material, object, 재료). 왕실 재무관 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 5, column 4: 성과급 압류 인장 (equipment, accessory, 영웅). 올해의 성과급은 본사가 회수합니다.\nRow 5, column 5: 왕실 예산 방어복 (equipment, armor, 영웅). 어떤 공격에도 예산 삭감만큼은 견딥니다.\n"
+    },
+    {
+      "id": "items-05",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 용사 경력 증명서 (material, object, 재료). 은퇴 예정 용사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 2: 금빛 검집 장식 (material, object, 재료). 은퇴 예정 용사 전용 전리품. 대표 용사 아우렐도 보유할 수 있습니다. 제작소에서 회사 상품으로 가공합니다.\nRow 1, column 3: 명예퇴직 대검 (equipment, weapon, 영웅). 퇴직 사유: 몬스터 측 경영상 판단.\nRow 1, column 4: 용사 연금 수령증 (equipment, accessory, 영웅). 연금 수령인은 회사로 변경됐습니다.\nRow 1, column 5: 아우렐의 사직서 (equipment, weapon, 전설). 세계를 구할 사람이 퇴사했습니다.\nRow 2, column 1: 용사 박멸 대표이사 인장 (equipment, accessory, 전설). 도장 한 번에 세계의 고용 관계가 바뀝니다.\nRow 2, column 2: 산골 수습 몽둥이 (equipment, weapon, 일반). 산골 마을 수습 부서의 몽둥이. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 3: 산골 수습 작업복 (equipment, armor, 일반). 산골 마을 수습 부서의 작업복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 4: 산골 수습 출근증 (equipment, accessory, 일반). 산골 마을 수습 부서의 출근증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 5: 산골 침투 몽둥이 (equipment, weapon, 희귀). 산골 마을 침투 부서의 몽둥이. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 1: 산골 침투 작업복 (equipment, armor, 희귀). 산골 마을 침투 부서의 작업복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 2: 산골 침투 출근증 (equipment, accessory, 희귀). 산골 마을 침투 부서의 출근증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 3: 산골 수호 몽둥이 (equipment, weapon, 희귀). 산골 마을 수호 부서의 몽둥이. 생존과 장기 근무에 특화된 장비.\nRow 3, column 4: 산골 수호 작업복 (equipment, armor, 희귀). 산골 마을 수호 부서의 작업복. 생존과 장기 근무에 특화된 장비.\nRow 3, column 5: 산골 수호 출근증 (equipment, accessory, 희귀). 산골 마을 수호 부서의 출근증. 생존과 장기 근무에 특화된 장비.\nRow 4, column 1: 산골 특무 몽둥이 (equipment, weapon, 영웅). 산골 마을 특무 부서의 몽둥이. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 2: 산골 특무 작업복 (equipment, armor, 영웅). 산골 마을 특무 부서의 작업복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 3: 산골 특무 출근증 (equipment, accessory, 영웅). 산골 마을 특무 부서의 출근증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 4: 산골 야간 몽둥이 (equipment, weapon, 영웅). 산골 마을 야간 부서의 몽둥이. 생존과 장기 근무에 특화된 장비.\nRow 4, column 5: 산골 야간 작업복 (equipment, armor, 영웅). 산골 마을 야간 부서의 작업복. 생존과 장기 근무에 특화된 장비.\nRow 5, column 1: 산골 야간 출근증 (equipment, accessory, 영웅). 산골 마을 야간 부서의 출근증. 생존과 장기 근무에 특화된 장비.\nRow 5, column 2: 산골 대표 몽둥이 (equipment, weapon, 전설). 산골 마을 대표 부서의 몽둥이. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 3: 산골 대표 작업복 (equipment, armor, 전설). 산골 마을 대표 부서의 작업복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 4: 산골 대표 출근증 (equipment, accessory, 전설). 산골 마을 대표 부서의 출근증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 5: 산골 자경단 인장 (material, object, 희귀). 산골 마을의 일반 적이 매우 드물게 남기는 희귀 장비 제작 재료. 자동 판매하지 않습니다.\n"
+    },
+    {
+      "id": "items-06",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 산골 새벽의 심장 (material, object, 영웅). 산골 마을의 일반 적이 매우 드물게 남기는 영웅 장비 제작 재료. 자동 판매하지 않습니다.\nRow 1, column 2: 소국 수습 보급검 (equipment, weapon, 일반). 변두리 소국 수습 부서의 보급검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 3: 소국 수습 호위복 (equipment, armor, 일반). 변두리 소국 수습 부서의 호위복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 4: 소국 수습 계약패 (equipment, accessory, 일반). 변두리 소국 수습 부서의 계약패. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 5: 소국 침투 보급검 (equipment, weapon, 희귀). 변두리 소국 침투 부서의 보급검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 1: 소국 침투 호위복 (equipment, armor, 희귀). 변두리 소국 침투 부서의 호위복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 2: 소국 침투 계약패 (equipment, accessory, 희귀). 변두리 소국 침투 부서의 계약패. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 3: 소국 수호 보급검 (equipment, weapon, 희귀). 변두리 소국 수호 부서의 보급검. 생존과 장기 근무에 특화된 장비.\nRow 2, column 4: 소국 수호 호위복 (equipment, armor, 희귀). 변두리 소국 수호 부서의 호위복. 생존과 장기 근무에 특화된 장비.\nRow 2, column 5: 소국 수호 계약패 (equipment, accessory, 희귀). 변두리 소국 수호 부서의 계약패. 생존과 장기 근무에 특화된 장비.\nRow 3, column 1: 소국 특무 보급검 (equipment, weapon, 영웅). 변두리 소국 특무 부서의 보급검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 2: 소국 특무 호위복 (equipment, armor, 영웅). 변두리 소국 특무 부서의 호위복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 3: 소국 특무 계약패 (equipment, accessory, 영웅). 변두리 소국 특무 부서의 계약패. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 4: 소국 야간 보급검 (equipment, weapon, 영웅). 변두리 소국 야간 부서의 보급검. 생존과 장기 근무에 특화된 장비.\nRow 3, column 5: 소국 야간 호위복 (equipment, armor, 영웅). 변두리 소국 야간 부서의 호위복. 생존과 장기 근무에 특화된 장비.\nRow 4, column 1: 소국 야간 계약패 (equipment, accessory, 영웅). 변두리 소국 야간 부서의 계약패. 생존과 장기 근무에 특화된 장비.\nRow 4, column 2: 소국 대표 보급검 (equipment, weapon, 전설). 변두리 소국 대표 부서의 보급검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 3: 소국 대표 호위복 (equipment, armor, 전설). 변두리 소국 대표 부서의 호위복. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 4: 소국 대표 계약패 (equipment, accessory, 전설). 변두리 소국 대표 부서의 계약패. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 5: 소국 용병 계약핵 (material, object, 희귀). 변두리 소국의 일반 적이 매우 드물게 남기는 희귀 장비 제작 재료. 자동 판매하지 않습니다.\nRow 5, column 1: 소국 맹세의 심장 (material, object, 영웅). 변두리 소국의 일반 적이 매우 드물게 남기는 영웅 장비 제작 재료. 자동 판매하지 않습니다.\nRow 5, column 2: 왕국 수습 결재검 (equipment, weapon, 일반). 작은 왕국 수습 부서의 결재검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 3: 왕국 수습 기사갑주 (equipment, armor, 일반). 작은 왕국 수습 부서의 기사갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 4: 왕국 수습 인사인장 (equipment, accessory, 일반). 작은 왕국 수습 부서의 인사인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 5: 왕국 침투 결재검 (equipment, weapon, 희귀). 작은 왕국 침투 부서의 결재검. 공격과 빠른 계약 완료에 특화된 장비.\n"
+    },
+    {
+      "id": "items-07",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 왕국 침투 기사갑주 (equipment, armor, 희귀). 작은 왕국 침투 부서의 기사갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 2: 왕국 침투 인사인장 (equipment, accessory, 희귀). 작은 왕국 침투 부서의 인사인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 3: 왕국 수호 결재검 (equipment, weapon, 희귀). 작은 왕국 수호 부서의 결재검. 생존과 장기 근무에 특화된 장비.\nRow 1, column 4: 왕국 수호 기사갑주 (equipment, armor, 희귀). 작은 왕국 수호 부서의 기사갑주. 생존과 장기 근무에 특화된 장비.\nRow 1, column 5: 왕국 수호 인사인장 (equipment, accessory, 희귀). 작은 왕국 수호 부서의 인사인장. 생존과 장기 근무에 특화된 장비.\nRow 2, column 1: 왕국 특무 결재검 (equipment, weapon, 영웅). 작은 왕국 특무 부서의 결재검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 2: 왕국 특무 기사갑주 (equipment, armor, 영웅). 작은 왕국 특무 부서의 기사갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 3: 왕국 특무 인사인장 (equipment, accessory, 영웅). 작은 왕국 특무 부서의 인사인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 4: 왕국 야간 결재검 (equipment, weapon, 영웅). 작은 왕국 야간 부서의 결재검. 생존과 장기 근무에 특화된 장비.\nRow 2, column 5: 왕국 야간 기사갑주 (equipment, armor, 영웅). 작은 왕국 야간 부서의 기사갑주. 생존과 장기 근무에 특화된 장비.\nRow 3, column 1: 왕국 야간 인사인장 (equipment, accessory, 영웅). 작은 왕국 야간 부서의 인사인장. 생존과 장기 근무에 특화된 장비.\nRow 3, column 2: 왕국 대표 결재검 (equipment, weapon, 전설). 작은 왕국 대표 부서의 결재검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 3: 왕국 대표 기사갑주 (equipment, armor, 전설). 작은 왕국 대표 부서의 기사갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 4: 왕국 대표 인사인장 (equipment, accessory, 전설). 작은 왕국 대표 부서의 인사인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 5: 왕국 기사단 인장 (material, object, 희귀). 작은 왕국의 일반 적이 매우 드물게 남기는 희귀 장비 제작 재료. 자동 판매하지 않습니다.\nRow 4, column 1: 왕국 명예의 심장 (material, object, 영웅). 작은 왕국의 일반 적이 매우 드물게 남기는 영웅 장비 제작 재료. 자동 판매하지 않습니다.\nRow 4, column 2: 성채 수습 공성망치 (equipment, weapon, 일반). 거대한 성 수습 부서의 공성망치. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 3: 성채 수습 근위갑주 (equipment, armor, 일반). 거대한 성 수습 부서의 근위갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 4: 성채 수습 휴가증 (equipment, accessory, 일반). 거대한 성 수습 부서의 휴가증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 5: 성채 침투 공성망치 (equipment, weapon, 희귀). 거대한 성 침투 부서의 공성망치. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 1: 성채 침투 근위갑주 (equipment, armor, 희귀). 거대한 성 침투 부서의 근위갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 2: 성채 침투 휴가증 (equipment, accessory, 희귀). 거대한 성 침투 부서의 휴가증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 3: 성채 수호 공성망치 (equipment, weapon, 희귀). 거대한 성 수호 부서의 공성망치. 생존과 장기 근무에 특화된 장비.\nRow 5, column 4: 성채 수호 근위갑주 (equipment, armor, 희귀). 거대한 성 수호 부서의 근위갑주. 생존과 장기 근무에 특화된 장비.\nRow 5, column 5: 성채 수호 휴가증 (equipment, accessory, 희귀). 거대한 성 수호 부서의 휴가증. 생존과 장기 근무에 특화된 장비.\n"
+    },
+    {
+      "id": "items-08",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 성채 특무 공성망치 (equipment, weapon, 영웅). 거대한 성 특무 부서의 공성망치. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 2: 성채 특무 근위갑주 (equipment, armor, 영웅). 거대한 성 특무 부서의 근위갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 3: 성채 특무 휴가증 (equipment, accessory, 영웅). 거대한 성 특무 부서의 휴가증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 4: 성채 야간 공성망치 (equipment, weapon, 영웅). 거대한 성 야간 부서의 공성망치. 생존과 장기 근무에 특화된 장비.\nRow 1, column 5: 성채 야간 근위갑주 (equipment, armor, 영웅). 거대한 성 야간 부서의 근위갑주. 생존과 장기 근무에 특화된 장비.\nRow 2, column 1: 성채 야간 휴가증 (equipment, accessory, 영웅). 거대한 성 야간 부서의 휴가증. 생존과 장기 근무에 특화된 장비.\nRow 2, column 2: 성채 대표 공성망치 (equipment, weapon, 전설). 거대한 성 대표 부서의 공성망치. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 3: 성채 대표 근위갑주 (equipment, armor, 전설). 거대한 성 대표 부서의 근위갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 4: 성채 대표 휴가증 (equipment, accessory, 전설). 거대한 성 대표 부서의 휴가증. 공격과 빠른 계약 완료에 특화된 장비.\nRow 2, column 5: 성채 근위대 인장 (material, object, 희귀). 거대한 성의 일반 적이 매우 드물게 남기는 희귀 장비 제작 재료. 자동 판매하지 않습니다.\nRow 3, column 1: 성채 철벽의 심장 (material, object, 영웅). 거대한 성의 일반 적이 매우 드물게 남기는 영웅 장비 제작 재료. 자동 판매하지 않습니다.\nRow 3, column 2: 왕도 수습 박멸검 (equipment, weapon, 일반). 용사 왕국 수습 부서의 박멸검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 3: 왕도 수습 대표갑주 (equipment, armor, 일반). 용사 왕국 수습 부서의 대표갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 4: 왕도 수습 법인인장 (equipment, accessory, 일반). 용사 왕국 수습 부서의 법인인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 3, column 5: 왕도 침투 박멸검 (equipment, weapon, 희귀). 용사 왕국 침투 부서의 박멸검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 1: 왕도 침투 대표갑주 (equipment, armor, 희귀). 용사 왕국 침투 부서의 대표갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 2: 왕도 침투 법인인장 (equipment, accessory, 희귀). 용사 왕국 침투 부서의 법인인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 4, column 3: 왕도 수호 박멸검 (equipment, weapon, 희귀). 용사 왕국 수호 부서의 박멸검. 생존과 장기 근무에 특화된 장비.\nRow 4, column 4: 왕도 수호 대표갑주 (equipment, armor, 희귀). 용사 왕국 수호 부서의 대표갑주. 생존과 장기 근무에 특화된 장비.\nRow 4, column 5: 왕도 수호 법인인장 (equipment, accessory, 희귀). 용사 왕국 수호 부서의 법인인장. 생존과 장기 근무에 특화된 장비.\nRow 5, column 1: 왕도 특무 박멸검 (equipment, weapon, 영웅). 용사 왕국 특무 부서의 박멸검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 2: 왕도 특무 대표갑주 (equipment, armor, 영웅). 용사 왕국 특무 부서의 대표갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 3: 왕도 특무 법인인장 (equipment, accessory, 영웅). 용사 왕국 특무 부서의 법인인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 5, column 4: 왕도 야간 박멸검 (equipment, weapon, 영웅). 용사 왕국 야간 부서의 박멸검. 생존과 장기 근무에 특화된 장비.\nRow 5, column 5: 왕도 야간 대표갑주 (equipment, armor, 영웅). 용사 왕국 야간 부서의 대표갑주. 생존과 장기 근무에 특화된 장비.\n"
+    },
+    {
+      "id": "items-09",
+      "count": 25,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 왕도 야간 법인인장 (equipment, accessory, 영웅). 용사 왕국 야간 부서의 법인인장. 생존과 장기 근무에 특화된 장비.\nRow 1, column 2: 왕도 대표 박멸검 (equipment, weapon, 전설). 용사 왕국 대표 부서의 박멸검. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 3: 왕도 대표 대표갑주 (equipment, armor, 전설). 용사 왕국 대표 부서의 대표갑주. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 4: 왕도 대표 법인인장 (equipment, accessory, 전설). 용사 왕국 대표 부서의 법인인장. 공격과 빠른 계약 완료에 특화된 장비.\nRow 1, column 5: 왕도 영웅 인장 (material, object, 희귀). 용사 왕국의 일반 적이 매우 드물게 남기는 희귀 장비 제작 재료. 자동 판매하지 않습니다.\nRow 2, column 1: 왕도 여명의 심장 (material, object, 영웅). 용사 왕국의 일반 적이 매우 드물게 남기는 영웅 장비 제작 재료. 자동 판매하지 않습니다.\nRow 2, column 2: 잡화 꾸러미 (product, object, crafted goods). 완제품 회사 상품. 거친 천, 나무 조각, 낡은 동전\nRow 2, column 3: 약초 포대 (product, object, crafted goods). 완제품 회사 상품. 거친 천, 마른 약초\nRow 2, column 4: 가죽 공구집 (product, object, crafted goods). 완제품 회사 상품. 마대 천, 가죽 조각\nRow 2, column 5: 보급용 가방 (product, object, crafted goods). 완제품 회사 상품. 거친 천, 가죽 조각, 은화 주머니\nRow 3, column 1: 철제 공구세트 (product, object, crafted goods). 완제품 회사 상품. 철편, 단단한 가죽\nRow 3, column 2: 왕국 위조 훈장 (product, object, crafted goods). 완제품 회사 상품. 철편, 왕국 동전, 왕국 문양 조각\nRow 3, column 3: 산골 판촉 꾸러미 (product, object, crafted goods). 완제품 회사 상품. 나무 조각, 연습용 표적 조각, 청년회 회비 봉투\nRow 3, column 4: 야외 근무 키트 (product, object, crafted goods). 완제품 회사 상품. 거친 천, 나무꾼 도끼날, 송진 묻은 장갑\nRow 3, column 5: 자경단 위장 세트 (product, object, crafted goods). 완제품 회사 상품. 낡은 동전, 마른 약초, 사냥꾼 활시위\nRow 4, column 1: 민원 파쇄 묶음 (product, object, crafted goods). 완제품 회사 상품. 나무 조각, 자경단 완장, 근무 교대표\nRow 4, column 2: 수확물 위탁 상자 (product, object, crafted goods). 완제품 회사 상품. 마대 천, 곡물 배급표, 날 선 낫 조각\nRow 4, column 3: 용병 복지 꾸러미 (product, object, crafted goods). 완제품 회사 상품. 가죽 조각, 운송장 묶음, 짐꾼 어깨끈\nRow 4, column 4: 보급품 재포장 세트 (product, object, crafted goods). 완제품 회사 상품. 은화 주머니, 호위 계약서, 경량 화살촉\nRow 4, column 5: 위장 호위 증명서 (product, object, crafted goods). 완제품 회사 상품. 마대 천, 경비대 호루라기, 가죽 방패끈\nRow 5, column 1: 변경 수리 공구함 (product, object, crafted goods). 완제품 회사 상품. 철편, 신병 인식표, 훈련 일지\nRow 5, column 2: 왕국 출장 증빙 (product, object, crafted goods). 완제품 회사 상품. 왕국 동전, 석궁 걸쇠, 관통 볼트\nRow 5, column 3: 초소 보안 꾸러미 (product, object, crafted goods). 완제품 회사 상품. 단단한 가죽, 초소 열쇠, 규율 수첩\nRow 5, column 4: 기사단 모조 기념품 (product, object, crafted goods). 완제품 회사 상품. 철편, 왕국 문양 조각, 기사 서약문\nRow 5, column 5: 왕성 인테리어 꾸러미 (product, object, crafted goods). 완제품 회사 상품. 빛바랜 벽지, 성문 열쇠고리, 방패병 견갑\n"
+    },
+    {
+      "id": "items-10",
+      "count": 7,
+      "prompt": "Use case: stylized-concept. Asset type: production pixel-art inventory sprite atlas for the humorous Korean fantasy game \"Hero Extermination Incorporated\", a company run by monsters. Create ONE precisely aligned 5-column by 5-row sprite sheet, square canvas, each cell identical size. Read the item list in row-major order. Each cell contains only its one listed object, centered, fully visible, occupying about 65% of the cell with generous empty padding on all sides. Clear chunky 32-bit pixel-art silhouettes, crisp stepped edges, rich restrained colors, dark outline, gentle upper-left light, readable at 48px. Whimsical medieval monster-office props; items must look distinct and match their names. Equipment rarity progresses from worn practical tools to extravagant enchanted executive relics. No writing, labels, letters, numbers, frames, grid lines, scenery, floor, cast shadow or watermark. Truly transparent alpha background, never draw a checkerboard. Exactly 25 cells; leave unused cells completely empty. Do not let any object touch a cell boundary. Item list (names are instructions only, NEVER write text in the image):\nRow 1, column 1: 세무 대응 증빙 세트 (product, object, crafted goods). 완제품 회사 상품. 깨진 샹들리에, 왕성 세금 고지서, 징세 인장\nRow 1, column 2: 궁정 복지 꾸러미 (product, object, crafted goods). 완제품 회사 상품. 성벽 석재 조각, 궁정 성가 악보, 치유 향낭\nRow 1, column 3: 성채 위장 근무복 (product, object, crafted goods). 완제품 회사 상품. 빛바랜 벽지, 성채 임명장, 은빛 방패편\nRow 1, column 4: 왕도 고급 판촉물 (product, object, crafted goods). 완제품 회사 상품. 황동 장식편, 근위대 휘장, 왕실 갑옷 나사\nRow 1, column 5: 왕실 정비 세트 (product, object, crafted goods). 완제품 회사 상품. 비단 자투리, 궁정 주문서, 정제 마력 결정\nRow 2, column 1: 궁정 결재 대행 서류 (product, object, crafted goods). 완제품 회사 상품. 깨진 왕관 보석, 왕실 채권, 금고 암호판\nRow 2, column 2: 용사 명예퇴직 패키지 (product, object, crafted goods). 완제품 회사 상품. 황동 장식편, 용사 경력 증명서, 금빛 검집 장식\n"
+    }
+  ]
+}

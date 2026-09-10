@@ -2,7 +2,7 @@ name: Campaign and Economy QA
 on:
   push:
     branches: [main, 'codex/gameplay-overhaul']
-    paths: ['app.js', 'index.html', 'scripts/**', 'ui-*.css', 'assets/art-v015/**', 'assets/art-v016/**', 'content/**', 'supabase/**', 'tools/simulation/**', '.github/workflows/campaign-v015.yml']
+    paths: ['app.js', 'index.html', 'scripts/**', 'ui-*.css', 'assets/art-v015/**', 'assets/art-v016/**', 'assets/items-v017/**', 'content/**', 'supabase/**', 'tools/simulation/**', '.github/workflows/campaign-v015.yml']
   workflow_dispatch:
 permissions:
   contents: read

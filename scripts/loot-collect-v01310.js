@@ -6,7 +6,7 @@ collectSiteLoot = async function(siteId){
   const before=siteExpeditions(siteId).filter(e=>lootCount(e)>0||expeditionPendingXp(e)>0);
   if(!before.length){toast('수거할 전리품이 없습니다.');return}
 
-  const button=document.querySelector(`.chapter-loot-btn[data-site="${siteId}"]`);
+  const button=document.querySelector(`[data-action="collect-site"][data-site="${siteId}"]`);
   if(button){
     button.disabled=true;
     button.classList.add('collecting');
@@ -39,16 +39,16 @@ collectSiteLoot = async function(siteId){
       for(const [id,q] of Object.entries(d.collected||{}))loot[id]=(loot[id]||0)+Number(q||0);
     }
     /* Parallel collect responses can finish out of order; one final state read guarantees the newest server snapshot. */
-    await api('state');
+    if(before.length>1)await api('state-lite');
     render();
     collectionResultModal(siteId,{durationSeconds,xp,loot});
   }catch(err){
-    try{await api('state');render()}catch(_){}
+    try{await api('state-lite');render()}catch(_){}
     if(String(err.message).includes('storage_full'))warehouseModal();
     toast(errorKo(err.message));
   }finally{
     busy=false;
-    const liveButton=document.querySelector(`.chapter-loot-btn[data-site="${siteId}"]`);
+    const liveButton=document.querySelector(`[data-action="collect-site"][data-site="${siteId}"]`);
     if(liveButton){
       liveButton.classList.remove('collecting');
       if(liveButton.dataset.collectLabel)liveButton.innerHTML=liveButton.dataset.collectLabel;

@@ -123,7 +123,7 @@
       const fn=type==='craft'?'game_cancel_craft':'game_cancel_sell';
       const {data,error}=await sb.rpc(fn,{p_job:id});
       if(error)throw error;
-      await api('state');
+      await api('state-lite');
       closeModal(true);
       render();
       requestAnimationFrame(()=>reopenEconomy(type));

@@ -33,6 +33,8 @@
     return {...previous,...patch,sites,account:previous?.account||null,itemDefs:previous?.itemDefs||[],recipes:previous?.recipes||[],evolutionDefs:previous?.evolutionDefs||[],skillDefs:previous?.skillDefs||[]};
   }
 
+  window.mergeGameState=mergeLiteState;
+
   function ensureForgeRow(){
     if(!S||screen!=='home')return;const row=document.querySelector('.facility-row.forge');if(!row)return;
     const stoneQty=Number((S.inventory||[]).find(x=>x.item_id==='강화석')?.qty||0),text=`강화석 ${fmt(stoneQty)}개 · 장착 장비 ${(S.equipment||[]).length}개`,small=row.querySelector('.facility-copy small');if(small&&small.textContent!==text)small.textContent=text;
@@ -60,11 +62,9 @@
 
   async function pollState(){
     if(pollInFlight||document.hidden||typeof S==='undefined'||!S||typeof session==='undefined'||!session||typeof busy!=='undefined'&&busy)return;pollInFlight=true;
-    const previous=S;
     try{
-      const d=await api('state-lite');const patch=d?.state||S;S=mergeLiteState(previous,patch);patchVisible();
+      const d=await api('state-lite');if(!d.stale)patchVisible();
     }catch(err){
-      S=previous;
       if(err?.message==='unknown_action'){try{await api('state');patchVisible()}catch(_){}}
       else if(err?.message==='unauthorized'){try{await sb.auth.signOut();showAuth()}catch(_){}}
       else{const line=document.querySelector('#briefLine');if(line)line.textContent='서버 재연결 중...'}

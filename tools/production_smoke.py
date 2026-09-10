@@ -40,7 +40,7 @@ class Assets(HTMLParser):
 assets=Assets();assets.feed(expected.decode())
 assets.paths.update('assets/icon-'+name+'.svg' for name in ('dorm','recruit','workshop','shop','forge','storage','ops'))
 assets.paths.update('assets/art-v014/'+name+'.webp' for name in ('headquarters','dormitory','recruitment','workshop','shop'))
-for directory in ('assets/art-v015', 'assets/art-v016'):
+for directory in ('assets/art-v015', 'assets/art-v016', 'assets/items-v017'):
     assets.paths.update(str(path.relative_to(ROOT)) for path in (ROOT/directory).rglob('*')
                         if path.is_file() and path.suffix.lower() in ('.png', '.webp', '.svg', '.jpg', '.jpeg'))
 verified=[]

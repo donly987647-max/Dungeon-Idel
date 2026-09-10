@@ -22,53 +22,14 @@ const capacities=(pl:any)=>({facilityCosts:{quarters:facilityCost('quarters',pl.
 async function getAuthUser(req:Request){const h=req.headers.get('authorization')||'';const token=h.toLowerCase().startsWith('bearer ')?h.slice(7).trim():'';if(!token)return null;const {data,error}=await db.auth.getUser(token);if(error||!data.user)return null;return data.user}
 async function ensurePlayer(player:string){const {error}=await db.rpc('game_initialize_company',{p_player:player});if(error)throw error}
 
-async function state(player:string){
-  const {error:tickError}=await db.rpc('game_tick_all');if(tickError)throw tickError
-  const [p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk,df]=await Promise.all([
-    db.from('game_players').select('*').eq('device_id',player).single(),
-    db.from('game_accounts').select('username,created_at,last_login_at').eq('user_id',player).maybeSingle(),
-    db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).order('created_at'),
-    db.from('game_candidates').select('*').eq('player_id',player).order('created_at'),
-    db.from('game_expeditions').select('*').eq('player_id',player).order('started_at',{ascending:false}),
-    db.from('game_hunt_sites').select('*').order('unlock_order'),
-    db.from('game_inventory').select('*').eq('player_id',player).order('item_id'),
-    db.from('game_monster_equipment').select('*').eq('player_id',player).order('equipped_at'),
-    db.from('game_item_defs').select('*').order('id'),
-    db.from('game_expedition_members').select('*').eq('player_id',player).order('position'),
-    db.from('game_stage_progress').select('*').eq('player_id',player),
-    db.from('game_recipes').select('*').order('sort_order'),
-    db.from('game_craft_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
-    db.from('game_sell_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
-    db.from('game_evolution_defs').select('*').order('tier').order('target_name'),
-    db.from('game_skill_defs').select('*').order('name'),
-    db.rpc('game_defense_snapshot',{p_player:player})
-  ])
-  const all=[p,a,m,c,e,s,i,q,d,em,sp,r,cj,sj,ev,sk,df],err=all.find(x=>x.error)?.error;if(err)throw err
-  const prog=new Map((sp.data||[]).map((x:any)=>[x.site_id,x]))
-  const sites=(s.data||[]).map((x:any,idx:number)=>{const prev=idx>0?(s.data||[])[idx-1]:null;const unlocked=idx===0||!!prog.get(prev?.id)?.boss_cleared;return {...x,unlocked,progress:prog.get(x.id)||{normal_wins:0,boss_ready:false,boss_cleared:false,boss_attempts:0}}})
-  const pl:any=p.data
-  return {account:a.data||null,player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],sites,inventory:i.data||[],equipment:q.data||[],itemDefs:d.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],recipes:r.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],evolutionDefs:ev.data||[],skillDefs:sk.data||[],defense:df.data||null,...capacities(pl),serverNow:new Date().toISOString()}
+async function snapshot(player:string,includeStatic:boolean){
+ const {data,error}=await db.rpc('game_client_state',{p_player:player,p_static:includeStatic});if(error)throw error
+ if(includeStatic){const progress=new Map((data.stageProgress||[]).map((row:any)=>[row.site_id,row]));data.sites=(data.sites||[]).map((site:any,index:number,all:any[])=>({...site,unlocked:index===0||!!(progress.get(all[index-1]?.id) as any)?.boss_cleared,progress:progress.get(site.id)||{normal_wins:0,boss_ready:false,boss_cleared:false,boss_attempts:0}}))}
+ data.candidates=(data.candidates||[]).map((candidate:any)=>({...candidate,hire_cost:0}));
+ return {...data,...capacities(data.player)}
 }
-
-async function stateLite(player:string){
-  const {error:tickError}=await db.rpc('game_tick_all');if(tickError)throw tickError
-  const [p,m,c,e,i,q,em,sp,cj,sj,df]=await Promise.all([
-    db.from('game_players').select('*').eq('device_id',player).single(),
-    db.from('game_monsters').select('*').eq('player_id',player).is('released_at',null).order('created_at'),
-    db.from('game_candidates').select('*').eq('player_id',player).order('created_at'),
-    db.from('game_expeditions').select('*').eq('player_id',player).order('started_at',{ascending:false}),
-    db.from('game_inventory').select('*').eq('player_id',player).order('item_id'),
-    db.from('game_monster_equipment').select('*').eq('player_id',player).order('equipped_at'),
-    db.from('game_expedition_members').select('*').eq('player_id',player).order('position'),
-    db.from('game_stage_progress').select('*').eq('player_id',player),
-    db.from('game_craft_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
-    db.from('game_sell_jobs').select('*').eq('player_id',player).order('started_at',{ascending:false}).limit(30),
-    db.rpc('game_defense_snapshot',{p_player:player})
-  ])
-  const all=[p,m,c,e,i,q,em,sp,cj,sj,df],err=all.find(x=>x.error)?.error;if(err)throw err
-  const pl:any=p.data
-  return {player:pl,monsters:m.data||[],candidates:(c.data||[]).map((x:any)=>({...x,hire_cost:0})),expeditions:e.data||[],inventory:i.data||[],equipment:q.data||[],expeditionMembers:em.data||[],stageProgress:sp.data||[],craftJobs:cj.data||[],sellJobs:sj.data||[],defense:df.data||null,...capacities(pl),serverNow:new Date().toISOString()}
-}
+const state=(player:string)=>snapshot(player,true)
+const stateLite=(player:string)=>snapshot(player,false)
 
 Deno.serve(async(req:Request)=>{
  if(req.method==='OPTIONS')return new Response(null,{headers:cors});if(req.method!=='POST')return json({error:'method'},405)
@@ -90,11 +51,12 @@ Deno.serve(async(req:Request)=>{
   }
   const user=await getAuthUser(req);if(!user)return json({error:'unauthorized'},401);const player=user.id
   if(action!=='state-lite')await ensurePlayer(player)
+  const lite=body.stateMode==='lite',actionState=()=>lite?stateLite(player):state(player)
   if(action==='plan-evolution'||action==='defense-command'||action==='defense-upgrade'){
    const rpc=action==='plan-evolution'?'game_plan_evolution':action==='defense-command'?'game_defense_command':'game_defense_upgrade';
    const args=action==='plan-evolution'?{p_player:player,p_monster:String(body.monsterId||''),p_evolution:String(body.evolutionId||'')}:action==='defense-command'?{p_player:player,p_action:String(body.command||''),p_stage:body.stage==null?null:Number(body.stage)}:{p_player:player,p_kind:String(body.kind||''),p_expected:Number(body.expectedLevel)};
    const {data,error}=await db.rpc(rpc,args);if(error){for(const code of ['gold_short','facility_changed','max_level','locked','evolution_invalid','invalid_action','invalid_settings','facility'])if(error.message.includes(code))return json({error:code},400);throw error}
-   return json({ok:true,result:data,state:await state(player)})
+   return json({ok:true,result:data,stateMode:lite?'lite':'full',state:await actionState()})
   }
   if(action==='state')return json({ok:true,state:await state(player)})
   if(action==='state-lite')return json({ok:true,state:await stateLite(player)})
@@ -105,32 +67,32 @@ Deno.serve(async(req:Request)=>{
    if(site.unlock_order>1){const {data:prev}=await db.from('game_hunt_sites').select('id').eq('unlock_order',site.unlock_order-1).maybeSingle();const {data:pr}=prev?await db.from('game_stage_progress').select('boss_cleared').eq('player_id',player).eq('site_id',prev.id).maybeSingle():{data:null} as any;if(!pr?.boss_cleared)return json({error:'locked'},400)}
    if((activeExps||[]).length){const expIds=(activeExps||[]).map((x:any)=>x.id);const {data:busy}=await db.from('game_expedition_members').select('monster_id').in('expedition_id',expIds).in('monster_id',monsterIds);if((busy||[]).length)return json({error:'monster_busy'},400)}
    const {data:exp,error:ie}=await db.from('game_expeditions').insert({player_id:player,monster_id:monsterIds[0],site_id:siteId,active:true,phase:'탐색',event_state:{type:'deploy',text:`${monsterIds.length}인 박멸조 현장 진입`,t:new Date().toISOString()}}).select('id').single();if(ie||!exp)throw ie||new Error('expedition_create')
-   const {error:me}=await db.from('game_expedition_members').insert(monsterIds.map((id:string,i:number)=>({expedition_id:exp.id,player_id:player,monster_id:id,position:i+1})));if(me){await db.from('game_expeditions').delete().eq('id',exp.id);throw me}return json({ok:true,state:await state(player)})
+   const {error:me}=await db.from('game_expedition_members').insert(monsterIds.map((id:string,i:number)=>({expedition_id:exp.id,player_id:player,monster_id:id,position:i+1})));if(me){await db.from('game_expeditions').delete().eq('id',exp.id);throw me}return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})
   }
-  if(action==='recall'){const id=String(body.expeditionId||'');const {error}=await db.from('game_expeditions').update({active:false,phase:'복귀',updated_at:new Date().toISOString()}).eq('id',id).eq('player_id',player);if(error)throw error;return json({ok:true,state:await state(player)})}
-  if(action==='collect'){const id=body.expeditionId?String(body.expeditionId):null;const {data,error}=await db.rpc('game_collect_loot',{p_player:player,p_expedition:id});if(error){if(String(error.message||'').includes('storage_full'))return json({error:'storage_full'},400);throw error}return json({ok:true,collected:data||{},state:await state(player)})}
-  if(action==='craft'){const qty=Math.max(1,Math.floor(Number(body.quantity||1)));const {error}=await db.rpc('game_start_craft',{p_player:player,p_recipe:String(body.recipeId||''),p_qty:qty});if(error){const msg=String(error.message||'');for(const code of ['recipe_missing','craft_queue_full','material_short','quantity_invalid','workshop_level'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,state:await state(player)})}
-  if(action==='sell'){const qty=Math.max(1,Math.floor(Number(body.quantity||1)));const {error}=await db.rpc('game_start_sell',{p_player:player,p_item:String(body.itemId||''),p_qty:qty});if(error){const msg=String(error.message||'');for(const code of ['not_sellable','sell_queue_full','item_missing','quantity_invalid'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,state:await state(player)})}
-  if(action==='equip'){const monsterId=String(body.monsterId||''),itemId=String(body.itemId||'');const {error}=await db.rpc('game_equip_item',{p_player:player,p_monster:monsterId,p_item:itemId});if(error){const msg=String(error.message||'');if(msg.includes('not_equipment'))return json({error:'not_equipment'},400);if(msg.includes('item_missing'))return json({error:'item_missing'},400);if(msg.includes('monster_missing'))return json({error:'invalid_target'},400);throw error}return json({ok:true,state:await state(player)})}
-  if(action==='unequip'){const monsterId=String(body.monsterId||''),slot=String(body.slot||'');const {error}=await db.rpc('game_unequip_item',{p_player:player,p_monster:monsterId,p_slot:slot});if(error)throw error;return json({ok:true,state:await state(player)})}
+  if(action==='recall'){const id=String(body.expeditionId||'');const {error}=await db.from('game_expeditions').update({active:false,phase:'복귀',updated_at:new Date().toISOString()}).eq('id',id).eq('player_id',player);if(error)throw error;return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})}
+  if(action==='collect'){const id=body.expeditionId?String(body.expeditionId):null;const {data,error}=await db.rpc('game_collect_loot',{p_player:player,p_expedition:id});if(error){if(String(error.message||'').includes('storage_full'))return json({error:'storage_full'},400);throw error}return json({ok:true,collected:data||{},stateMode:lite?'lite':'full',state:await actionState()})}
+  if(action==='craft'){const qty=Math.max(1,Math.floor(Number(body.quantity||1)));const {error}=await db.rpc('game_start_craft',{p_player:player,p_recipe:String(body.recipeId||''),p_qty:qty});if(error){const msg=String(error.message||'');for(const code of ['recipe_missing','craft_queue_full','material_short','quantity_invalid','workshop_level'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})}
+  if(action==='sell'){const qty=Math.max(1,Math.floor(Number(body.quantity||1)));const {error}=await db.rpc('game_start_sell',{p_player:player,p_item:String(body.itemId||''),p_qty:qty});if(error){const msg=String(error.message||'');for(const code of ['not_sellable','sell_queue_full','item_missing','quantity_invalid'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})}
+  if(action==='equip'){const monsterId=String(body.monsterId||''),itemId=String(body.itemId||'');const {error}=await db.rpc('game_equip_item',{p_player:player,p_monster:monsterId,p_item:itemId});if(error){const msg=String(error.message||'');if(msg.includes('not_equipment'))return json({error:'not_equipment'},400);if(msg.includes('item_missing'))return json({error:'item_missing'},400);if(msg.includes('monster_missing'))return json({error:'invalid_target'},400);throw error}return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})}
+  if(action==='unequip'){const monsterId=String(body.monsterId||''),slot=String(body.slot||'');const {error}=await db.rpc('game_unequip_item',{p_player:player,p_monster:monsterId,p_slot:slot});if(error)throw error;return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})}
   if(action==='evolve'){
-   const monsterId=String(body.monsterId||''),evolutionId=String(body.evolutionId||'');const {data,error}=await db.rpc('game_evolve_monster',{p_player:player,p_monster:monsterId,p_evolution:evolutionId});if(error){const msg=String(error.message||'');for(const code of ['monster_missing','monster_busy','evolution_invalid','evolution_level'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,evolution:data||{},state:await state(player)})
+   const monsterId=String(body.monsterId||''),evolutionId=String(body.evolutionId||'');const {data,error}=await db.rpc('game_evolve_monster',{p_player:player,p_monster:monsterId,p_evolution:evolutionId});if(error){const msg=String(error.message||'');for(const code of ['monster_missing','monster_busy','evolution_invalid','evolution_level'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,evolution:data||{},stateMode:lite?'lite':'full',state:await actionState()})
   }
   if(action==='hire'){
-   const id=String(body.candidateId||'');const {data,error}=await db.rpc('game_hire_candidate',{p_player:player,p_candidate:id});if(error){const msg=String(error.message||'');for(const code of ['candidate_missing','quarters_full','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,hire:data||{},state:await state(player)})
+   const id=String(body.candidateId||'');const {data,error}=await db.rpc('game_hire_candidate',{p_player:player,p_candidate:id});if(error){const msg=String(error.message||'');for(const code of ['candidate_missing','quarters_full','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,hire:data||{},stateMode:lite?'lite':'full',state:await actionState()})
   }
   if(action==='candidate-lock'){
-   const id=String(body.candidateId||''),locked=body.locked===true;const {data,error}=await db.rpc('game_set_candidate_lock',{p_player:player,p_candidate:id,p_locked:locked});if(error){const msg=String(error.message||'');for(const code of ['candidate_missing','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,locked:!!data,state:await state(player)})
+   const id=String(body.candidateId||''),locked=body.locked===true;const {data,error}=await db.rpc('game_set_candidate_lock',{p_player:player,p_candidate:id,p_locked:locked});if(error){const msg=String(error.message||'');for(const code of ['candidate_missing','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,locked:!!data,stateMode:lite?'lite':'full',state:await actionState()})
   }
-  if(action==='reject'){await db.from('game_candidates').delete().eq('id',String(body.candidateId||'')).eq('player_id',player);return json({ok:true,state:await state(player)})}
+  if(action==='reject'){await db.from('game_candidates').delete().eq('id',String(body.candidateId||'')).eq('player_id',player);return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})}
   if(action==='release'){
-   const id=String(body.monsterId||'');const {data,error}=await db.rpc('game_release_monster',{p_player:player,p_monster:id});if(error){const msg=String(error.message||'');for(const code of ['monster_missing','monster_busy','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,release:data||{},state:await state(player)})
+   const id=String(body.monsterId||'');const {data,error}=await db.rpc('game_release_monster',{p_player:player,p_monster:id});if(error){const msg=String(error.message||'');for(const code of ['monster_missing','monster_busy','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}return json({ok:true,release:data||{},stateMode:lite?'lite':'full',state:await actionState()})
   }
   if(action==='upgrade'){
    const facility=String(body.facility||'');
    const {error}=await db.rpc('game_upgrade_facility',{p_player:player,p_facility:facility,p_expected_level:body.expectedLevel==null?null:Number(body.expectedLevel)});
    if(error){const msg=String(error.message||'');for(const code of ['facility_changed','facility','max_level','gold_short','player_missing'])if(msg.includes(code))return json({error:code},400);throw error}
-   return json({ok:true,state:await state(player)})
+   return json({ok:true,stateMode:lite?'lite':'full',state:await actionState()})
   }
   return json({error:'unknown_action'},400)
  }catch(e){console.error(e);return json({error:'server_error',detail:String((e as Error)?.message||e)},500)}

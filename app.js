@@ -25,7 +25,9 @@ const roleMeta=m=>({
   slime:{key:'buffer',title:'완충형',summary:'체력과 방어가 고르게 잡힌 범용 전투 요원입니다.',points:['안정적인 생존','균형형 성장','전문화 효과 없음']}
 }[m?.family]||{key:'fighter',title:'전투 요원',summary:'기본 전투 역할을 수행합니다.',points:[]});
 const roleCardHtml=m=>{const r=roleMeta(m);return `<section class="monster-role-card role-${r.key}"><header><small>PARTY ROLE</small><b>${esc(r.title)}</b></header><p>${esc(r.summary)}</p><div>${r.points.map(x=>`<span>${esc(x)}</span>`).join('')}</div></section>`};
-const itemDef=id=>(S?.itemDefs||[]).find(x=>x.id===id)||null;
+const lookupCache=new WeakMap();
+function lookupRow(rows,key,id){if(!rows)return null;let entry=lookupCache.get(rows);if(!entry||entry.key!==key||entry.length!==rows.length){entry={key,length:rows.length,map:new Map(rows.map(row=>[row[key],row]))};lookupCache.set(rows,entry)}return entry.map.get(id)||null}
+const itemDef=id=>lookupRow(S?.itemDefs,'id',id);
 const equippedFor=mid=>(S?.equipment||[]).filter(x=>x.monster_id===mid);
 const kstHour=()=>{try{return Number(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',hour:'2-digit',hour12:false}).format(new Date()))%24}catch(_){return new Date().getHours()}};
 const personalityMeta=n=>({
@@ -53,7 +55,7 @@ const capacity=()=>Number(S?.quartersCapacity||3+(Math.max(1,Number(S?.player?.q
 const facilityCost=k=>Number(S?.facilityCosts?.[k]||0);
 const nextQuarterCost=()=>facilityCost('quarters');
 const nextTavernCost=()=>facilityCost('tavern');
-const inventoryQty=id=>Number((S?.inventory||[]).find(x=>x.item_id===id)?.qty||0);
+const inventoryQty=id=>Number(lookupRow(S?.inventory,'item_id',id)?.qty||0);
 const inventoryUsed=()=>Number((S?.inventory||[]).filter(x=>Number(x.qty||0)>0).length);
 const inventoryTotal=()=>Number((S?.inventory||[]).reduce((a,x)=>a+Math.max(0,Number(x.qty||0)),0));
 const siteExpeditions=sid=>(S?.expeditions||[]).filter(e=>e.site_id===sid);
@@ -87,9 +89,9 @@ const skillEffectLabel=s=>s?.effect_type==='heal_all'?`전체 회복 ${Math.roun
 const skillTriggerText=s=>{if(!s)return '';let t=s.trigger_type==='every_n'?`${s.trigger_count}번째 공격마다 발동`:s.trigger_type==='hp_below_chance'?`아군 HP ${Math.round(Number(s.condition_value||0)*100)}% 이하 · 공격 시 ${Math.round(Number(s.trigger_value||0)*100)}% 확률`:`공격 시 ${Math.round(Number(s.trigger_value||0)*100)}% 확률`;if(s.effect_type==='tank')t+=` · 상시 도발/피해감소`;return t};
 const evoPct=v=>{const n=Math.round((Number(v||1)-1)*100);return `${n>=0?'+':''}${n}%`};
 const enemyAsset=n=>{const x=String(n||'');if(window.CampaignArt?.enemyCell(x))return 'campaign-foe:'+x;if(/나무꾼|농부|짐꾼/.test(x))return 'human-lumberjack';if(/사냥꾼|석궁|호위/.test(x))return 'human-hunter';if(/대장|기사|경비|병사|베르크|브란|부관|단장/.test(x))return 'human-captain';return 'human-youth'};
-const itemAsset=n=>{const x=String(n||'');if(window.CampaignArt?.itemCell(x))return 'campaign-item:'+x;if(/동전/.test(x))return 'coin';if(/천/.test(x))return 'cloth';if(/몽둥이/.test(x))return 'club';if(/주머니|부적|훈장/.test(x))return 'pouch';if(/가죽|조끼/.test(x))return 'leather';if(/낫/.test(x))return 'sickle';if(/철|철갑/.test(x))return 'iron';if(/검/.test(x))return 'sword';const d=itemDef(n);if(d?.slot==='armor')return 'leather';if(d?.slot==='weapon')return 'sword';if(d?.slot==='accessory')return 'pouch';return 'crate'};
+const itemAsset=n=>{const x=String(n||'');if(window.ItemArt?.has(x))return 'item-v017:'+x;if(window.CampaignArt?.itemCell(x))return 'campaign-item:'+x;if(/동전/.test(x))return 'coin';if(/천/.test(x))return 'cloth';if(/몽둥이/.test(x))return 'club';if(/주머니|부적|훈장/.test(x))return 'pouch';if(/가죽|조끼/.test(x))return 'leather';if(/낫/.test(x))return 'sickle';if(/철|철갑/.test(x))return 'iron';if(/검/.test(x))return 'sword';const d=itemDef(n);if(d?.slot==='armor')return 'leather';if(d?.slot==='weapon')return 'sword';if(d?.slot==='accessory')return 'pouch';return 'crate'};
 const charSvg=(id,cls='')=>id.startsWith('monster-')&&window.OfficeArt?OfficeArt.monster(id.slice(8),cls):id.startsWith('campaign-foe:')?CampaignArt.enemy(id.slice(13),cls):`<svg class="pixel-char ${cls}" viewBox="0 0 64 64" aria-hidden="true"><use href="assets/characters.svg#${id}"></use></svg>`;
-const itemSvg=(id,cls='')=>id.startsWith('campaign-item:')?CampaignArt.item(id.slice(14),cls):`<svg class="pixel-item ${cls}" viewBox="0 0 48 48" aria-hidden="true"><use href="assets/items.svg#${id}"></use></svg>`;
+const itemSvg=(id,cls='')=>id.startsWith('item-v017:')?ItemArt.item(id.slice(10),cls):id.startsWith('campaign-item:')?CampaignArt.item(id.slice(14),cls):`<svg class="pixel-item ${cls}" viewBox="0 0 48 48" aria-hidden="true"><use href="assets/items.svg#${id}"></use></svg>`;
 const buzz=()=>{try{navigator.vibrate?.(12)}catch(_){}};
 
 function toast(text){buzz();const e=$('#toast');if(!e)return;e.textContent=text;e.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>e.classList.remove('show'),1700)}
@@ -97,7 +99,19 @@ function authMsg(text='',ok=false){const e=$('#authMsg');if(!e)return;e.textCont
 function errorKo(code){return ({username_format:'사원명은 한글 2~12글자로 입력해 주세요.',password_format:'보안 PIN은 숫자 4자리입니다.',username_taken:'이미 등록된 사원명입니다.',invalid_credentials:'사원명 또는 PIN이 맞지 않습니다.',unauthorized:'로그인이 만료되었습니다.',quarters_full:'숙소 정원이 가득 찼습니다.',gold_short:'금고 잔액이 부족합니다.',locked:'이전 지역 보스를 먼저 처치해야 합니다.',candidate_missing:'영입 후보가 이미 떠났습니다.',invalid_target:'작전 대상을 확인할 수 없습니다.',not_equipment:'장착할 수 없는 물품입니다.',item_missing:'창고에 해당 물품이 없습니다.',storage_full:'창고가 가득 차서 전리품을 수령할 수 없습니다.',party_size:'파티는 1~4마리로 구성해야 합니다.',monster_busy:'이미 다른 작전에 참가 중인 몬스터가 있습니다.',expedition_changed:'이미 종료되거나 변경된 원정입니다.',party_unchanged:'파티 구성을 변경한 뒤 재출정해 주세요.',ops_full:'작전실 동시 파견 한도에 도달했습니다.',workshop_level:'제작소를 확장하면 이 제작법을 사용할 수 있습니다.',facility_changed:'시설 상태가 변경됐습니다. 최신 비용을 확인해 주세요.',recipe_missing:'제작법을 찾을 수 없습니다.',craft_queue_full:'제작 대기열이 가득 찼습니다.',material_short:'제작 재료가 부족합니다.',not_sellable:'판매할 수 없는 품목입니다.',sell_queue_full:'상점이 다른 물품을 판매 중입니다.',max_level:'시설이 현재 최대 레벨입니다.',evolution_invalid:'선택할 수 없는 전직 경로입니다.',evolution_level:'전직에 필요한 레벨이 부족합니다.',monster_missing:'몬스터 정보를 찾을 수 없습니다.',server_error:'서버 처리 중 오류가 발생했습니다.'}[code]||code||'처리에 실패했습니다.')}
 
 async function currentSession(){const {data,error}=await sb.auth.getSession();if(error)throw error;session=data.session;return session}
-async function api(action,payload={}){const s=await currentSession();if(!s)throw new Error('unauthorized');const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB,'Authorization':'Bearer '+s.access_token},body:JSON.stringify({action,...payload})});const d=await r.json().catch(()=>({error:'bad_response'}));if(!r.ok)throw new Error(d.error||'server_error');if(d.state)S=action==='state-lite'?{...S,...d.state}:d.state;return d}
+let actionEpoch=0,requestSerial=0,lastAppliedRequest=0;
+async function api(action,payload={}){
+ const poll=action==='state-lite',epoch=poll?actionEpoch:++actionEpoch,serial=++requestSerial;
+ const s=await currentSession();if(!s)throw new Error('unauthorized');
+ const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB,'Authorization':'Bearer '+s.access_token},body:JSON.stringify({action,...payload,stateMode:action==='state'?'full':'lite'})});
+ const d=await r.json().catch(()=>({error:'bad_response'}));
+ // A background response from before a command must never roll back that command.
+ if(poll&&(epoch!==actionEpoch||serial<lastAppliedRequest))return {...d,stale:true};
+ if(!r.ok)throw new Error(d.error||'server_error');
+ if(serial<lastAppliedRequest)return {...d,stale:true};
+ if(d.state){S=(action==='state-lite'||d.stateMode==='lite')&&S?window.mergeGameState(S,d.state):d.state;lastAppliedRequest=serial;}
+ return d;
+}
 async function registerAccount(username,password){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB},body:JSON.stringify({action:'register',username,password})});const d=await r.json().catch(()=>({error:'bad_response'}));if(!r.ok)throw new Error(d.error||'register_failed');return d}
 async function loginAccount(username,password){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','apikey':PUB},body:JSON.stringify({action:'login',username,password})});const d=await r.json().catch(()=>({error:'bad_response'}));if(!r.ok)throw new Error(d.error||'invalid_credentials');return d}
 async function applySession(authSession){if(!authSession?.access_token||!authSession?.refresh_token)throw new Error('invalid_credentials');const {data,error}=await sb.auth.setSession({access_token:authSession.access_token,refresh_token:authSession.refresh_token});if(error||!data.session)throw new Error('invalid_credentials');session=data.session}
