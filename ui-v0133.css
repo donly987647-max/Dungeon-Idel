@@ -1,0 +1,50 @@
+/* v0.13.3 — flicker removal + hunt card overflow fix */
+
+/* Economy queue must never change opacity/typography while time advances. */
+.economy-v0128-sheet .job-row.queued,
+.economy-v0128-sheet .job-row:not(.ready-to-claim){opacity:1!important;filter:none!important}
+.economy-v0128-sheet .econ-job-right,
+.economy-v0128-sheet .econ-job-right>strong,
+.economy-v0128-sheet .job-percent{transition:none!important;animation:none!important;filter:none!important;text-shadow:none!important}
+
+/* v0.13.1 live dashboard added content to a legacy fixed-height 194/206px card.
+   Let the card grow naturally so exploration status is never clipped. */
+.compact-missions .mission-card.hunt-v0131-enhanced{
+  height:auto!important;
+  min-height:300px!important;
+  overflow:hidden!important;
+}
+.compact-missions .mission-card.hunt-v0131-enhanced .mission-file{
+  height:auto!important;
+  min-height:300px!important;
+  grid-template-rows:auto auto auto auto!important;
+  align-content:start!important;
+  gap:7px!important;
+  padding-bottom:10px!important;
+}
+.compact-missions .mission-card.hunt-v0131-enhanced .mission-middle{
+  min-height:48px!important;
+  align-items:center!important;
+}
+.compact-missions .mission-card.hunt-v0131-enhanced .mission-live-dashboard{
+  min-width:0!important;
+  margin:0!important;
+  overflow:visible!important;
+}
+.compact-missions .mission-card.hunt-v0131-enhanced .mission-foot{
+  min-width:0!important;
+  align-self:end!important;
+}
+.compact-missions .mission-card.hunt-v0131-enhanced .op-state{
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  line-height:1.4!important;
+}
+
+@media(max-width:430px){
+  .compact-missions .mission-card.hunt-v0131-enhanced{min-height:326px!important}
+  .compact-missions .mission-card.hunt-v0131-enhanced .mission-file{min-height:326px!important;padding:10px 9px 11px!important}
+  .compact-missions .mission-card.hunt-v0131-enhanced .mission-live-dashboard{padding:7px!important}
+  .compact-missions .mission-card.hunt-v0131-enhanced .mission-foot{grid-template-columns:minmax(0,1fr) auto!important;gap:6px!important}
+}
