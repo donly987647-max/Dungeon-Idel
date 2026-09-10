@@ -103,7 +103,15 @@ async function loginAccount(username,password){const r=await fetch(API,{method:'
 async function applySession(authSession){if(!authSession?.access_token||!authSession?.refresh_token)throw new Error('invalid_credentials');const {data,error}=await sb.auth.setSession({access_token:authSession.access_token,refresh_token:authSession.refresh_token});if(error||!data.session)throw new Error('invalid_credentials');session=data.session}
 
 function closeModal(immediate=false){const m=$('#modal');if(!m)return;clearTimeout(modalCloseTimer);watchingExpeditionId=null;partyPick=[];partySite=null;if(immediate){m.classList.add('hidden');m.classList.remove('open','closing');m.innerHTML='';return}m.classList.remove('open');m.classList.add('closing');modalCloseTimer=setTimeout(()=>{m.classList.add('hidden');m.classList.remove('closing');m.innerHTML=''},180)}
-function modal(html,extra=''){const m=$('#modal');clearTimeout(modalCloseTimer);m.classList.remove('hidden','closing','open');m.innerHTML=`<div class="sheet ${extra}">${html}</div>`;requestAnimationFrame(()=>m.classList.add('open'))}
+function modal(html,extra=''){
+  let scene='';
+  if(extra==='lodge-sheet')scene=officeScene('dormitory','사내 복지 1호 · 침대는 제공, 악몽은 각자.');
+  else if(extra==='warehouse-popup-sheet')scene=officeScene('shop','물류팀 · 분실물 아닙니다. 전리품입니다.');
+  else if(extra==='recruit-sheet')scene=officeScene('recruitment','인사팀 · 인간만 아니면 일단 면접.');
+  else if(extra.split(' ').includes('forge-browser-sheet'))scene=officeScene('workshop','대장간 · 오늘도 불꽃 튀는 근무 중.');
+  else if(extra.split(' ').includes('economy-sheet')&&/<h2>(상점|제작소)<\/h2>/.test(html))scene=html.includes('<h2>상점</h2>')?officeScene('shop','영업팀 · 주인은 바뀌어도 명검은 명검.'):officeScene('workshop','생산팀 · 장인 정신과 약간의 흑마법.');
+  if(scene&&!html.includes('class="office-scene')){const boundary=html.indexOf('</button></div>');if(boundary!==-1)html=html.slice(0,boundary+15)+scene+html.slice(boundary+15);}
+  const m=$('#modal');clearTimeout(modalCloseTimer);m.classList.remove('hidden','closing','open');m.innerHTML=`<div class="sheet ${extra}">${html}</div>`;requestAnimationFrame(()=>m.classList.add('open'))}
 function showAuth(){closeModal(true);S=null;session=null;$('#app').classList.add('hidden');$('#authGate').classList.remove('hidden');authMsg('')}
 async function enterGame(){const s=await currentSession();if(!s){showAuth();return}$('#authGate').classList.add('hidden');$('#app').classList.remove('hidden');try{await api('state');render()}catch(e){if(e.message==='unauthorized'){await sb.auth.signOut();showAuth()}else{toast('서버 상태를 불러오지 못했습니다.')}}}
 
@@ -115,22 +123,31 @@ function drawMonster(c,m,x=32,y=40,scale=1,phase=0){if(!c||!m)return;const g=c.g
 function drawEnemy(g,x,y,phase){g.save();g.translate(x,y+Math.sin(phase+.8)*1.2);g.fillStyle='#1a1714';g.fillRect(-11,14,22,4);g.fillStyle='#d1b08d';g.fillRect(-7,-9,14,12);g.fillStyle='#725642';g.fillRect(-9,-14,18,6);g.fillStyle='#6c7480';g.fillRect(-10,3,20,16);g.fillStyle='#beb7a6';g.fillRect(7,1,4,22);g.fillStyle='#d5d0c4';g.fillRect(4,-3,10,4);g.restore()}
 function battleCanvas(canvas,e){if(!canvas||!e||!S)return;const m=S.monsters.find(x=>x.id===e.monster_id),site=S.sites.find(x=>x.id===e.site_id);if(!m||!site)return;const g=canvas.getContext('2d'),w=canvas.width,h=canvas.height,t=Date.now()/180;g.clearRect(0,0,w,h);g.imageSmoothingEnabled=false;const cycle=(t%16);const attacking=cycle>5&&cycle<9;const mx=76+(attacking?Math.min(22,(cycle-5)*8):0),ex=w-82-(attacking?0:Math.max(0,Math.sin(t*.7)*3));drawMonster(canvas,m,mx,h-58,1.3,t*.7);drawEnemy(g,ex,h-50,t*.8);if(attacking){g.fillStyle='#f0b65c';g.fillRect(mx+34,h-80,26,5);g.fillRect(mx+49,h-89,5,20);if(cycle>7){g.fillStyle='#d75d52';g.fillRect(ex-18,h-88,8,8);g.fillRect(ex+12,h-96,6,6)}}g.fillStyle='#0009';g.fillRect(8,8,130,18);g.fillStyle='#e8ece6';g.font='10px monospace';g.fillText(`${m.name} · Lv.${m.level}`,14,20);g.fillStyle='#0009';g.fillRect(w-150,8,142,18);g.fillStyle='#e8ece6';g.fillText((e.battle_state?.enemy||site.enemy_names?.[0]||'용사'),w-143,20)}
 
-function hq(){const active=(S.expeditions||[]).filter(e=>e.active),pending=totalPending(),cap=capacity(),used=inventoryUsed(),craftJobs=activeCraftJobs(),sellJobs=activeSellJobs();return `
-<section class="facility-stack">
-  <button class="facility-row dorm" data-action="dorm"><img src="assets/icon-dorm.svg" alt=""><span class="facility-copy"><b>숙소</b><small>${S.monsters.length}/${cap} 몬스터</small></span><span class="facility-side"><em>Lv.${S.player.quarters_level}</em><i>›</i></span></button>
-  <button class="facility-row recruit" data-action="candidates"><img src="assets/icon-recruit.svg" alt=""><span class="facility-copy"><b>영입소</b><small>4시간마다 ${recruitBatch()}명 · 현재 ${(S.candidates||[]).length}명</small></span><span class="facility-side"><em>Lv.${S.player.tavern_level}</em><i>›</i></span></button>
-  <button class="facility-row workshop" data-action="workshop"><img src="assets/icon-workshop.svg" alt=""><span class="facility-copy"><b>제작소</b><small>작업 ${craftJobs.length}/${S.craftCapacity||5} · 총 대기열 ${S.craftCapacity||5}</small></span><span class="facility-side"><em>Lv.${S.player.workshop_level||1}</em><i>›</i></span></button>
-  <button class="facility-row shop" data-action="shop"><img src="assets/icon-shop.svg" alt=""><span class="facility-copy"><b>상점</b><small>판매 ${sellJobs.length}/${S.shopCapacity||5} · 총 대기열 ${S.shopCapacity||5}</small></span><span class="facility-side"><em>Lv.${S.player.shop_level||1}</em><i>›</i></span></button>
-  <button class="facility-row forge" data-forge-action="open"><img src="assets/icon-forge.svg" alt=""><span class="facility-copy"><b>대장간</b><small>강화석 ${fmt(inventoryQty('강화석'))}개 · 장착 장비 ${(S.equipment||[]).length}개</small></span><span class="facility-side"><em>강화</em><i>›</i></span></button>
-  <button class="facility-row storage" data-action="warehouse"><img src="assets/icon-storage.svg" alt=""><span class="facility-copy"><b>전리품 창고</b><small>${fmt(inventoryTotal())}개 보관 · ${inventoryUsed()}종</small></span><span class="facility-side"><em>Lv.${S.player.storage_level||1}</em><i>›</i></span></button>
-</section>
-${active.length?`<section class="home-live"><header><b>진행 중인 작전</b><small>${active.length}건</small></header>${active.slice(0,3).map(e=>{const site=S.sites.find(x=>x.id===e.site_id),p=partyOf(e);return `<button data-action="watch" data-id="${e.id}"><span class="live-pin"></span><span><b>${esc(site?.name||'작전')}</b><small>${esc(partyLabel(e))} · ${p.length}인 · 승리 ${fmt(e.kills)} · 화물 ${lootCount(e)}</small></span><i>관전</i></button>`}).join('')}</section>`:''}`}
+// Scene artwork is decorative. All facility actions and state stay in real HTML.
+function officeScene(kind,caption,compact=false){return `<figure class="office-scene ${compact?'office-scene-compact':''}"><img src="assets/art-v014/${kind}.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async"><figcaption>${caption}</figcaption></figure>`}
+function hq(){
+  const active=(S.expeditions||[]).filter(e=>e.active),cap=capacity(),craftJobs=activeCraftJobs(),sellJobs=activeSellJobs();
+  const facilities=[
+    ['dorm','dorm','숙소','dormitory','휴식도 업무의 일부입니다.',`${S.monsters.length}/${cap} 몬스터`,`Lv.${S.player.quarters_level}`,'data-action="dorm"'],
+    ['recruit','recruit','영입소','recruitment','스펙보다 중요한 건 송곳니.',`지원자 ${(S.candidates||[]).length}명 · 4시간마다 갱신`,`Lv.${S.player.tavern_level}`,'data-action="candidates"'],
+    ['workshop','workshop','제작소','workshop','작은 손도, 큰 손도 환영.',`작업 ${craftJobs.length}/${S.craftCapacity||5}`,`Lv.${S.player.workshop_level||1}`,'data-action="workshop"'],
+    ['shop','shop','상점','shop','용사님 장비, 거의 새것.',`판매 ${sellJobs.length}/${S.shopCapacity||5}`,`Lv.${S.player.shop_level||1}`,'data-action="shop"'],
+    ['forge','forge','대장간','workshop','강화는 뜨겁게. 결재는 차갑게.',`강화석 ${fmt(inventoryQty('강화석'))}개`,'강화','data-forge-action="open"'],
+    ['storage','storage','전리품 창고','shop','분실물 아닙니다. 전리품입니다.',`${fmt(inventoryTotal())}개 보관 · ${inventoryUsed()}종`,`Lv.${S.player.storage_level||1}`,'data-action="warehouse"']
+  ];
+  return `<section class="office-home-hero"><img src="assets/art-v014/headquarters.webp" width="1536" height="1024" alt="몬스터 직원들이 일하는 지하 본부"><div><span class="office-eyebrow">HEADQUARTERS · 지하 1층</span><h2>오늘도 성실하게, 사악하게.</h2><p>직원을 영입하고, 장비를 만들고, 용사를 박멸하세요.</p></div><span class="office-open"><i></i> 정상 영업 중</span></section>
+  <div class="office-section-head"><h2>사내 시설</h2><span>박멸도 복지가 좋아야 잘됩니다.</span></div>
+  <section class="facility-stack">${facilities.map(([cls,icon,title,art,joke,status,level,action],i)=>`<button class="facility-row ${cls}" ${action}><span class="facility-art" aria-hidden="true"><img src="assets/art-v014/${art}.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async"><span class="facility-dept">${String(i+1).padStart(2,'0')} / ${title}</span></span><span class="facility-copy"><b><img src="assets/icon-${icon}.svg" alt="">${title}</b><span class="facility-joke">${joke}</span><small>${status}</small></span><span class="facility-side"><em>${level}</em><i aria-hidden="true">↗</i></span></button>`).join('')}</section>
+  ${active.length?`<section class="home-live"><header><b>진행 중인 작전</b><small>${active.length}건</small></header>${active.slice(0,3).map(e=>{const site=S.sites.find(x=>x.id===e.site_id),p=partyOf(e);return `<button data-action="watch" data-id="${e.id}"><span class="live-pin"></span><span><b>${esc(site?.name||'작전')}</b><small>${esc(partyLabel(e))} · ${p.length}인 · 승리 ${fmt(e.kills)} · 화물 ${lootCount(e)}</small></span><i>관전</i></button>`}).join('')}</section>`:''}
+  <p class="office-footer">용사 박멸 주식회사 <span>·</span> 당신의 악행을 응원합니다.</p>`
+}
 
 
 function dormModal(){const cap=capacity();modal(`<div class="sheet-head lodge-head"><div><div class="section-kicker">MONSTER QUARTERS</div><h2>숙소 인원 관리</h2><p>${S.monsters.length}/${cap}명 입실 · 숙소 Lv.${S.player.quarters_level}</p></div><button class="close-btn" data-action="close">×</button></div><div class="lodge-list">${S.monsters.map(m=>{const e=activeOf(m.id);return `<button class="lodge-row" data-action="employee" data-origin="dorm" data-id="${m.id}"><span class="lodge-avatar">${charSvg(monsterAsset(m.family),'lodge-sprite '+formClass(m))}</span><span class="lodge-info"><b>${esc(m.name)}</b><small>${formName(m)} · 성장 ${esc(m.growth_grade||'C')} · ${esc(m.trait||'무특성')}</small><em class="${e?'field':''}">${e?'현장 출동':'숙소 대기'}</em></span><span class="lodge-stats"><i><small>LV</small><b>${m.level}</b></i><i><small>전투</small><b>${fmt(power(m))}</b></i><i><small>재능</small><b>${fmt(m.talent)}</b></i></span></button>`}).join('')}</div><div class="lodge-footer"><span><small>다음 정원</small><b>${cap} → ${cap+2}명</b></span><button class="primary-btn" data-action="upgrade" data-id="quarters">숙소 확장 · ${fmt(nextQuarterCost())}G</button></div>`,`lodge-sheet`)}
 
 function monsters(){return `
-<div class="page-head"><div><span>MONSTER ROSTER</span><h2>몬스터 리스트</h2></div><button class="primary-btn" data-action="candidates">영입 ${(S.candidates||[]).length}</button></div>
+<div class="page-head"><div><span>MONSTER ROSTER</span><h2>몬스터 사원 명부</h2></div><button class="primary-btn" data-action="candidates">영입 ${(S.candidates||[]).length}</button></div>
+${officeScene('recruitment','우리 회사의 경쟁력은 인재. 정확히는 괴재.',true)}
 <section class="personnel-list">${S.monsters.map(m=>{const e=activeOf(m.id);return `<button class="personnel-row ${e?'deployed':''}" data-action="employee" data-origin="roster" data-id="${m.id}"><span class="personnel-avatar">${charSvg(monsterAsset(m.family),'employee-sprite '+formClass(m))}</span><span class="personnel-info"><b>${esc(m.name)}</b><small>${formName(m)} · ${esc(m.trait||'무특성')}</small><em>${e?'현장 출동':'본부 대기'}</em></span><span class="personnel-power"><small>전투력</small><b>${fmt(power(m))}</b><i>LV.${m.level}</i></span></button>`}).join('')}</section>`}
 
 function hunt(){const active=(S.expeditions||[]).filter(e=>e.active);return `

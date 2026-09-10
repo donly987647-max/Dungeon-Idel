@@ -1,0 +1,2 @@
+# Keep lossless generated originals locally; ship the optimized WebP versions.
+*.png

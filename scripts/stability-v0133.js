@@ -55,7 +55,7 @@
   }
 
   function patchVisible(){
-    if(!S)return;try{updateChrome()}catch(_){}try{updateCandidateTimer()}catch(_){}try{patchHome()}catch(_){}try{patchRoster()}catch(_){}try{patchHuntBase()}catch(_){}try{window.refreshForgeEnhancements?.()}catch(_){}try{window.refreshHuntEnhancements?.()}catch(_){}try{if(watchingExpeditionId)syncWatchPanel()}catch(_){}
+    if(typeof S==='undefined'||!S)return;try{updateChrome()}catch(_){}try{updateCandidateTimer()}catch(_){}try{patchHome()}catch(_){}try{patchRoster()}catch(_){}try{patchHuntBase()}catch(_){}try{window.refreshForgeEnhancements?.()}catch(_){}try{window.refreshHuntEnhancements?.()}catch(_){}try{if(watchingExpeditionId)syncWatchPanel()}catch(_){}
   }
 
   async function pollState(){
@@ -76,5 +76,7 @@
     patchVisible();nativeSetInterval(pollState,2000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollState()});window.__frontendPollNow=pollState;
   }
 
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else queueMicrotask(start);
+  // This file intentionally loads before app.js to intercept its legacy intervals.
+  // Defer state/render access until every deferred application script has run.
+  if(document.readyState==='complete')start();else document.addEventListener('DOMContentLoaded',start,{once:true});
 })();
