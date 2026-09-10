@@ -1110,7 +1110,7 @@ begin
  insert into game_defense(player_id) values(p_player) on conflict do nothing;
  select * into d from game_defense where player_id=p_player for update;lv:=(to_jsonb(d)->>p_kind)::integer;
  if lv<>p_expected then raise exception 'facility_changed';end if;if lv>=25 then raise exception 'max_level';end if;
- price:=ceil((case p_kind when 'traps' then 120 when 'gas' then 180 when 'slow' then 240 else 300 end)*power(1.7::numeric,lv));
+ price:=ceil((case p_kind when 'traps' then 120 when 'gas' then 180 when 'slow' then 240 else 300 end)*power(1.28::numeric,lv));
  select gold into gold_now from game_players where device_id=p_player for update;if gold_now<price then raise exception 'gold_short';end if;
  update game_players set gold=gold-price where device_id=p_player;
  execute format('update game_defense set %I=$1 where player_id=$2',p_kind) using lv+1,p_player;

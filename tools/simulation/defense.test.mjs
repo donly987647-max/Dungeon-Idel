@@ -30,7 +30,7 @@ try{
  await test('gold upgrades debit once, reject stale levels and materially change combat',async()=>{
   const p=await fixture();await assert.rejects(db.query("select game_defense_upgrade($1,'gas',0)",[p]),/gold_short/);await db.query('update game_players set gold=1000 where device_id=$1',[p]);
   for(const [kind,cost] of [['traps',120],['gas',180],['slow',240],['arcane',300]]){const result=(await one('select game_defense_upgrade($1,$2,0) r',[p,kind])).r;assert.equal(result.cost,cost);await assert.rejects(db.query('select game_defense_upgrade($1,$2,0)',[p,kind]),/facility_changed/);}
-  assert.equal((await one('select gold from game_players where device_id=$1',[p])).gold,160);
+  assert.equal((await one('select gold from game_players where device_id=$1',[p])).gold,160);const second=(await one("select game_defense_upgrade($1,'traps',1) r",[p])).r;assert.equal(second.cost,154);assert.equal((await one('select gold from game_players where device_id=$1',[p])).gold,6);
   await setWave(p,{hp:1000,maxHp:1000,position:.24});const w=await action(p);assert(w.heroes[0].hp<960);assert(Math.abs(w.heroes[0].position-(.24+1/31))<1e-6);
  });
  await test('reward vault preserves full-warehouse drops and delivers exactly once',async()=>{

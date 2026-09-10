@@ -13,7 +13,7 @@ await page.route('https://xtvhisddjtfnsumprgpm.supabase.co/**',async route=>{
  if(body.action==='plan-evolution'){const m=state.monsters.find(m=>m.id===body.monsterId),e=state.evolutionDefs.find(e=>e.id===body.evolutionId);m.evolution_plan[e.from_form_id]=e.id;}
  if(body.action==='idle-policy')Object.assign(state.player,body.settings);
  if(body.action==='defense-command'){if(body.command==='stage'){state.defense.stage=body.stage;state.defense.boss_auto=false;}else state.defense.boss_auto=body.command==='boss-auto';}
- if(body.action==='defense-upgrade'){const bases={traps:120,gas:180,slow:240,arcane:300};state.player.gold-=Math.ceil(bases[body.kind]*1.7**state.defense[body.kind]);state.defense[body.kind]++;}
+ if(body.action==='defense-upgrade'){const bases={traps:120,gas:180,slow:240,arcane:300};state.player.gold-=Math.ceil(bases[body.kind]*1.28**state.defense[body.kind]);state.defense[body.kind]++;}
  if(body.action==='craft'){const r=state.recipes.find(r=>r.id===body.recipeId);state.craftJobs.push({id:'new-job',output_item:r.output_item,output_qty:body.quantity,status:'queued',started_at:new Date().toISOString(),finish_at:new Date(Date.now()+r.craft_seconds*body.quantity*1000).toISOString()});}
  await route.fulfill({contentType:'application/json',body:JSON.stringify({ok:true,state})});
 });
