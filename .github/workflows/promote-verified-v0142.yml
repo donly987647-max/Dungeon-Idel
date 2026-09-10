@@ -1,4 +1,4 @@
-name: Promote Verified v0142
+name: Connect Verified v0142 to Live URL
 on:
   push:
     branches: ['maintenance/expedition-v0142']
@@ -6,9 +6,9 @@ on:
 permissions:
   contents: read
 jobs:
-  promote:
+  connect:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -16,25 +16,60 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate selected already-built deployment
+      - name: Connect existing public game hostname to the verified static build
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           python3 - <<'PY'
           import json, os
+          from pathlib import Path
+          from urllib.error import HTTPError
           from urllib.request import Request,urlopen
           token=os.environ.get('VERCEL_TOKEN','')
-          if not token:raise SystemExit('PROMOTION_CREDENTIAL_NOT_CONFIGURED')
-          req=Request('https://api.vercel.com/v13/deployments/dpl_9pJqb1BcZsCoRJDZXq9GP6QhwKH8?teamId=team_7bLL2tRq5PMtthxr701h7FRa',headers={'Authorization':'Bearer '+token})
-          with urlopen(req,timeout=30) as r:found=json.load(r)
+          if not token:raise SystemExit('DEPLOYMENT_CREDENTIAL_NOT_CONFIGURED')
+          deployment='dpl_9pJqb1BcZsCoRJDZXq9GP6QhwKH8'
+          def api(path,data=None):
+              req=Request('https://api.vercel.com'+path+'?teamId=team_7bLL2tRq5PMtthxr701h7FRa',data=json.dumps(data).encode() if data is not None else None,headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'})
+              try:
+                  with urlopen(req,timeout=30) as r:return json.load(r)
+              except HTTPError as e:raise SystemExit(str(e.code)+': '+e.read().decode()[:1200])
+          found=api('/v13/deployments/'+deployment)
           assert found.get('projectId')=='prj_oN16fERQAklapuasrNyEtAH0QIA6'
           assert found.get('readyState')=='READY'
           assert found.get('meta',{}).get('githubCommitSha')=='16cdbd596b82eb9628b635f5b3a2004e9ed906b4'
-          print('VERIFIED_DEPLOYMENT_CONFIRMED')
+          result=api('/v2/deployments/'+deployment+'/aliases',{'alias':'hero-extermination-inc.vercel.app'})
+          Path('/tmp/previous-game-deployment').write_text(result.get('oldDeploymentId') or '')
+          print('LIVE_GAME_ALIAS_CONNECTED: '+result.get('alias',''))
           PY
-      - name: Promote the verified Preview with explicit confirmation
+      - name: Verify public production files match the release
+        run: python3 tools/production_smoke.py
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0 >/tmp/pw-install.log 2>&1
+          npx playwright install --with-deps chromium >>/tmp/pw-install.log 2>&1 || { tail -n 60 /tmp/pw-install.log; exit 1; }
+      - name: Test actual live frontend with synthetic backend fixtures
+        env:
+          QA_BASE_URL: https://hero-extermination-inc.vercel.app
+        run: node tests/expedition-runtime.mjs
+      - name: Restore previous alias if live verification fails
+        if: failure()
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: npx --yes vercel@latest promote hero-extermination-hkkuk6yht-donly987647-maxs-projects.vercel.app --yes --scope donly987647-maxs-projects --token "$VERCEL_TOKEN" --timeout 2m
-      - name: Verify production serves the validated frontend
-        run: python3 tools/production_smoke.py
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          from urllib.request import Request,urlopen
+          p=Path('/tmp/previous-game-deployment')
+          old=p.read_text().strip() if p.exists() else ''
+          if old:
+              req=Request('https://api.vercel.com/v2/deployments/'+old+'/aliases?teamId=team_7bLL2tRq5PMtthxr701h7FRa',data=json.dumps({'alias':'hero-extermination-inc.vercel.app'}).encode(),headers={'Authorization':'Bearer '+os.environ['VERCEL_TOKEN'],'Content-Type':'application/json'})
+              with urlopen(req,timeout=30) as r:assert r.status==200
+              print('PREVIOUS_LIVE_ALIAS_RESTORED')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-expedition-v0142
+          path: artifacts/runtime-v0142
+          retention-days: 7
