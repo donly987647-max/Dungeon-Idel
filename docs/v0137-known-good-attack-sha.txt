@@ -1,4 +1,0 @@
-assets/generated-monster-attack-v0137.png
-git-blob-sha: 55b850ccb9d12390e71252758fdd3a494dd01858
-size: 3674 bytes
-layout: 4 columns x 8 rows, 24x24 px cells
