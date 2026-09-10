@@ -52,8 +52,13 @@ try{
  });
  await test('defense tab, live movement, boss failure, stage switch and upgrade affordance stay current',async()=>{
   await page.locator('[data-screen="defense"]').click();assert.equal(await page.locator('.defense-hero').count(),3);assert.equal(await page.locator('.defense-team button').count(),9);
-  state.defense.wave.at=new Date().toISOString();
-  const moves=await page.evaluate(async()=>{const frame=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));const hero=document.querySelector('.defense-hero');S.defense.wave.at=new Date(Date.now()+60000).toISOString();await frame();const before=parseFloat(hero.style.left);S.defense.wave.at=new Date(Date.now()-1000).toISOString();await frame();return parseFloat(hero.style.left)>before+.5;});assert(moves,'hero position interpolates between server actions');
+  // Keep the server fixture timestamp stable while its background polls continue.
+  // Only the client animation clock advances, so a poll cannot reset our test timestamp.
+  const moves=await page.evaluate(async()=>{
+   const frame=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))),realNow=Date.now,at=Date.parse(S.defense.wave.at);
+   const left=()=>parseFloat(document.querySelector('.defense-hero').style.left);
+   try{Date.now=()=>at;await frame();const before=left();Date.now=()=>at+1000;await window.__frontendPollNow?.();await frame();return left()>before+.5;}finally{Date.now=realNow;}
+  });assert(moves,'hero position interpolates between server actions');
   await page.locator('[data-defense-action="boss"]').click();await page.waitForFunction(()=>S.defense.boss_auto);assert.equal(await page.locator('.defense-hero').count(),3,'same-wave rerender retains heroes');
   state.defense.boss_auto=false;state.defense.last_event={text:'보스 돌파 · 연속 도전 중단, 직전 단계 반복'};
   await install();await page.evaluate(()=>{screen='defense';render()});assert.equal(await page.locator('[data-defense-action="boss"]').textContent(),'보스 연속 도전');
