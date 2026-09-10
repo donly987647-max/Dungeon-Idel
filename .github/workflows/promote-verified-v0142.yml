@@ -1,0 +1,36 @@
+name: Promote Verified v0142
+on:
+  push:
+    branches: ['maintenance/expedition-v0142']
+    paths: ['.github/workflows/promote-verified-v0142.yml']
+permissions:
+  contents: read
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Promote verified static deployment without a new build
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from urllib.request import Request, urlopen
+          token=os.environ.get('VERCEL_TOKEN','')
+          if not token:
+              raise SystemExit('PROMOTION_CREDENTIAL_NOT_CONFIGURED: production remains unchanged')
+          project='prj_oN16fERQAklapuasrNyEtAH0QIA6'
+          deployment='dpl_9pJqb1BcZsCoRJDZXq9GP6QhwKH8'
+          team='team_7bLL2tRq5PMtthxr701h7FRa'
+          headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'}
+          def request(path,data=None):
+              with urlopen(Request('https://api.vercel.com'+path+'?teamId='+team,data=data,headers=headers),timeout=30) as r:
+                  return json.loads(r.read() or b'{}')
+          found=request('/v13/deployments/'+deployment)
+          assert found.get('projectId')==project, 'Wrong project'
+          assert found.get('readyState')=='READY', 'Deployment not ready'
+          assert found.get('meta',{}).get('githubCommitSha')=='16cdbd596b82eb9628b635f5b3a2004e9ed906b4', 'Unexpected source'
+          request('/v10/projects/'+project+'/promote/'+deployment,b'{}')
+          print('VERIFIED_DEPLOYMENT_PROMOTION_REQUESTED')
+          PY
