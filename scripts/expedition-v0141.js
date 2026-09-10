@@ -7,7 +7,7 @@
   const partyIds=e=>(S?.expeditionMembers||[]).filter(x=>x.expedition_id===e?.id).sort((a,b)=>a.position-b.position).map(x=>x.monster_id);
   const monsterById=id=>(S?.monsters||[]).find(m=>m.id===id)||null;
   const hpOf=(e,id)=>{
-    const bs=e?.battle_state||{},mx=Number(bs.partyMaxHp?.[id]||0),hp=Number(bs.partyHp?.[id]??mx||0);
+    const bs=e?.battle_state||{},mx=Number(bs.partyMaxHp?.[id]||0),hp=Number(bs.partyHp?.[id] ?? mx);
     if(!mx)return {hp:null,max:null,pct:100};
     return {hp,max:mx,pct:Math.max(0,Math.min(100,Math.round(hp/mx*100)))};
   };
@@ -55,7 +55,7 @@
     modal(`<div class="sheet-head"><div><div class="section-kicker">PARTY REDEPLOY</div><h2>${esc(site.name)} 파티 재편</h2><p>현재 전투를 종료하고 새 파티로 탐험을 다시 시작합니다.</p></div><button class="close-btn" data-action="close">×</button></div><div class="exp-restart-warning"><b>전투 중 교대 투입 불가</b><span>재편을 확정하면 지금 진행 중인 전투는 취소됩니다. 던전 승리 진행도와 이미 모은 전리품은 유지되지만, 새 파티의 탐험 HP는 최대치에서 새로 시작합니다.</span></div><div class="exp-edit-slots" data-exp-edit-slots>${fourSlots([...edit.selected],null,false)}</div><div class="exp-edit-count"><b data-exp-edit-count>${edit.selected.size}/4</b><small>최대 4명</small></div><div class="exp-edit-list">${rows}</div><button class="primary-btn exp-redeploy-confirm" data-exp-action="confirm" ${edit.selected.size?'':'disabled'}>현재 전투 취소 후 재출정</button>`,'mission-party-sheet exp-reconfigure-sheet');
   }
   function updateEditor(){
-    if(!edit)return;const e=activeForSite(edit.siteId),ids=[...edit.selected];
+    if(!edit)return;const ids=[...edit.selected];
     const slots=q('[data-exp-edit-slots]');if(slots)slots.innerHTML=fourSlots(ids,null,false);
     const count=q('[data-exp-edit-count]');if(count)count.textContent=`${ids.length}/4`;
     q('.exp-redeploy-confirm')?.toggleAttribute('disabled',ids.length===0);
@@ -65,8 +65,8 @@
     if(working||!ids.length)return;working=true;
     try{
       const d=await api('deploy',{monsterIds:ids,siteId});
-      const e=(d.state?.expeditions||S?.expeditions||[]).find(x=>x.active&&x.site_id===siteId);
-      closeModal(true);render();toast(`${ids.length}마리 박멸조 출정`);if(e)watchModal(e.id);
+      const ex=(d.state?.expeditions||S?.expeditions||[]).find(x=>x.active&&x.site_id===siteId);
+      closeModal(true);render();toast(`${ids.length}마리 박멸조 출정`);if(ex)watchModal(ex.id);
     }catch(err){toast(errorKo(err.message));}
     finally{working=false;}
   }
@@ -76,8 +76,8 @@
     try{
       await api('recall',{expeditionId:oldId});
       const d=await api('deploy',{monsterIds:ids,siteId});
-      const e=(d.state?.expeditions||S?.expeditions||[]).find(x=>x.active&&x.site_id===siteId);
-      edit=null;closeModal(true);render();toast('기존 전투 취소 · 새 파티로 탐험 재시작');if(e)watchModal(e.id);
+      const ex=(d.state?.expeditions||S?.expeditions||[]).find(x=>x.active&&x.site_id===siteId);
+      edit=null;closeModal(true);render();toast('기존 전투 취소 · 새 파티로 탐험 재시작');if(ex)watchModal(ex.id);
     }catch(err){toast(errorKo(err.message));if(activeForSite(siteId))openReconfigure(siteId);else{closeModal(true);render();}}
     finally{working=false;}
   }
