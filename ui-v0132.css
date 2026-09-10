@@ -1,0 +1,63 @@
+/* v0.13.2 — stable economy timers + blacksmith */
+
+/* Timer stability: numbers may change, typography/layout must not. */
+.economy-v0128-sheet .econ-job-right{
+  flex:0 0 108px!important;width:108px!important;min-width:108px!important;max-width:108px!important;
+  min-height:22px!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  font-family:inherit!important;font-size:10px!important;font-weight:900!important;line-height:1.2!important;
+  font-variant-numeric:tabular-nums!important;font-feature-settings:"tnum" 1!important;letter-spacing:0!important;
+  color:#e5b264!important;text-align:right!important;white-space:nowrap!important;overflow:visible!important;
+  transform:none!important;transition:none!important;animation:none!important;
+}
+.economy-v0128-sheet .econ-job-right>strong{
+  display:block!important;width:100%!important;margin:0!important;padding:0!important;
+  font:900 10px/1.2 inherit!important;color:#e5b264!important;letter-spacing:0!important;
+  font-variant-numeric:tabular-nums!important;font-feature-settings:"tnum" 1!important;
+  white-space:nowrap!important;text-align:right!important;transform:none!important;transition:none!important;animation:none!important;
+}
+.economy-v0128-sheet .job-percent{
+  display:inline-block!important;min-width:34px!important;font:800 8px/1.2 inherit!important;color:#d9a85e!important;
+  font-variant-numeric:tabular-nums!important;letter-spacing:0!important;transform:none!important;transition:none!important;animation:none!important;
+}
+.economy-v0128-sheet .craft-job:not(.ready-to-claim),
+.economy-v0128-sheet .craft-job:not(.ready-to-claim) *{font-synthesis:none}
+.economy-v0128-sheet .craft-job:not(.ready-to-claim) .econ-job-right,
+.economy-v0128-sheet .craft-job:not(.ready-to-claim) .econ-job-right>strong{filter:none!important;text-shadow:none!important}
+
+/* Blacksmith facility */
+.facility-row.forge{border-color:#52483d;background:#1c1915}.facility-row.forge img{image-rendering:pixelated}.facility-row.forge .facility-copy b{color:#efc27d}.facility-row.forge .facility-side em{color:#d7a85e}
+.forge-sheet{max-height:min(88vh,690px)}
+.forge-sheet .sheet-head{border-bottom-color:#52422e}
+.forge-stone-wallet{display:grid;grid-template-columns:54px 1fr;align-items:center;gap:9px;margin:4px 0 8px;padding:8px;border:1px solid #53472e;background:#1d1912;box-shadow:inset 3px 0 #b88942}
+.forge-stone-art{width:50px;height:50px;display:grid;place-items:center;border:1px solid #5a5037;background:#111714}.forge-stone-art .pixel-item{width:42px;height:42px;filter:drop-shadow(0 0 6px #79c7c766)}
+.forge-stone-wallet small{display:block;font-size:7px;color:#8e968e}.forge-stone-wallet b{display:block;margin-top:2px;font-size:18px;color:#8dd5d0}.forge-stone-wallet em{display:block;margin-top:2px;font-style:normal;font-size:8px;color:#9ca59d}
+.forge-rule-card{margin-bottom:9px;padding:8px;border:1px solid #3e473f;background:#151a16}.forge-rule-card>b{font-size:10px;color:#e6eae6}.forge-rule-card p{margin:4px 0 6px;font-size:8px;line-height:1.55;color:#9da69f}.forge-rule-card p strong{color:#e4b663}.forge-rule-card>div{display:flex;flex-wrap:wrap;gap:4px}.forge-rule-card>div span{padding:3px 5px;border:1px solid #3c463e;background:#202620;font-size:7px;color:#a9b2aa}.forge-rule-card>div .danger{border-color:#71433e;background:#281919;color:#e9978c}
+.forge-list-head{display:flex;align-items:end;justify-content:space-between;gap:8px;margin:9px 0 5px;padding-bottom:4px;border-bottom:1px solid #39423a}.forge-list-head b{font-size:11px}.forge-list-head small{font-size:7px;color:#879189}.forge-list-head.stored{margin-top:13px}
+.forge-gear-list{display:grid;gap:5px}.forge-gear-row{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:7px;min-height:72px;padding:6px;border:1px solid #3b453d;background:#151a16}.forge-gear-row.uncommon{border-color:#4d664e}.forge-gear-row.rare{border-color:#4b5f77}.forge-gear-row.epic{border-color:#6a526e}.forge-gear-row.risk-zone{box-shadow:inset 2px 0 #af653e}
+.forge-gear-icon{position:relative;width:46px;height:46px;display:grid;place-items:center;border:1px solid #3d483f;background:#101411}.forge-gear-icon .pixel-item{width:38px;height:38px}.forge-gear-icon i{position:absolute;right:-3px;bottom:-3px;min-width:20px;height:17px;display:grid;place-items:center;padding:0 3px;border:1px solid #b98136;background:#2b210f;color:#ffd27b;font:900 8px/1 inherit;font-style:normal}
+.forge-gear-copy{min-width:0}.forge-gear-copy header{display:flex;align-items:baseline;justify-content:space-between;gap:6px}.forge-gear-copy header b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}.forge-gear-copy header b em{font-style:normal;color:#e7b35f}.forge-gear-copy header span{flex:0 0 auto;font-size:7px;color:#88938b}.forge-gear-copy>small{display:block;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:7px;color:#9aa49c}
+.forge-mini-rates{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}.forge-mini-rates span{padding:2px 4px;border:1px solid #364038;background:#202620;color:#aab3ab;font-size:6px}.forge-mini-rates .success{color:#8dd08f;border-color:#3d6544}.forge-mini-rates .down{color:#e1b16d;border-color:#69553b}.forge-mini-rates .destroy{color:#ef9187;border-color:#74413d}.forge-mini-rates .max{color:#f0c66e;border-color:#785e32}
+.forge-row-btn{min-width:68px;min-height:34px;padding:0 7px;font-size:8px!important;white-space:nowrap}
+.forge-empty{padding:22px 8px;text-align:center;border:1px dashed #3d463f;color:#808b82;font-size:9px;line-height:1.6}
+.forge-stored-list{display:grid;gap:4px}.forge-stored-list>div{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:6px;min-height:42px;padding:4px 6px;border:1px solid #3b453e;background:#131814}.forge-stored-list .pixel-item{width:30px;height:30px}.forge-stored-list b{font-size:9px}.forge-stored-list em{font-style:normal;font-size:8px;color:#d3aa68}
+
+/* Enhancement confirmation */
+.forge-confirm-gear{display:grid;grid-template-columns:58px 1fr;align-items:center;gap:9px;padding:8px;border:1px solid #514631;background:#171712}.forge-confirm-gear>div{position:relative;width:54px;height:54px;display:grid;place-items:center;border:1px solid #4b493c;background:#101310}.forge-confirm-gear .pixel-item{width:46px;height:46px}.forge-confirm-gear>div i{position:absolute;right:-4px;bottom:-4px;padding:2px 5px;border:1px solid #b88339;background:#30230f;color:#ffd47d;font-size:9px;font-style:normal;font-weight:1000}.forge-confirm-gear small{display:block;font-size:7px;color:#879189}.forge-confirm-gear b{display:block;margin-top:2px;font-size:9px;line-height:1.45;color:#e5e9e5}.forge-confirm-gear em{display:block;margin-top:3px;font-style:normal;font-size:8px;color:#e5b464}
+.forge-rate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:7px}.forge-rate-grid>div{min-height:61px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #3c453e;background:#151a16;text-align:center}.forge-rate-grid small{font-size:6px;color:#879188}.forge-rate-grid b{margin-top:2px;font-size:14px;font-variant-numeric:tabular-nums}.forge-rate-grid span{margin-top:2px;font-size:6px;color:#8e9890}.forge-rate-grid .success{border-color:#416848}.forge-rate-grid .success b{color:#8dd594}.forge-rate-grid .down{border-color:#67533a}.forge-rate-grid .down b{color:#e2b16d}.forge-rate-grid .destroy{border-color:#6e403d}.forge-rate-grid .destroy b{color:#ef9187}
+.forge-destroy-warning{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;padding:7px 8px;border:1px solid #78423e;background:#291818}.forge-destroy-warning b{flex:0 0 auto;font-size:9px;color:#ef9187}.forge-destroy-warning span{font-size:7px;line-height:1.4;color:#bda09c}
+.forge-confirm-cost{display:flex;align-items:center;justify-content:space-between;margin-top:7px;padding:7px 8px;border:1px solid #445047;background:#131813}.forge-confirm-cost span{display:flex;align-items:center;gap:5px;font-size:9px}.forge-confirm-cost .pixel-item{width:24px;height:24px}.forge-confirm-cost b{font-size:12px;color:#8ed4d0;font-variant-numeric:tabular-nums}.forge-confirm-actions{display:grid;grid-template-columns:.8fr 1.2fr;gap:6px;margin-top:7px}.forge-confirm-actions button{min-height:40px}
+
+/* Enhancement result */
+.forge-result{display:grid;place-items:center;text-align:center;min-height:190px;padding:18px 10px;border:1px solid #3e4940;background:#141914}.forge-result-icon{width:64px;height:64px;display:grid;place-items:center;margin-bottom:8px;border:2px solid #536158;background:#101410;font-size:34px;font-weight:1000}.forge-result>b{font-size:18px}.forge-result>span{margin-top:4px;font-size:8px;color:#8d978f}.forge-result>p{margin:7px 0 0;font-size:8px;color:#a5aea7}.forge-result.success{border-color:#47724e;box-shadow:inset 0 3px #72b77b}.forge-result.success .forge-result-icon,.forge-result.success>b{color:#91da99}.forge-result.fail{border-color:#555f58}.forge-result.down{border-color:#765c3d;box-shadow:inset 0 3px #c58b48}.forge-result.down .forge-result-icon,.forge-result.down>b{color:#e0af67}.forge-result.destroy{border-color:#804844;background:#211414;box-shadow:inset 0 3px #c35e54}.forge-result.destroy .forge-result-icon,.forge-result.destroy>b{color:#f08e84}.forge-result-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}.forge-result-actions:has(button:only-child){grid-template-columns:1fr}.forge-result-actions button{min-height:40px}
+
+/* Enhancement badges in existing equipment UI */
+.gear-enhance-badge{position:absolute;right:-3px;bottom:-3px;min-width:19px;height:16px;display:grid;place-items:center;padding:0 3px;border:1px solid #b98437;background:#30230f;color:#ffd27a;font:900 8px/1 inherit;font-style:normal;z-index:2}.gear-choice-icon,.current-equipment-row>span:first-child{position:relative}.gear-choice.enhanced{box-shadow:inset 2px 0 #bc853b}.gear-choice-copy>b>em{font-style:normal;color:#e6b15e}.gear-inline-level{position:absolute;right:4px;top:4px;min-width:20px;height:17px;display:grid;place-items:center;padding:0 3px;border:1px solid #b88438;background:#2d220f;color:#ffd27a;font:900 8px/1 inherit;font-style:normal}.monster-detail-sheet-v10 .gear-slot{position:relative}
+
+/* Stone drop group */
+.stone-any-enemy-group{border-color:#466264!important;background:#12191a!important}.stone-any-enemy-group>header b{color:#8fd6d1!important}.stone-any-enemy-group .source-drop-item{border-color:#354e50!important}.stone-any-enemy-group .boss-bonus{border-color:#665239!important;background:#19160f!important}
+
+@media(max-width:430px){
+  .economy-v0128-sheet .econ-job-right{flex-basis:100px!important;width:100px!important;min-width:100px!important;max-width:100px!important}
+  .forge-gear-row{grid-template-columns:44px minmax(0,1fr) auto;padding:5px;gap:5px}.forge-gear-icon{width:42px;height:42px}.forge-gear-icon .pixel-item{width:35px;height:35px}.forge-row-btn{min-width:61px;padding:0 5px}.forge-mini-rates span{font-size:5px}.forge-rate-grid{gap:3px}.forge-rate-grid b{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){.forge-sheet *{animation:none!important;transition:none!important}}
