@@ -1,0 +1,42 @@
+/* v0.13.19 — evolved-form identity + HQ actionable alert dots */
+
+/* Evolved monsters keep their species silhouette but must never look identical to the base form. */
+.generated-monster-gfx{position:relative;isolation:isolate}
+.generated-monster-gfx:not(.form-slime):not(.form-goblin):not(.form-troll):not(.form-mandrake):not(.form-pixie):not(.form-imp):not(.form-wisp):not(.form-golem):not(.form-mimic){
+  filter:saturate(1.35) brightness(1.08) contrast(1.04) drop-shadow(0 0 5px #d6a55b88) drop-shadow(0 4px 0 #050805)!important;
+}
+.generated-monster-gfx:not(.form-slime):not(.form-goblin):not(.form-troll):not(.form-mandrake):not(.form-pixie):not(.form-imp):not(.form-wisp):not(.form-golem):not(.form-mimic)::before{
+  content:"";position:absolute;z-index:2;left:8%;right:8%;top:5%;height:4px;background:#f0c36b;box-shadow:0 3px 0 #fff3b4;opacity:.78;pointer-events:none
+}
+/* Holy / celestial evolutions */
+.generated-monster-gfx[class*="holy_"],.generated-monster-gfx[class*="saint_"],.generated-monster-gfx[class*="sacred_"],.generated-monster-gfx[class*="seraph_"],.generated-monster-gfx[class*="star_"],.generated-monster-gfx[class*="crystal_"],.generated-monster-gfx[class*="prism_"]{
+  filter:sepia(.25) saturate(.75) brightness(1.35) contrast(1.03) drop-shadow(0 0 7px #ffe49cdd) drop-shadow(0 4px 0 #050805)!important
+}
+/* Dark / abyssal evolutions */
+.generated-monster-gfx[class*="dark_"],.generated-monster-gfx[class*="shadow_"],.generated-monster-gfx[class*="void_"],.generated-monster-gfx[class*="abyss_"],.generated-monster-gfx[class*="nether_"],.generated-monster-gfx[class*="null_"],.generated-monster-gfx[class*="obsidian_"]{
+  filter:hue-rotate(205deg) saturate(1.55) brightness(.82) contrast(1.18) drop-shadow(0 0 7px #8c67dbcc) drop-shadow(0 4px 0 #050805)!important
+}
+/* Blood / venom evolutions */
+.generated-monster-gfx[class*="blood_"],.generated-monster-gfx[class*="bloodrage_"],.generated-monster-gfx[class*="bloodvine_"],.generated-monster-gfx[class*="bloodbox_"],.generated-monster-gfx[class*="crimson_"]{
+  filter:hue-rotate(285deg) saturate(1.65) brightness(.98) contrast(1.15) drop-shadow(0 0 6px #da5d61aa) drop-shadow(0 4px 0 #050805)!important
+}
+.generated-monster-gfx[class*="venom_"],.generated-monster-gfx[class*="poison_"]{
+  filter:hue-rotate(48deg) saturate(1.75) brightness(1.03) contrast(1.12) drop-shadow(0 0 6px #8ddd5faa) drop-shadow(0 4px 0 #050805)!important
+}
+/* Elemental / armored evolutions */
+.generated-monster-gfx[class*="flame_"],.generated-monster-gfx[class*="inferno_"],.generated-monster-gfx[class*="emberlord_"]{filter:hue-rotate(300deg) saturate(1.7) brightness(1.12) drop-shadow(0 0 7px #ff9a4acc) drop-shadow(0 4px 0 #050805)!important}
+.generated-monster-gfx[class*="storm_"],.generated-monster-gfx[class*="thunder_"],.generated-monster-gfx[class*="tempest_"]{filter:hue-rotate(135deg) saturate(1.4) brightness(1.2) drop-shadow(0 0 7px #8fe6ffcc) drop-shadow(0 4px 0 #050805)!important}
+.generated-monster-gfx[class*="iron_"],.generated-monster-gfx[class*="guardian_"],.generated-monster-gfx[class*="fortress_"],.generated-monster-gfx[class*="aegis_"],.generated-monster-gfx[class*="sentinel_"],.generated-monster-gfx[class*="vault_"]{filter:grayscale(.45) saturate(.65) brightness(1.15) contrast(1.2) drop-shadow(0 0 6px #b8c1c4aa) drop-shadow(0 4px 0 #050805)!important}
+
+/* Seraph Slime: explicit halo + wing silhouette so it reads as a final holy evolution at a glance. */
+.generated-monster-gfx.form-seraph_slime{overflow:visible!important;transform:scale(1.03);transform-origin:50% 70%}
+.generated-monster-gfx.form-seraph_slime::before{content:"";position:absolute;z-index:3;left:29%;top:2%;width:42%;height:8%;border:3px solid #ffe596;background:#fff5bf44;box-shadow:0 0 0 2px #8a6d2c,0 0 8px #ffe596;pointer-events:none}
+.generated-monster-gfx.form-seraph_slime::after{content:"";position:absolute;z-index:1;inset:23% -7% 8%;background:linear-gradient(135deg,transparent 0 17%,#fff3c9 18% 28%,#e7c979 29% 35%,transparent 36%) left/50% 100% no-repeat,linear-gradient(225deg,transparent 0 17%,#fff3c9 18% 28%,#e7c979 29% 35%,transparent 36%) right/50% 100% no-repeat;filter:drop-shadow(0 0 4px #ffe5a2);pointer-events:none}
+
+/* Headquarters notification dots */
+.facility-row{position:relative}
+.facility-row.facility-has-alert::after{content:"";position:absolute;z-index:6;left:7px;top:7px;width:12px;height:12px;border-radius:50%;background:#ef4038;border:2px solid #2a0e0d;box-shadow:0 0 0 2px #ff8b82,0 0 8px #ef4038;animation:facilityAlertPulse 1.35s steps(2,end) infinite;pointer-events:none}
+.facility-row.facility-has-alert::before{content:"NEW";position:absolute;z-index:5;left:25px;top:6px;padding:2px 4px;border:1px solid #8e2925;background:#471816;color:#ffb2ad;font-size:8px!important;font-weight:1000;line-height:1;letter-spacing:.35px;pointer-events:none}
+@keyframes facilityAlertPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.18);filter:brightness(1.35)}}
+@media(max-width:430px){.facility-row.facility-has-alert::after{left:6px;top:6px;width:11px;height:11px}.facility-row.facility-has-alert::before{left:23px;top:5px}}
+@media(prefers-reduced-motion:reduce){.facility-row.facility-has-alert::after{animation:none}}
