@@ -1,0 +1,28 @@
+/* v0.13.18 — fixed 4-slot dungeon party presentation */
+.compact-mission .mission-middle{display:flex!important;align-items:center!important;gap:9px!important;min-height:52px!important}
+.compact-mission .squad{display:grid!important;grid-template-columns:repeat(4,40px)!important;gap:5px!important;align-items:center!important;width:auto!important;min-width:0!important;overflow:visible!important}
+.compact-mission .party-capacity-slot{width:40px!important;height:40px!important;margin:0!important;border:1px solid #647066!important;background:#111612c9!important;display:grid!important;place-items:center!important;position:relative!important;overflow:hidden!important;box-shadow:inset 0 0 0 1px #0c100d!important}
+.compact-mission .party-capacity-slot.filled{border-color:#9b7043!important;background:#1e261fdd!important}
+.compact-mission .party-capacity-slot.empty{border-style:dashed!important;border-color:#5b665d!important;color:#7d887f!important}
+.compact-mission .party-capacity-slot.empty i{font-style:normal!important;font-size:18px!important;font-weight:900!important;line-height:1!important;color:#8b958d!important}
+.compact-mission .party-capacity-slot .party-sprite,.compact-mission .party-capacity-slot svg{width:36px!important;height:36px!important;max-width:36px!important;max-height:36px!important;margin:0!important}
+.compact-mission .party-capacity-label{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:26px!important;padding:4px 7px!important;border:1px solid #4d594f!important;background:#151a16d9!important;color:#d7ddd7!important;font-size:10px!important;font-weight:900!important;white-space:nowrap!important}
+
+.mission-party-sheet .party-select-head{gap:10px!important;flex-wrap:wrap!important}
+.mission-party-sheet .party-select-head small{margin-left:auto!important;padding:4px 7px!important;border:1px solid #4e5a51!important;background:#171d18!important;color:#d0d7d1!important;border-radius:3px!important;font-size:11px!important;font-weight:800!important;white-space:nowrap!important}
+
+/* Keep the four slots readable on narrow mobile screens. */
+@media(max-width:430px){
+  .compact-mission .squad{grid-template-columns:repeat(4,36px)!important;gap:4px!important}
+  .compact-mission .party-capacity-slot{width:36px!important;height:36px!important}
+  .compact-mission .party-capacity-slot .party-sprite,.compact-mission .party-capacity-slot svg{width:32px!important;height:32px!important;max-width:32px!important;max-height:32px!important}
+  .compact-mission .party-capacity-label{font-size:9px!important;padding:3px 6px!important}
+  .mission-party-sheet .party-select-head small{font-size:10px!important}
+}
+
+@media(max-width:360px){
+  .compact-mission .mission-middle{gap:6px!important}
+  .compact-mission .squad{grid-template-columns:repeat(4,33px)!important;gap:3px!important}
+  .compact-mission .party-capacity-slot{width:33px!important;height:33px!important}
+  .compact-mission .party-capacity-slot .party-sprite,.compact-mission .party-capacity-slot svg{width:29px!important;height:29px!important;max-width:29px!important;max-height:29px!important}
+}
