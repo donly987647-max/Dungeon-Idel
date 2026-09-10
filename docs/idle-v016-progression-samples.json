@@ -1,0 +1,476 @@
+{
+  "verifiedAt": "2026-09-10T17:18:01.455284+00:00",
+  "passed": true,
+  "actionsPerCompany": 24000,
+  "hoursPerCompany": 13.333333333333334,
+  "checkpointResolutionActions": 500,
+  "comparisons": [
+    {
+      "seed": 0.217,
+      "idleWins": 3471,
+      "frequentWins": 3460,
+      "winGapPercent": 0.3179190751445087,
+      "idleGrossGold": 20568,
+      "frequentGrossGold": 20103,
+      "grossGoldGapPercent": 2.3130875988658413,
+      "idleChapter5Checkpoint": 19000,
+      "frequentChapter5Checkpoint": 18500
+    },
+    {
+      "seed": 0.641,
+      "idleWins": 3410,
+      "frequentWins": 3453,
+      "winGapPercent": 1.2452939472922098,
+      "idleGrossGold": 19885,
+      "frequentGrossGold": 19245,
+      "grossGoldGapPercent": 3.325539101065212,
+      "idleChapter5Checkpoint": 20000,
+      "frequentChapter5Checkpoint": 20000
+    }
+  ],
+  "databaseMaintenance": {
+    "scope": "Synthetic in-memory PGlite only. VACUUM reclaims dead tuples without editing logical game rows, elapsed game time or RNG state. No active gameplay intervention was added.",
+    "frequentModeVacuumAfterActions": {
+      "0.217": [
+        20500,
+        21500
+      ],
+      "0.641": [
+        21000
+      ]
+    },
+    "reproduction": "The saved probe now vacuums between every 500-action batch because PGlite has no autovacuum worker."
+  },
+  "runs": [
+    {
+      "at": "2026-09-10T17:15:10.779Z",
+      "sources": {
+        "catalog": "a5b87a3b17cee2ced8a210514a12bfc95b70476955880679e1e21002b62b8adf",
+        "runtime": "001c780449204e6743b5a0ed5f30eea8e8e7ff5a13fe131fd6372a1360bd5e9a",
+        "economy": "243b3cc118c7fade4c3b1b8294b1182d95490c66c2af3d11d35403ab65249bd9"
+      },
+      "notes": "Synthetic new companies start at 0G, hire two free supports, deploy once; no recalls, stat grants, gear grants, XP grants, forced wins or boss rolls. Server action clock advances 2 seconds. Frequent mode additionally collects and finishes jobs every action and equips between battles. This measures polling/collection attention, not all possible optimized party/recipe strategies. Equal fixed action budgets per seed.",
+      "reports": [
+        {
+          "seed": 0.217,
+          "mode": "idle",
+          "actions": 24000,
+          "hours": 13.333333333333334,
+          "wins": 3471,
+          "losses": 0,
+          "checkpoints": [
+            {
+              "chapter": 1,
+              "actions": 4000
+            },
+            {
+              "chapter": 2,
+              "actions": 7500
+            },
+            {
+              "chapter": 3,
+              "actions": 11000
+            },
+            {
+              "chapter": 4,
+              "actions": 15500
+            },
+            {
+              "chapter": 5,
+              "actions": 19000
+            }
+          ],
+          "player": {
+            "gold": 14168,
+            "workshop_level": 3,
+            "storage_level": 1,
+            "idle_receipt": {
+              "gold": 20568
+            }
+          },
+          "monsters": [
+            {
+              "family": "imp",
+              "level": 60,
+              "xp": 0,
+              "form_id": "emberlord_imp",
+              "growth_grade": "S",
+              "service_points": 3471
+            },
+            {
+              "family": "mandrake",
+              "level": 60,
+              "xp": 0,
+              "form_id": "sacred_bloom_mandrake",
+              "growth_grade": "S",
+              "service_points": 3471
+            },
+            {
+              "family": "slime",
+              "level": 60,
+              "xp": 0,
+              "form_id": "abyss_slime",
+              "growth_grade": "S",
+              "service_points": 3471
+            }
+          ],
+          "equipment": [
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            }
+          ]
+        },
+        {
+          "seed": 0.217,
+          "mode": "frequent",
+          "actions": 24000,
+          "hours": 13.333333333333334,
+          "wins": 3460,
+          "losses": 0,
+          "checkpoints": [
+            {
+              "chapter": 1,
+              "actions": 3500
+            },
+            {
+              "chapter": 2,
+              "actions": 7000
+            },
+            {
+              "chapter": 3,
+              "actions": 10500
+            },
+            {
+              "chapter": 4,
+              "actions": 14000
+            },
+            {
+              "chapter": 5,
+              "actions": 18500
+            }
+          ],
+          "player": {
+            "gold": 13703,
+            "workshop_level": 3,
+            "storage_level": 1,
+            "idle_receipt": {
+              "gold": 20103
+            }
+          },
+          "monsters": [
+            {
+              "family": "imp",
+              "level": 60,
+              "xp": 0,
+              "form_id": "emberlord_imp",
+              "growth_grade": "S",
+              "service_points": 3460
+            },
+            {
+              "family": "mandrake",
+              "level": 60,
+              "xp": 0,
+              "form_id": "sacred_bloom_mandrake",
+              "growth_grade": "S",
+              "service_points": 3460
+            },
+            {
+              "family": "slime",
+              "level": 60,
+              "xp": 0,
+              "form_id": "abyss_slime",
+              "growth_grade": "S",
+              "service_points": 3460
+            }
+          ],
+          "equipment": [
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "at": "2026-09-10T17:17:09.525Z",
+      "sources": {
+        "catalog": "a5b87a3b17cee2ced8a210514a12bfc95b70476955880679e1e21002b62b8adf",
+        "runtime": "001c780449204e6743b5a0ed5f30eea8e8e7ff5a13fe131fd6372a1360bd5e9a",
+        "economy": "243b3cc118c7fade4c3b1b8294b1182d95490c66c2af3d11d35403ab65249bd9"
+      },
+      "notes": "Synthetic new companies start at 0G, hire two free supports, deploy once; no recalls, stat grants, gear grants, XP grants, forced wins or boss rolls. Server action clock advances 2 seconds. Frequent mode additionally collects and finishes jobs every action and equips between battles. This measures polling/collection attention, not all possible optimized party/recipe strategies. Equal fixed action budgets per seed.",
+      "reports": [
+        {
+          "seed": 0.641,
+          "mode": "idle",
+          "actions": 24000,
+          "hours": 13.333333333333334,
+          "wins": 3410,
+          "losses": 0,
+          "checkpoints": [
+            {
+              "chapter": 1,
+              "actions": 4000
+            },
+            {
+              "chapter": 2,
+              "actions": 7500
+            },
+            {
+              "chapter": 3,
+              "actions": 12000
+            },
+            {
+              "chapter": 4,
+              "actions": 16000
+            },
+            {
+              "chapter": 5,
+              "actions": 20000
+            }
+          ],
+          "player": {
+            "gold": 13485,
+            "workshop_level": 3,
+            "storage_level": 1,
+            "idle_receipt": {
+              "gold": 19885
+            }
+          },
+          "monsters": [
+            {
+              "family": "imp",
+              "level": 60,
+              "xp": 0,
+              "form_id": "emberlord_imp",
+              "growth_grade": "S",
+              "service_points": 3410
+            },
+            {
+              "family": "mandrake",
+              "level": 60,
+              "xp": 0,
+              "form_id": "sacred_bloom_mandrake",
+              "growth_grade": "S",
+              "service_points": 3410
+            },
+            {
+              "family": "slime",
+              "level": 60,
+              "xp": 0,
+              "form_id": "abyss_slime",
+              "growth_grade": "S",
+              "service_points": 3410
+            }
+          ],
+          "equipment": [
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            }
+          ]
+        },
+        {
+          "seed": 0.641,
+          "mode": "frequent",
+          "actions": 24000,
+          "hours": 13.333333333333334,
+          "wins": 3453,
+          "losses": 0,
+          "checkpoints": [
+            {
+              "chapter": 1,
+              "actions": 4000
+            },
+            {
+              "chapter": 2,
+              "actions": 7500
+            },
+            {
+              "chapter": 3,
+              "actions": 11500
+            },
+            {
+              "chapter": 4,
+              "actions": 16000
+            },
+            {
+              "chapter": 5,
+              "actions": 20000
+            }
+          ],
+          "player": {
+            "gold": 12845,
+            "workshop_level": 3,
+            "storage_level": 1,
+            "idle_receipt": {
+              "gold": 19245
+            }
+          },
+          "monsters": [
+            {
+              "family": "imp",
+              "level": 60,
+              "xp": 0,
+              "form_id": "emberlord_imp",
+              "growth_grade": "S",
+              "service_points": 3453
+            },
+            {
+              "family": "mandrake",
+              "level": 60,
+              "xp": 0,
+              "form_id": "sacred_bloom_mandrake",
+              "growth_grade": "S",
+              "service_points": 3453
+            },
+            {
+              "family": "slime",
+              "level": 60,
+              "xp": 0,
+              "form_id": "abyss_slime",
+              "growth_grade": "S",
+              "service_points": 3453
+            }
+          ],
+          "equipment": [
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 대표갑주",
+              "slot": "armor"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 박멸검",
+              "slot": "weapon"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            },
+            {
+              "item_id": "왕도 수습 법인인장",
+              "slot": "accessory"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

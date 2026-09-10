@@ -28,6 +28,8 @@ try{
   let actions=0,wins=0,losses=0,checkpoints=[];
   for(;actions<maxActions;){
    const n=Math.min(500,maxActions-actions),r=(await one('select qa_idle_steps($1,$2,$3) r',[f.e,n,mode==='frequent'])).r;actions+=n;wins+=r.wins;losses+=r.losses;
+   // PGlite has no autovacuum worker. Reclaim dead tuples without changing game state.
+   await db.exec('vacuum');
    const cleared=Number((await one('select count(*) n from game_stage_progress where player_id=$1 and boss_cleared',[p])).n);
    if(cleared>checkpoints.length){checkpoints.push({chapter:cleared,actions});console.log(JSON.stringify({seed,mode,cleared,actions,wins,losses}));}
    if(actions%10000===0)console.log(JSON.stringify({seed,mode,actions,wins,losses,cleared}));

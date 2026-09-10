@@ -60,7 +60,7 @@ try{
   await page.getByLabel('던전방어 단계',{exact:true}).selectOption('1');await page.waitForFunction(()=>S.defense.stage===1);
   await page.locator('[data-defense-action="upgrade"][data-kind="traps"]').click();await page.waitForFunction(()=>S.defense.traps===2);assert((await page.locator('.defense-upgrades article').first().textContent()).includes('Lv.2'));
   await page.evaluate(()=>{S.player.gold=0;OfficeUI.refresh()});assert(await page.locator('[data-defense-action="upgrade"][data-kind="traps"]').isDisabled());
-  for(const width of [360,390,768,1280]){await page.setViewportSize({width,height:900});await page.evaluate(()=>{document.querySelector('#view').scrollTop=0;document.querySelector('#view').parentElement.scrollTop=0;window.scrollTo(0,0);});await layout('defense '+width);await page.screenshot({path:`${output}/defense-${width}.png`,fullPage:true});}
+  for(const width of [360,390,768,1280]){await page.setViewportSize({width,height:900});await page.evaluate(()=>{document.activeElement?.blur();document.querySelector('#view').scrollTo({top:0,left:0,behavior:'instant'});});await page.waitForFunction(()=>document.querySelector('#view').scrollTop<1);await layout('defense '+width);await page.screenshot({path:`${output}/defense-${width}.png`,fullPage:true});}
   assert((await page.locator('.defense-rewards').textContent()).includes('경험치는 지급하지 않습니다'));
  });
  await test('all sprite stages load and server events cause attack, hit and healing animations',async()=>{

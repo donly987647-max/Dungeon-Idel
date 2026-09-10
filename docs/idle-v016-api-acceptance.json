@@ -1,0 +1,30 @@
+{
+  "started": "2026-09-10T16:45:09.425Z",
+  "finished": "2026-09-10T16:46:29.320Z",
+  "passed": true,
+  "checks": [
+    "anonymous game actions rejected",
+    "new company, fresh login, 0G and complete v16 catalog",
+    "evolution reservation and persistent idle policy",
+    "two free support hires with office skills",
+    "defense challenge and zero-gold upgrade rejection",
+    "only the server can advance combat time",
+    "separate accounts and foreign employee ownership rejection",
+    "unattended cron progression, idle-only defense, no defense XP, boss failure OFF and previous stage",
+    "authenticated expedition recall"
+  ],
+  "environment": "production",
+  "apiFunction": "dungeon-idel-api",
+  "apiVersion": 13,
+  "migration": "20260910164138_v016_idle_company",
+  "serverCron": "10 seconds",
+  "syntheticAccountsRemoved": 2,
+  "remainingSyntheticAuth": 0,
+  "remainingSyntheticCompanies": 0,
+  "cronFailuresInLast15Minutes": 0,
+  "sourceSha256": {
+    "supabase/functions/dungeon-idel-api/index.ts": "18acc92fb3e17740c0278b63502f5a15770e2d25b91f38b1f3e7a38bf53c8327",
+    "supabase/functions/dungeon-idel-api/deno.json": "480cb9dae827278f07ae456c09bc0e5e4d28f30e8b9ca241057fa36f7c400c10",
+    "supabase/migrations/20260910152957_v016_idle_company.sql": "d2068da1775b880f52f12cfb75cf46dfa1d04f769c60b5babac67ebb7d13344f"
+  }
+}
