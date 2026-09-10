@@ -30,10 +30,10 @@
     const currentMonsters=ids(S.monsters),currentCandidates=ids(S.candidates);
     const seenMonsters=baseline('monsters',currentMonsters),seenCandidates=baseline('candidates',currentCandidates);
     const newMonsters=currentMonsters.filter(id=>!seenMonsters.includes(id));
-    const candidateChanged=currentCandidates.length>0&&currentCandidates.join('|')!==seenCandidates.join('|');
+    const newCandidates=currentCandidates.filter(id=>!seenCandidates.includes(id));
     const craftReady=readyJobs('craft').length,sellReady=readyJobs('sell').length;
     setDot('.facility-row.dorm',newMonsters.length>0,newMonsters.length);
-    setDot('.facility-row.recruit',candidateChanged,currentCandidates.length);
+    setDot('.facility-row.recruit',newCandidates.length>0,newCandidates.length);
     setDot('.facility-row.workshop',craftReady>0,craftReady);
     setDot('.facility-row.shop',sellReady>0,sellReady);
     scheduleNext();
