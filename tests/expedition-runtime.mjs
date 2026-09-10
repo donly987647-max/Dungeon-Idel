@@ -87,4 +87,4 @@ try{
  assert.deepEqual(errors,[],'no browser runtime exceptions');
  const report={passed:true,widths:[360,390,430,768,1024],fixtureOnly:true,liveAccountDataUsed:false,checks:['HQ rendering without removed status rail','forge existence','one-request launch to battle','four slots and locked active-party selection','failed restart retains original','successful atomic restart opens battle','persistent exploration HP','no revive or stale skill replay','visible recovery and recovery clearing','mobile/tablet overflow and battle-label overlap','wipe restart action'],errors};
  await fs.writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log('EXPEDITION_RUNTIME_OK',JSON.stringify(report));
-}finally{await browser.close()}
+}catch(err){await page.screenshot({path:`${output}/failure.png`,fullPage:true});await fs.writeFile(`${output}/failure.json`,JSON.stringify({error:String(err),errors,html:await page.locator('#modal').innerHTML(),state:await page.evaluate(()=>S)},null,2));throw err}finally{await browser.close()}

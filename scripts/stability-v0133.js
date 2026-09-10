@@ -50,12 +50,12 @@
   }
 
   function patchHuntBase(){
-    if(!S||screen!=='hunt')return;const active=(S.expeditions||[]).filter(e=>e.active),head=document.querySelector('.compact-head small');if(head){const t=`${active.length}개 파티 출동 중 · 몬스터별 자유 파견`;if(head.textContent!==t)head.textContent=t}
+    if(!S||screen!=='hunt')return;const active=(S.expeditions||[]).filter(e=>e.active),head=document.querySelector('.compact-head small');if(head){const t=`${active.length}개 파티 출동 중 · 던전당 1개 파티 · 최대 4명`;if(head.textContent!==t)head.textContent=t}
     document.querySelectorAll('.mission-card[data-site]').forEach(card=>{const site=(S.sites||[]).find(x=>x.id===card.dataset.site);if(!site)return;const ex=activeAt(site.id),pending=sitePending(site.id),wins=Number(site.progress?.normal_wins||0),bossReady=!!site.progress?.boss_ready,bossCleared=!!site.progress?.boss_cleared,party=ex[0]?partyOf(ex[0]):[];const op=card.querySelector('.op-state'),bar=card.querySelector('.stage-progress i'),label=card.querySelector('.stage-progress small'),collect=card.querySelector('.chapter-loot-btn strong');if(op&&ex.length){const t=`${ex[0]?.phase||'탐색'} · ${party.length}인 · 화물 ${pending}`;if(op.textContent!==t)op.textContent=t}const pct=bossCleared?100:Math.min(100,wins/500*100);if(bar)bar.style.width=pct+'%';if(label)label.textContent=bossCleared?'완료':bossReady?'500/500':`${Math.min(500,wins)}/500`;if(collect)collect.textContent=`(${fmt(pending)}/${fmt(siteCargoCapacity(site.id))})`});
   }
 
   function patchVisible(){
-    if(typeof S==='undefined'||!S)return;try{updateChrome()}catch(_){}try{updateCandidateTimer()}catch(_){}try{patchHome()}catch(_){}try{patchRoster()}catch(_){}try{patchHuntBase()}catch(_){}try{window.refreshForgeEnhancements?.()}catch(_){}try{window.refreshHuntEnhancements?.()}catch(_){}try{if(watchingExpeditionId)syncWatchPanel()}catch(_){}
+    if(typeof S==='undefined'||!S)return;try{updateChrome()}catch(_){}try{updateCandidateTimer()}catch(_){}try{patchHome()}catch(_){}try{patchRoster()}catch(_){}try{patchHuntBase()}catch(_){}try{window.refreshForgeEnhancements?.()}catch(_){}try{window.refreshHuntEnhancements?.()}catch(_){}try{window.refreshExpeditionPartyUI?.()}catch(_){}try{if(watchingExpeditionId)syncWatchPanel()}catch(_){}
   }
 
   async function pollState(){
@@ -72,7 +72,7 @@
   }
 
   function start(){
-    if(started)return;started=true;document.body.classList.add('frontend-stable-v01312');try{const fullRender=render;render=function(){fullRender();patchVisible()}}catch(_){}
+    if(started)return;started=true;document.body.classList.add('frontend-stable-v01312');document.addEventListener('game:render',patchVisible);
     patchVisible();nativeSetInterval(pollState,2000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollState()});window.__frontendPollNow=pollState;
   }
 

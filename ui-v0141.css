@@ -23,3 +23,16 @@
 .mission-live-dashboard .live-bar-row{min-height:26px!important}.mission-live-dashboard .live-bar-row>span{font-size:11px!important}.mission-live-dashboard .live-bar-row>b{font-size:11px!important}.mission-live-dashboard .live-bar-row>i{height:9px!important}
 @media(max-width:390px){.exp-active-slots,.exp-edit-slots{gap:5px!important}.exp-party-slot{min-height:96px!important;padding:5px 3px!important;grid-template-rows:52px auto auto 6px!important}.exp-party-slot .exp-party-avatar{width:48px!important;height:48px!important}.exp-party-slot .exp-party-avatar .pixel-char,.exp-party-slot .exp-party-avatar .generated-monster-gfx{width:46px!important;height:46px!important}.exp-party-slot>b{font-size:10px!important}.exp-party-slot>small{font-size:8px!important}.exp-active-actions{grid-template-columns:1fr 1fr!important}.exp-edit-row{grid-template-columns:48px minmax(0,1fr) 44px!important}.exp-edit-row>span:first-child{width:44px!important;height:44px!important}.exp-edit-row>span:first-child .pixel-char,.exp-edit-row>span:first-child .generated-monster-gfx{width:42px!important;height:42px!important}}
 @media(prefers-reduced-motion:reduce){.exp-party-slot,.exp-edit-row{transition:none!important}}
+/* v0.14.2: shared, bounded party cards and readable carried health. */
+.exp-active-party-sheet .exp-active-slots,.exp-reconfigure-sheet .exp-edit-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.exp-active-party-sheet .exp-party-slot,.exp-reconfigure-sheet .exp-party-slot{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;overflow:hidden}
+.exp-party-slot .exp-party-avatar{width:48px;height:48px;display:grid;place-items:center;flex:none;overflow:hidden}
+.exp-party-slot .exp-party-avatar>*{width:44px!important;height:44px!important;max-width:44px;max-height:44px;flex:none}
+.exp-party-slot b{font-size:14px;line-height:1.35;max-width:100%;overflow-wrap:anywhere;text-align:center}
+.exp-party-slot small{font-size:12px;line-height:1.5;font-variant-numeric:tabular-nums;text-align:center}
+.exp-party-slot>i{display:block;width:100%;height:6px;background:#171421;overflow:hidden}.exp-party-slot>i>em{display:block;height:100%;background:#a8d880}
+.exp-party-slot.down{opacity:.6}.exp-active-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.exp-active-actions button,.exp-redeploy-confirm{min-height:44px;font-size:14px}
+.exp-active-party-sheet .exp-restart-warning,.exp-reconfigure-sheet .exp-restart-warning{font-size:13px;line-height:1.7;word-break:keep-all;overflow-wrap:anywhere}
+#modal .battle-report-actions .retreat{font-size:14px;min-height:44px;white-space:normal}
+#modal .hp-text{font-variant-numeric:tabular-nums;font-size:12px!important;line-height:1.5;white-space:normal!important;overflow-wrap:anywhere}
+@media(min-width:560px){.exp-active-party-sheet .exp-active-slots,.exp-reconfigure-sheet .exp-edit-slots{grid-template-columns:repeat(4,minmax(0,1fr))}}
