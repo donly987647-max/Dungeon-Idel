@@ -1,0 +1,97 @@
+/* v0.13.6 — tactile input, screen/modal transitions, forge feel */
+
+/* Fast, consistent press response across the game. */
+button,
+.facility-row,
+.personnel-row,
+.mission-card:not(.locked),
+.inventory-slot,
+.gear-slot,
+.candidate-profile-btn,
+.dispatch-row{
+  transform-origin:center;
+  transition:transform 80ms cubic-bezier(.2,.8,.2,1),filter 90ms ease,border-color 90ms ease,background-color 90ms ease,box-shadow 90ms ease;
+}
+button.ui-pressed:not(:disabled),
+.facility-row.ui-pressed,
+.personnel-row.ui-pressed,
+.mission-card.ui-pressed:not(.locked),
+.inventory-slot.ui-pressed,
+.gear-slot.ui-pressed,
+.candidate-profile-btn.ui-pressed,
+.dispatch-row.ui-pressed{
+  transform:translateY(2px) scale(.975)!important;
+  filter:brightness(1.14) saturate(1.08)!important;
+}
+button.ui-clicked:not(:disabled){filter:brightness(1.18) saturate(1.1)}
+.primary-btn.ui-pressed:not(:disabled){box-shadow:inset 0 3px #ffd28b55,0 2px 0 #2d1c0d!important}
+.soft-btn.ui-pressed:not(:disabled){box-shadow:inset 0 2px #ffffff18!important}
+.danger-btn.ui-pressed:not(:disabled){box-shadow:inset 0 3px #ffb1a933!important}
+.facility-row.ui-pressed{border-color:#89948b!important;background:#343b35!important}
+.personnel-row.ui-pressed,.candidate-profile-btn.ui-pressed{border-color:#78857a!important}
+.mission-card.ui-pressed:not(.locked){border-color:#9c7447!important}
+.bottom-nav button.ui-pressed:not(:disabled){transform:translateY(1px) scale(.94)!important;background:#2a312b!important}
+.bottom-nav button.active .nav-pict{animation:navPictKick .19s cubic-bezier(.2,.9,.3,1)}
+
+/* Pixel tap burst at the actual finger location. */
+.ui-tap-burst{
+  position:fixed;z-index:120;width:5px;height:5px;left:0;top:0;pointer-events:none;
+  background:#f4c77c;box-shadow:-10px 0 #9fb794,10px 0 #9fb794,0 -10px #e0a553,0 10px #e0a553,-7px -7px #fff0b0,7px 7px #c27c44;
+  image-rendering:pixelated;transform:translate(-50%,-50%) scale(.45);
+  animation:uiTapBurst .2s steps(4,end) forwards;
+}
+
+/* The core renderer already toggles .view-enter; make it visible and snappy. */
+.view.view-enter{animation:viewSnapIn .19s cubic-bezier(.18,.82,.28,1) both}
+.view.view-enter>*{animation:viewChildIn .22s cubic-bezier(.18,.82,.28,1) both}
+
+/* Bottom sheets now visibly snap in/out instead of simply appearing. */
+.modal:not(.hidden){opacity:0;transition:opacity .14s ease;background:#0008;backdrop-filter:blur(0)}
+.modal.open{opacity:1;background:#000b;backdrop-filter:blur(2px)}
+.modal.closing{opacity:0!important;background:#0005}
+.modal .sheet{
+  opacity:.72;transform:translateY(30px) scale(.985);transform-origin:50% 100%;
+  transition:transform .18s cubic-bezier(.16,.86,.22,1),opacity .14s ease;
+  will-change:transform,opacity;
+}
+.modal.open .sheet{opacity:1;transform:translateY(0) scale(1)}
+.modal.closing .sheet{opacity:.5;transform:translateY(22px) scale(.99)}
+.game-back-btn.ui-pressed,.close-btn.ui-pressed{transform:translateY(1px) scale(.92)!important}
+
+/* Toasts should feel like feedback, not passive text. */
+.toast.show{animation:toastKick .2s cubic-bezier(.15,.85,.25,1)}
+
+/* Faster, more satisfying blacksmith feedback. */
+.forge-hit-btn{position:relative;overflow:hidden;min-height:38px!important;box-shadow:0 3px 0 #3a250f,inset 0 1px #ffd18a30}
+.forge-hit-btn.ui-pressed:not(:disabled){transform:translateY(3px) scale(.95)!important;box-shadow:0 0 0 #3a250f,inset 0 3px #ffe0a155!important}
+.forge-fast-row.forging .forge-gear-icon{animation:forgeHammerImpact .22s steps(3,end) infinite}
+.forge-fast-row.result-success{animation:forgeSuccessPunch .46s steps(4,end)}
+.forge-fast-row.result-fail{animation:forgeFailShake .28s steps(4,end)}
+.forge-fast-row.result-down{animation:forgeDownKick .38s steps(4,end)}
+.forge-fast-row.result-destroy{animation:forgeDestroyKick .55s steps(5,end)}
+.forge-live-result.pop{animation:forgeResultPunch .3s cubic-bezier(.15,.9,.25,1)!important}
+.forge-live-result.success b{font-size:16px!important;text-shadow:0 0 9px #86d98988}
+.forge-live-result.destroy b{font-size:16px!important;text-shadow:0 0 9px #ef736c88}
+
+@keyframes uiTapBurst{0%{opacity:1;transform:translate(-50%,-50%) scale(.45)}70%{opacity:.9;transform:translate(-50%,-50%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.55)}}
+@keyframes viewSnapIn{0%{opacity:.25;transform:translateX(12px) scale(.992);filter:brightness(.78)}65%{opacity:1;filter:brightness(1.06)}100%{opacity:1;transform:none;filter:none}}
+@keyframes viewChildIn{0%{opacity:.45;transform:translateY(7px)}100%{opacity:1;transform:none}}
+@keyframes navPictKick{0%{transform:scale(.78)}65%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes toastKick{0%{opacity:0;transform:translate(-50%,10px) scale(.9)}60%{opacity:1;transform:translate(-50%,-2px) scale(1.03)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes forgeHammerImpact{0%{transform:translateY(0) rotate(0)}45%{transform:translateY(2px) rotate(-3deg);filter:brightness(1.35)}100%{transform:translateY(0) rotate(0)}}
+@keyframes forgeSuccessPunch{0%{transform:scale(.97);box-shadow:inset 0 0 #77d783}40%{transform:scale(1.015);box-shadow:inset 5px 0 #77d783,0 0 18px #77d78355}100%{transform:none}}
+@keyframes forgeFailShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+@keyframes forgeDownKick{0%{transform:translateY(-2px)}35%{transform:translateY(3px);box-shadow:inset 5px 0 #d69a52}100%{transform:none}}
+@keyframes forgeDestroyKick{0%{transform:scale(1);filter:brightness(1)}30%{transform:scale(1.025);filter:brightness(1.8)}55%{transform:translateX(-4px);filter:brightness(.7)}75%{transform:translateX(4px);opacity:.75}100%{transform:scale(.94);opacity:.2}}
+@keyframes forgeResultPunch{0%{transform:scale(.96);filter:brightness(.8)}55%{transform:scale(1.02);filter:brightness(1.2)}100%{transform:none;filter:none}}
+
+@media(max-width:430px){
+  .forge-hit-btn{min-height:40px!important}
+  .view.view-enter{animation-duration:.17s}
+  .modal .sheet{transition-duration:.16s}
+}
+@media(prefers-reduced-motion:reduce){
+  button,.facility-row,.personnel-row,.mission-card,.inventory-slot,.gear-slot,.candidate-profile-btn,.dispatch-row,.modal,.modal .sheet{transition:none!important;animation:none!important}
+  .view.view-enter,.view.view-enter>*,.bottom-nav button.active .nav-pict,.toast.show,.forge-fast-row,.forge-live-result.pop{animation:none!important}
+  .ui-tap-burst{display:none!important}
+}
