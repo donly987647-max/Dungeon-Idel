@@ -1,0 +1,47 @@
+name: Expedition Runtime QA
+on:
+  push:
+    branches: [main, 'maintenance/expedition-v0142']
+    paths: ['*.js', '*.css', 'index.html', 'scripts/**', 'tests/**', 'tools/attrition_sim_v0141.py', '.github/workflows/expedition-runtime.yml']
+  workflow_dispatch:
+  deployment_status:
+permissions:
+  contents: read
+jobs:
+  test:
+    if: github.event_name != 'deployment_status' || github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript and source integrity
+        run: |
+          set -euo pipefail
+          node --check app.js
+          find scripts -type f -name '*.js' -print0 | xargs -0 -n1 node --check
+          ! grep -q 'Warning: truncated output' app.js
+      - name: Simulate starter attrition against real elapsed time
+        run: python3 tools/attrition_sim_v0141.py
+      - name: Install pinned test browser
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0 >/tmp/pw-install.log 2>&1
+          npx playwright install --with-deps chromium >>/tmp/pw-install.log 2>&1 || { tail -n 60 /tmp/pw-install.log; exit 1; }
+      - name: Exercise locally served source with synthetic data
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8123 --bind 127.0.0.1 >/tmp/game-server.log 2>&1 &
+          node tests/expedition-runtime.mjs
+      - name: Exercise production frontend after successful production deployment
+        if: github.event_name == 'deployment_status' && github.event.deployment.environment == 'Production'
+        env:
+          QA_BASE_URL: https://hero-extermination-inc.vercel.app
+        run: node tests/expedition-runtime.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: expedition-runtime-${{ github.run_id }}
+          path: artifacts/runtime-v0142
+          retention-days: 7
