@@ -13,6 +13,8 @@
 .battle-report-scene.gfx-party-impact .battle-stage:after,.battle-report-scene.gfx-enemy-impact .battle-stage:after{content:"";position:absolute;inset:0;z-index:8;pointer-events:none;animation:gfxImpactFlash .28s steps(3,end)}
 .battle-report-scene.gfx-party-impact .battle-stage{animation:gfxSceneKick .26s steps(4,end)}
 .battle-report-scene.gfx-enemy-impact .battle-stage{animation:gfxSceneHit .24s steps(4,end)}
+/* Monster detail already has global modal Back/X navigation. Keep the duplicate roster-list control out of this sheet only. */
+.monster-detail-headbar>.monster-back-btn{display:none!important}
 @keyframes gfxBattleIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 @keyframes gfxFallbackAttack{0%,100%{transform:translateX(0) scale(1)}40%{transform:translateX(-3px) scale(.96,1.04)}65%{transform:translateX(10px) scale(1.08,.94)}}
 @keyframes gfxFallbackHurt{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px);filter:brightness(1.7)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
