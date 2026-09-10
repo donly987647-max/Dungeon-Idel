@@ -83,21 +83,32 @@
     </section>`;
   }
 
+  function dashboardSignature(site,e){
+    const p=site?.progress||{},bs=e?.battle_state||{},recent=battleEnds(e);
+    return [
+      p.normal_wins,p.boss_ready,p.boss_cleared,e?.phase,e?.event_state?.text,e?.kills,
+      bs.active,bs.boss,bs.turn,bs.enemy,bs.enemyHp,bs.enemyMaxHp,
+      JSON.stringify(bs.partyHp||{}),JSON.stringify(bs.partyMaxHp||{}),
+      recent.map(x=>`${x.result}:${x.enemy}:${x.boss?1:0}`).join(',')
+    ].join('|');
+  }
+
   function enhanceHuntCards(){
     if(!S||screen!=='hunt')return;
     document.querySelectorAll('.mission-card[data-site]').forEach(card=>{
       const site=(S.sites||[]).find(x=>x.id===card.dataset.site);
       if(!site)return;
-      const e=currentExp(site.id),html=dashboardHtml(site,e);
+      const e=currentExp(site.id),sig=dashboardSignature(site,e);
       let dash=card.querySelector('.mission-live-dashboard');
+      if(dash?.dataset.liveSig===sig){card.classList.add('hunt-v0131-enhanced');return}
+      const html=dashboardHtml(site,e),wrap=document.createElement('div');
+      wrap.innerHTML=html;
+      const next=wrap.firstElementChild;
+      next.dataset.liveSig=sig;
       if(!dash){
         const middle=card.querySelector('.mission-middle');
-        middle?.insertAdjacentHTML('afterend',html);
-      }else{
-        const wrap=document.createElement('div');
-        wrap.innerHTML=html;
-        dash.replaceWith(wrap.firstElementChild);
-      }
+        middle?.insertAdjacentElement('afterend',next);
+      }else dash.replaceWith(next);
       card.classList.add('hunt-v0131-enhanced');
     });
   }
