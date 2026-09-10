@@ -1,17 +1,19 @@
-/* v0.13.3 — runtime stability
- * Prevent legacy full-screen polling and duplicate economy timer writers.
- * Keep server state fresh by patching values in-place instead of rebuilding #view.
+/* v0.13.12 — frontend runtime stability
+ * One state poll, no legacy full-screen polling, no duplicate economy timer writer.
+ * Server state patches visible DOM in place so menus do not blink or get recreated.
  */
 (()=>{
   const nativeSetInterval=window.setInterval.bind(window);
   const nativeClearInterval=window.clearInterval.bind(window);
   const suppressed=new Set(['refresh','updateEconomyProgress']);
+  let pollInFlight=false;
+  let started=false;
 
   window.setInterval=function(fn,delay,...args){
     const name=typeof fn==='function'?(fn.name||''):'';
     if(suppressed.has(name)){
-      window.__v0133SuppressedIntervals=window.__v0133SuppressedIntervals||{};
-      window.__v0133SuppressedIntervals[name]=true;
+      window.__v01312SuppressedIntervals=window.__v01312SuppressedIntervals||{};
+      window.__v01312SuppressedIntervals[name]=true;
       return -1;
     }
     return nativeSetInterval(fn,delay,...args);
@@ -23,6 +25,7 @@
     return jobs.filter(j=>j.status==='ready'||(['running','queued'].includes(j.status)&&new Date(j.finish_at).getTime()<=now));
   };
   const activeJobs=type=>(type==='craft'?(S?.craftJobs||[]):(S?.sellJobs||[])).filter(j=>['running','queued'].includes(j.status));
+  const siteCargoCapacity=sid=>Math.min(9000,3000+Math.max(0,(typeof activeAt==='function'?activeAt(sid).length:1)-1)*1500);
 
   function ensureForgeRow(){
     if(!S||screen!=='home')return;
@@ -82,7 +85,7 @@
       if(op&&ex.length){const t=`${ex[0]?.phase||'탐색'} · ${party.length}인 · 화물 ${pending}`;if(op.textContent!==t)op.textContent=t}
       const pct=bossCleared?100:Math.min(100,wins/500*100);if(bar)bar.style.width=pct+'%';
       if(label)label.textContent=bossCleared?'완료':bossReady?'500/500':`${Math.min(500,wins)}/500`;
-      if(collect)collect.textContent=`(${fmt(pending)}/3000)`;
+      if(collect)collect.textContent=`(${fmt(pending)}/${fmt(siteCargoCapacity(site.id))})`;
     });
   }
 
@@ -90,22 +93,37 @@
     if(!S)return;
     try{updateChrome()}catch(_){}
     try{updateCandidateTimer()}catch(_){}
-    patchHome();patchRoster();patchHuntBase();
+    try{patchHome()}catch(_){}
+    try{patchRoster()}catch(_){}
+    try{patchHuntBase()}catch(_){}
     try{if(watchingExpeditionId)syncWatchPanel()}catch(_){}
   }
 
-  window.addEventListener('load',()=>{
+  async function pollState(){
+    if(pollInFlight||document.hidden||typeof S==='undefined'||!S||typeof session==='undefined'||!session||typeof busy!=='undefined'&&busy)return;
+    pollInFlight=true;
+    try{
+      await api('state');
+      patchVisible();
+    }catch(err){
+      if(err?.message==='unauthorized'){try{await sb.auth.signOut();showAuth()}catch(_){}}
+      else{const line=document.querySelector('#briefLine');if(line)line.textContent='서버 재연결 중...'}
+    }finally{pollInFlight=false}
+  }
+
+  function start(){
+    if(started)return;started=true;
+    document.body.classList.add('frontend-stable-v01312');
     try{
       const fullRender=render;
       render=function(){fullRender();patchVisible()};
     }catch(_){}
     patchVisible();
-    nativeSetInterval(async()=>{
-      if(document.hidden||typeof S==='undefined'||!S||typeof session==='undefined'||!session||typeof busy!=='undefined'&&busy)return;
-      try{await api('state');patchVisible()}catch(err){
-        if(err?.message==='unauthorized'){try{await sb.auth.signOut();showAuth()}catch(_){}}
-        else{const line=document.querySelector('#briefLine');if(line)line.textContent='서버 재연결 중...'}
-      }
-    },2000);
-  });
+    nativeSetInterval(pollState,2000);
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollState()});
+    window.__frontendPollNow=pollState;
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+  else queueMicrotask(start);
 })();
