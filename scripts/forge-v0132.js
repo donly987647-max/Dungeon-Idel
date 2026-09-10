@@ -1,32 +1,41 @@
-/* v0.13.12 — Blacksmith / event-driven fast enhancement loop */
+/* v0.13.14 — Blacksmith +20 / dedicated enhancement chamber */
 (()=>{
-  const MAX_ENHANCE=10;
+  const MAX_ENHANCE=20;
   const SLOT_ORDER=['weapon','armor','accessory'];
   const enhancing=new Set();
   let lastStock=[];
   let decorateRaf=0;
 
-  const profile=level=>{
-    const lv=Math.max(0,Math.min(9,Number(level||0)));
-    return [
-      {cost:1, success:1.00,fail:0,down:0,destroy:0},
-      {cost:2, success:.85,fail:.15,down:0,destroy:0},
-      {cost:3, success:.75,fail:.25,down:0,destroy:0},
-      {cost:4, success:.65,fail:.28,down:.07,destroy:0},
-      {cost:6, success:.55,fail:.28,down:.12,destroy:.05},
-      {cost:8, success:.47,fail:.31,down:.15,destroy:.07},
-      {cost:11,success:.39,fail:.33,down:.19,destroy:.09},
-      {cost:15,success:.32,fail:.34,down:.22,destroy:.12},
-      {cost:20,success:.25,fail:.34,down:.26,destroy:.15},
-      {cost:28,success:.18,fail:.34,down:.30,destroy:.18}
-    ][lv];
-  };
+  const PROFILES=[
+    {cost:1,success:1.00,fail:0,down:0,destroy:0},
+    {cost:2,success:.85,fail:.15,down:0,destroy:0},
+    {cost:3,success:.75,fail:.25,down:0,destroy:0},
+    {cost:4,success:.65,fail:.28,down:.07,destroy:0},
+    {cost:6,success:.55,fail:.28,down:.12,destroy:.05},
+    {cost:8,success:.47,fail:.31,down:.15,destroy:.07},
+    {cost:11,success:.39,fail:.33,down:.19,destroy:.09},
+    {cost:15,success:.32,fail:.34,down:.22,destroy:.12},
+    {cost:20,success:.25,fail:.34,down:.26,destroy:.15},
+    {cost:28,success:.18,fail:.34,down:.30,destroy:.18},
+    {cost:38,success:.16,fail:.34,down:.31,destroy:.19},
+    {cost:50,success:.15,fail:.33,down:.32,destroy:.20},
+    {cost:65,success:.14,fail:.32,down:.33,destroy:.21},
+    {cost:82,success:.13,fail:.31,down:.34,destroy:.22},
+    {cost:102,success:.12,fail:.30,down:.35,destroy:.23},
+    {cost:125,success:.11,fail:.29,down:.36,destroy:.24},
+    {cost:152,success:.10,fail:.28,down:.37,destroy:.25},
+    {cost:184,success:.09,fail:.27,down:.38,destroy:.26},
+    {cost:220,success:.08,fail:.26,down:.39,destroy:.27},
+    {cost:260,success:.07,fail:.25,down:.40,destroy:.28}
+  ];
+  const profile=level=>{const lv=Number(level||0);return lv>=0&&lv<MAX_ENHANCE?PROFILES[lv]:null};
   const rate=n=>`${Math.round(Number(n||0)*100)}%`;
   const enhanceMul=lv=>1+Math.max(0,Number(lv||0))*.08;
   const stones=()=>Number((S?.inventory||[]).find(x=>x.item_id==='강화석')?.qty||0);
   const currentGear=(mid,slot)=>(S?.equipment||[]).find(x=>x.monster_id===mid&&x.slot===slot)||null;
   const monster=id=>(S?.monsters||[]).find(x=>x.id===id)||null;
   const gearKey=(mid,slot)=>`${mid}:${slot}`;
+  const tierClass=lv=>lv>=20?'mythic':lv>=15?'legend':lv>=10?'master':lv>=4?'danger':'safe';
 
   function enhancedStats(m){
     const eq=equippedFor(m.id).map(row=>({row,d:itemDef(row.item_id)})).filter(x=>x.d);
@@ -77,26 +86,35 @@
     return lastStock;
   }
 
-  function levelPips(lv){return `<div class="forge-level-track" aria-label="강화 +${lv}">${Array.from({length:10},(_,i)=>`<i class="${i<lv?'on':''} ${i>=4?'risk':''}"></i>`).join('')}</div>`}
+  function levelPips(lv){return `<div class="forge-level-track forge-level-track-20" aria-label="강화 +${lv}">${Array.from({length:MAX_ENHANCE},(_,i)=>`<i class="${i<lv?'on':''} ${i>=4?'risk':''} ${i===9||i===14||i===19?'milestone':''}"></i>`).join('')}</div>`}
 
   function forgeGearRow(row){
-    const m=monster(row.monster_id),d=itemDef(row.item_id),lv=Number(row.enhance_level||0),p=lv<MAX_ENHANCE?profile(lv):null;
-    const active=!!activeOf(row.monster_id),enough=p&&stones()>=p.cost,key=gearKey(row.monster_id,row.slot),working=enhancing.has(key),danger=p?.destroy>0;
-    return `<article class="forge-gear-row forge-fast-row ${rarityClass(d?.rarity)} ${lv>=4?'risk-zone':''}" data-forge-gear="${esc(key)}" data-monster="${esc(row.monster_id)}" data-slot="${row.slot}"><div class="forge-gear-icon">${itemSvg(itemAsset(row.item_id))}<i>+${lv}</i></div><div class="forge-gear-copy"><header><b>${esc(row.item_id)} <em>+${lv}</em></b><span>${esc(m?.name||'몬스터')} · ${slotName(row.slot)}</span></header><small>${esc(statText(d,lv))}</small>${levelPips(lv)}<div class="forge-mini-rates">${p?`<span class="success">성공 ${rate(p.success)}</span><span>유지 ${rate(p.fail)}</span><span class="down">하락 ${rate(p.down)}</span>${danger?`<span class="destroy">파괴 ${rate(p.destroy)}</span>`:''}`:'<span class="max">MAX 강화 완료</span>'}</div></div><div class="forge-fast-action">${danger?`<small class="forge-risk-label">파괴 ${rate(p.destroy)}</small>`:''}<button class="primary-btn forge-row-btn forge-hit-btn" data-forge-action="enhance" data-monster="${esc(row.monster_id)}" data-slot="${row.slot}" ${active||!p||!enough||working?'disabled':''}>${working?'두드리는 중…':active?'출동 중':!p?'MAX':!enough?`석 ${p.cost}개 필요`:`강화 ${p.cost}`}</button></div></article>`;
+    const m=monster(row.monster_id),d=itemDef(row.item_id),lv=Number(row.enhance_level||0),p=profile(lv),active=!!activeOf(row.monster_id);
+    return `<button type="button" class="forge-gear-row forge-select-row ${rarityClass(d?.rarity)} ${tierClass(lv)}" data-forge-action="select" data-monster="${esc(row.monster_id)}" data-slot="${esc(row.slot)}"><div class="forge-gear-icon">${itemSvg(itemAsset(row.item_id))}<i>+${lv}</i></div><div class="forge-gear-copy"><header><b>${esc(row.item_id)} <em>+${lv}</em></b><span>${esc(m?.name||'몬스터')} · ${slotName(row.slot)}</span></header><small>${esc(statText(d,lv))}</small>${levelPips(lv)}<div class="forge-mini-rates">${p?`<span class="success">성공 ${rate(p.success)}</span><span class="down">하락 ${rate(p.down)}</span><span class="destroy">파괴 ${rate(p.destroy)}</span>`:'<span class="max">MAX +20 달성</span>'}</div></div><div class="forge-select-cta"><small>${active?'출동 중 · 강화 불가':p?`강화석 ${p.cost}개`:'최종 강화'}</small><b>${p?'강화하기':'완성'} ›</b></div></button>`;
   }
 
   function storedHtml(stock=lastStock){
     const stored=(stock||[]).filter(x=>Number(x.enhance_level||0)>0&&Number(x.qty||0)>0);
-    return stored.length?`<div class="forge-list-head stored"><b>보관 중 강화 장비</b><small>장비 선택창에서 다시 장착 가능</small></div><div class="forge-stored-list">${stored.map(x=>`<div><span>${itemSvg(itemAsset(x.item_id))}</span><b>${esc(x.item_id)} +${x.enhance_level}</b><em>${fmt(x.qty)}개</em></div>`).join('')}</div>`:'';
+    return stored.length?`<div class="forge-list-head stored"><b>보관 중 강화 장비</b><small>몬스터에게 장착 후 강화 가능</small></div><div class="forge-stored-list">${stored.map(x=>`<div><span>${itemSvg(itemAsset(x.item_id))}</span><b>${esc(x.item_id)} +${x.enhance_level}</b><em>${fmt(x.qty)}개</em></div>`).join('')}</div>`:'';
   }
 
   function rowsHtml(){const rows=(S?.equipment||[]).filter(x=>itemDef(x.item_id)?.slot);return rows.length?rows.map(forgeGearRow).join(''):'<div class="forge-empty">장착 중인 장비가 없습니다.<br>몬스터 상세에서 장비를 먼저 장착하세요.</div>'}
 
   window.forgeModal=function(){
     if(!S)return;
-    modal(`<div class="sheet-head"><div><div class="section-kicker">BLACKSMITH · QUICK ENHANCE</div><h2>대장간</h2><p>확인창 없이 바로 강화합니다. 결과는 장비 카드에서 즉시 표시됩니다.</p></div><button class="close-btn" data-action="close">×</button></div><section class="forge-stone-wallet forge-fast-wallet"><div class="forge-stone-art">${itemSvg('crystal')}</div><span><small>보유 강화석</small><b data-forge-stones>${fmt(stones())}개</b><em>강화 버튼을 눌러 즉시 시도</em></span><strong>FAST</strong></section><div class="forge-live-result idle" data-forge-result><b>망치를 준비했습니다</b><span>강화할 장비의 버튼을 누르세요.</span></div><section class="forge-rule-card forge-quick-rules"><div><span>1강당 능력치 +8%</span><span>+3부터 하락</span><span class="danger">+4부터 파괴</span><span>최대 +10</span></div></section><div class="forge-list-head"><b>장착 장비</b><small>버튼을 연속해서 눌러 빠르게 강화</small></div><div class="forge-gear-list" data-forge-list>${rowsHtml()}</div><div data-forge-stored></div>`,'forge-sheet forge-fast-sheet');
+    modal(`<div class="sheet-head"><div><div class="section-kicker">BLACKSMITH · EQUIPMENT FORGE</div><h2>대장간</h2><p>강화할 장비를 선택하면 전용 강화실로 이동합니다.</p></div><button class="close-btn" data-action="close">×</button></div><section class="forge-stone-wallet"><div class="forge-stone-art">${itemSvg('crystal')}</div><span><small>보유 강화석</small><b data-forge-stones>${fmt(stones())}개</b><em>장비 강화 최대 +20 · 1강당 장비 기본 능력치 +8%</em></span></section><section class="forge-rule-card forge-browser-rules"><div><span>+0 → +1 확정</span><span>+3부터 하락</span><span class="danger">+4부터 파괴</span><span>+10 이후 초고위험</span><span>MAX +20</span></div></section><div class="forge-list-head"><b>장착 장비</b><small>장비를 눌러 강화실 입장</small></div><div class="forge-gear-list" data-forge-list>${rowsHtml()}</div><div data-forge-stored></div>`,'forge-sheet forge-browser-sheet');
     decorate();
     equipmentStock().then(stock=>{const host=document.querySelector('[data-forge-stored]');if(host)host.innerHTML=storedHtml(stock)}).catch(()=>{});
+  };
+
+  function ratesHtml(p){if(!p)return `<div class="forge-max-banner"><b>MAX +20</b><span>최종 강화 단계에 도달했습니다.</span></div>`;return `<div class="forge-rate-grid forge-rate-grid-detail"><div class="success"><small>성공</small><b>${rate(p.success)}</b><span>+1 상승</span></div><div><small>유지</small><b>${rate(p.fail)}</b><span>현재 강화 유지</span></div><div class="down"><small>하락</small><b>${rate(p.down)}</b><span>-1 하락</span></div><div class="destroy"><small>파괴</small><b>${rate(p.destroy)}</b><span>장비 소멸</span></div></div>`}
+  function chamberFxNodes(){return `<div class="forge-flare"></div><div class="forge-runes">${Array.from({length:8},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div><div class="forge-sparks">${Array.from({length:18},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div>`}
+
+  window.forgeDetailModal=function(mid,slot){
+    const row=currentGear(mid,slot);if(!row){toast('강화할 장비가 없습니다.');forgeModal();return}
+    const m=monster(mid),d=itemDef(row.item_id),lv=Number(row.enhance_level||0),p=profile(lv),active=!!activeOf(mid),enough=p&&stones()>=p.cost,working=enhancing.has(gearKey(mid,slot)),next=p?statText(d,Math.min(MAX_ENHANCE,lv+1)):statText(d,lv);
+    modal(`<div class="sheet-head"><div><div class="section-kicker">FORGE CHAMBER · +${lv}</div><h2>${esc(row.item_id)} 강화</h2><p>${esc(m?.name||'몬스터')} · ${slotName(slot)} · 최대 +20</p></div><button class="close-btn" data-action="close">×</button></div><section class="forge-chamber ${tierClass(lv)}" data-forge-chamber>${chamberFxNodes()}<div class="forge-hammer" aria-hidden="true"><i></i><b></b></div><div class="forge-anvil" aria-hidden="true"><i></i><b></b></div><div class="forge-focus-item ${rarityClass(d?.rarity)}" data-forge-focus>${itemSvg(itemAsset(row.item_id))}<strong data-detail-level>+${lv}</strong></div><div class="forge-chamber-result idle" data-forge-result><b>강화 준비</b><span>망치를 내려쳐 장비를 강화하세요.</span></div></section><section class="forge-detail-card"><div class="forge-detail-title"><span><small>현재 강화</small><b data-detail-level-text>+${lv} / +${MAX_ENHANCE}</b></span><span><small>강화 효과</small><b>기본 능력치 +${lv*8}%</b></span></div><div data-detail-pips>${levelPips(lv)}</div><div class="forge-stat-compare"><div><small>현재</small><b data-detail-current>${esc(statText(d,lv))}</b></div><i>›</i><div><small>${p?'성공 시':'최종'}</small><b data-detail-next>${esc(next)}</b></div></div><div data-detail-rates>${ratesHtml(p)}</div></section><section class="forge-detail-action"><div class="forge-detail-cost"><span>${itemSvg('crystal')}<small>필요 강화석</small></span><b data-detail-cost>${p?`${fmt(p.cost)}개`:'-'}</b><em data-forge-stones>보유 ${fmt(stones())}개</em></div><button class="forge-strike-btn" data-forge-action="enhance" data-monster="${esc(mid)}" data-slot="${esc(slot)}" ${active||!p||!enough||working?'disabled':''}>${working?'강화 중…':active?'출동 중이라 강화 불가':!p?'MAX +20':!enough?`강화석 ${p.cost}개 필요`:`망치 내려치기 · +${lv} → +${lv+1}`}</button><p>${p&&p.destroy>0?`파괴 확률 ${rate(p.destroy)} · 파괴 시 장비는 영구 소멸합니다.`:p?'안전 구간입니다. 파괴되지 않습니다.':'최종 강화가 완료되었습니다.'}</p></section>`,'forge-sheet forge-detail-sheet');
+    decorate();
   };
 
   function applyLocalResult(data,mid,slot){
@@ -106,40 +124,53 @@
     return {result,prev,next,cost,item:String(data?.itemId||currentGear(mid,slot)?.item_id||'장비')};
   }
 
-  function showForgeResult(info){
-    const box=document.querySelector('[data-forge-result]');if(!box)return;
+  function pulseDevice(result){try{if(!navigator.vibrate)return;const pattern=result==='success'?[18,24,45]:result==='destroy'?[50,30,70,30,90]:result==='down'?[35,25,35]:[14,40,14];navigator.vibrate(pattern)}catch(_){}}
+
+  function playForgeEffect(info){
+    const chamber=document.querySelector('[data-forge-chamber]'),box=document.querySelector('[data-forge-result]');if(!chamber||!box)return;
+    chamber.classList.remove('is-striking','result-success','result-fail','result-down','result-destroy','fx-burst');void chamber.offsetWidth;chamber.classList.add('is-striking');
+    setTimeout(()=>{if(!chamber.isConnected)return;chamber.classList.add(`result-${info.result}`,'fx-burst');pulseDevice(info.result)},210);
     const label=info.result==='success'?'강화 성공!':info.result==='down'?'강화 하락':info.result==='destroy'?'장비 파괴':'강화 실패';
     const detail=info.result==='success'?`+${info.prev} → +${info.next}`:info.result==='down'?`+${info.prev} → +${info.next}`:info.result==='destroy'?`+${info.prev} 장비 소멸`:`+${info.prev} 유지`;
-    box.className=`forge-live-result ${info.result}`;box.innerHTML=`<b>${label}</b><span>${esc(info.item)} · ${detail} · 강화석 ${fmt(info.cost)}개</span>`;box.classList.remove('pop');void box.offsetWidth;box.classList.add('pop');
+    setTimeout(()=>{if(!box.isConnected)return;box.className=`forge-chamber-result ${info.result} pop`;box.innerHTML=`<b>${label}</b><span>${esc(info.item)} · ${detail}</span>`},220);
   }
 
-  function refreshForgeView(info,mid,slot){
-    const stoneEl=document.querySelector('[data-forge-stones]');if(stoneEl)stoneEl.textContent=`${fmt(stones())}개`;
-    const list=document.querySelector('[data-forge-list]');if(!list)return;
-    const key=gearKey(mid,slot),old=list.querySelector(`[data-forge-gear="${CSS.escape(key)}"]`),row=currentGear(mid,slot);
-    if(info.result==='destroy'){if(old){old.classList.add('result-destroy');old.innerHTML=`<div class="forge-destroyed-card"><b>장비 파괴</b><span>${esc(info.item)} +${info.prev} 소멸</span></div>`;setTimeout(()=>{old.remove();if(!list.querySelector('.forge-gear-row'))list.innerHTML=rowsHtml()},650)}return}
-    if(row){const wrap=document.createElement('div');wrap.innerHTML=forgeGearRow(row);const fresh=wrap.firstElementChild;fresh.classList.add(`result-${info.result}`);if(old)old.replaceWith(fresh);else list.appendChild(fresh);setTimeout(()=>fresh.classList.remove(`result-${info.result}`),650)}
+  function refreshDetail(mid,slot){
+    const stoneEls=document.querySelectorAll('[data-forge-stones]');stoneEls.forEach((el,i)=>el.textContent=i===0?`${fmt(stones())}개`:`보유 ${fmt(stones())}개`);
+    const row=currentGear(mid,slot);
+    if(!row){const btn=document.querySelector('.forge-strike-btn');if(btn){btn.disabled=true;btn.textContent='장비 파괴됨'}const note=document.querySelector('.forge-detail-action>p');if(note)note.textContent='파괴된 장비는 복구할 수 없습니다. 뒤로가기를 눌러 다른 장비를 선택하세요.';return}
+    const d=itemDef(row.item_id),lv=Number(row.enhance_level||0),p=profile(lv),active=!!activeOf(mid),enough=p&&stones()>=p.cost;
+    document.querySelectorAll('[data-detail-level]').forEach(el=>el.textContent=`+${lv}`);
+    const levelText=document.querySelector('[data-detail-level-text]');if(levelText)levelText.textContent=`+${lv} / +${MAX_ENHANCE}`;
+    const pips=document.querySelector('[data-detail-pips]');if(pips)pips.innerHTML=levelPips(lv);
+    const cur=document.querySelector('[data-detail-current]');if(cur)cur.textContent=statText(d,lv);
+    const next=document.querySelector('[data-detail-next]');if(next)next.textContent=p?statText(d,lv+1):statText(d,lv);
+    const rates=document.querySelector('[data-detail-rates]');if(rates)rates.innerHTML=ratesHtml(p);
+    const cost=document.querySelector('[data-detail-cost]');if(cost)cost.textContent=p?`${fmt(p.cost)}개`:'-';
+    const chamber=document.querySelector('[data-forge-chamber]');if(chamber){chamber.classList.remove('safe','danger','master','legend','mythic');chamber.classList.add(tierClass(lv))}
+    const btn=document.querySelector('.forge-strike-btn');if(btn){btn.disabled=active||!p||!enough;btn.textContent=active?'출동 중이라 강화 불가':!p?'MAX +20':!enough?`강화석 ${p.cost}개 필요`:`망치 내려치기 · +${lv} → +${lv+1}`}
+    const note=document.querySelector('.forge-detail-action>p');if(note)note.textContent=p&&p.destroy>0?`파괴 확률 ${rate(p.destroy)} · 파괴 시 장비는 영구 소멸합니다.`:p?'안전 구간입니다. 파괴되지 않습니다.':'최종 강화가 완료되었습니다.';
+    decorateEnhancedStats();scheduleDecorate();
   }
 
   async function enhance(mid,slot){
     const key=gearKey(mid,slot);if(enhancing.has(key))return;
     const row=currentGear(mid,slot);if(!row){toast('강화할 장비가 없습니다.');return}
-    const lv=Number(row.enhance_level||0),p=lv<MAX_ENHANCE?profile(lv):null;if(!p){toast('이미 최대 강화입니다.');return}if(stones()<p.cost){toast('강화석이 부족합니다.');return}if(activeOf(mid)){toast('출동 중인 몬스터의 장비는 강화할 수 없습니다.');return}
-    enhancing.add(key);const card=document.querySelector(`[data-forge-gear="${CSS.escape(key)}"]`),btn=card?.querySelector('.forge-hit-btn');if(card)card.classList.add('forging');if(btn){btn.disabled=true;btn.textContent='두드리는 중…'}
+    const lv=Number(row.enhance_level||0),p=profile(lv);if(!p){toast('이미 최대 강화입니다.');return}if(stones()<p.cost){toast('강화석이 부족합니다.');return}if(activeOf(mid)){toast('출동 중인 몬스터의 장비는 강화할 수 없습니다.');return}
+    enhancing.add(key);const btn=document.querySelector('.forge-strike-btn');if(btn){btn.disabled=true;btn.textContent='망치를 드는 중…'}
+    const chamber=document.querySelector('[data-forge-chamber]');if(chamber){chamber.classList.remove('is-striking','fx-burst');void chamber.offsetWidth;chamber.classList.add('pre-strike')}
     try{
       const {data,error}=await sb.rpc('game_enhance_equipped',{p_monster:mid,p_slot:slot});if(error)throw error;
-      const info=applyLocalResult(data||{},mid,slot);showForgeResult(info);enhancing.delete(key);refreshForgeView(info,mid,slot);decorateEnhancedStats();scheduleDecorate();window.__frontendPollNow?.();
+      const info=applyLocalResult(data||{},mid,slot);enhancing.delete(key);if(chamber)chamber.classList.remove('pre-strike');playForgeEffect(info);setTimeout(()=>refreshDetail(mid,slot),500);queueMicrotask(()=>window.__frontendPollNow?.());
     }catch(err){
-      enhancing.delete(key);if(card)card.classList.remove('forging');const msg=String(err?.message||'');
+      enhancing.delete(key);if(chamber)chamber.classList.remove('pre-strike');const msg=String(err?.message||'');
       if(msg.includes('stone_short'))toast('강화석이 부족합니다.');else if(msg.includes('monster_busy'))toast('출동 중인 몬스터의 장비는 강화할 수 없습니다.');else if(msg.includes('enhance_max'))toast('이미 최대 강화입니다.');else if(msg.includes('equipment_missing'))toast('강화할 장비가 없습니다.');else toast('강화 처리 중 오류가 발생했습니다.');
-      const latest=currentGear(mid,slot);if(card&&latest){const wrap=document.createElement('div');wrap.innerHTML=forgeGearRow(latest);card.replaceWith(wrap.firstElementChild)}
+      refreshDetail(mid,slot);
     }
   }
 
-  function decorateHome(){
-    if(!S||screen!=='home')return;const row=document.querySelector('.facility-row.forge');if(!row)return;
-    const small=row.querySelector('.facility-copy small'),text=`강화석 ${fmt(stones())}개 · 장착 장비 ${(S.equipment||[]).length}개`;if(small&&small.textContent!==text)small.textContent=text;
-  }
+  function decorateHome(){if(!S||screen!=='home')return;const row=document.querySelector('.facility-row.forge');if(!row)return;const small=row.querySelector('.facility-copy small'),text=`강화석 ${fmt(stones())}개 · 장착 장비 ${(S.equipment||[]).length}개`;if(small&&small.textContent!==text)small.textContent=text}
+  function decorateForgeBrowser(){const list=document.querySelector('.forge-browser-sheet [data-forge-list]');if(!list)return;const sig=(S?.equipment||[]).map(x=>`${x.monster_id}:${x.slot}:${x.item_id}:${x.enhance_level||0}`).join('|');if(list.dataset.sig===sig)return;list.dataset.sig=sig;list.innerHTML=rowsHtml();const stone=document.querySelector('.forge-browser-sheet [data-forge-stones]');if(stone)stone.textContent=`${fmt(stones())}개`}
 
   function decorateEnhancedStats(){
     if(!S)return;
@@ -158,14 +189,11 @@
     list.insertAdjacentHTML('afterbegin',`<section class="loot-source-group stone-any-enemy-group"><header><b>모든 적 처치 · 강화석</b><small>일반 적을 실제로 처치했을 때 판정</small></header><div class="source-drop-item"><span class="source-drop-icon">${itemSvg('crystal')}</span><span><b>강화석</b><small>모든 적 처치 · 대장간 재료</small></span><strong>${rate(all.chance)}</strong></div>${boss?`<div class="source-drop-item boss-bonus"><span class="source-drop-icon">${itemSvg('crystal')}</span><span><b>보스 추가 강화석</b><small>${esc(site.boss_name)} 처치 · ${fmt(boss.min||1)}~${fmt(boss.max||1)}개</small></span><strong>${rate(boss.chance)}</strong></div>`:''}</section>`);
   }
 
-  function decorate(){decorateHome();decorateEnhancedStats();decorateStoneVisuals()}
+  function decorate(){decorateHome();decorateForgeBrowser();decorateEnhancedStats();decorateStoneVisuals()}
   function scheduleDecorate(){if(decorateRaf)return;decorateRaf=requestAnimationFrame(()=>{decorateRaf=0;decorate()})}
   window.refreshForgeEnhancements=scheduleDecorate;
 
-  document.addEventListener('click',e=>{
-    const btn=e.target.closest('[data-forge-action]');if(!btn)return;e.preventDefault();e.stopImmediatePropagation();const a=btn.dataset.forgeAction;
-    if(a==='open')forgeModal();else if(a==='enhance')enhance(btn.dataset.monster,btn.dataset.slot);else if(a==='monster'){closeModal(true);screen='monsters';render();requestAnimationFrame(()=>employeeModal(btn.dataset.monster,'roster'))}
-  },true);
-
+  document.addEventListener('click',e=>{const btn=e.target.closest('[data-forge-action]');if(!btn)return;e.preventDefault();e.stopImmediatePropagation();const a=btn.dataset.forgeAction;if(a==='open')forgeModal();else if(a==='select')forgeDetailModal(btn.dataset.monster,btn.dataset.slot);else if(a==='enhance')enhance(btn.dataset.monster,btn.dataset.slot);else if(a==='monster'){closeModal(true);screen='monsters';render();requestAnimationFrame(()=>employeeModal(btn.dataset.monster,'roster'))}},true);
+  const modalHost=document.querySelector('#modal');if(modalHost)new MutationObserver(()=>scheduleDecorate()).observe(modalHost,{childList:true});
   requestAnimationFrame(decorate);
 })();
