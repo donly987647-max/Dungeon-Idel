@@ -1,4 +1,4 @@
-/* v0.13.0 — universal modal navigation history */
+/* v0.13.16 — universal modal navigation history + post-render UI hook */
 (()=>{
   const baseModal=modal;
   const baseCloseModal=closeModal;
@@ -82,6 +82,12 @@
     }
   }
 
+  function afterModalRender(){
+    injectBack();
+    const sheet=document.querySelector('#modal > .sheet');
+    window.applyReadability?.(sheet);
+  }
+
   modal=function(html,extra=''){
     const newKey=modalKey(html,extra);
     const current=captureCurrent();
@@ -99,7 +105,7 @@
     }
     baseModal(html,extra);
     currentKey=newKey;
-    requestAnimationFrame(injectBack);
+    requestAnimationFrame(afterModalRender);
   };
 
   closeModal=function(immediate=false){
@@ -127,7 +133,7 @@
       requestAnimationFrame(()=>{
         const sheet=document.querySelector('#modal > .sheet');
         if(sheet)sheet.scrollTop=prev.scrollTop||0;
-        injectBack();
+        afterModalRender();
       });
     }finally{restoring=false}
   }
