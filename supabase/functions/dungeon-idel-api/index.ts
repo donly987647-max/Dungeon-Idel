@@ -90,9 +90,9 @@ Deno.serve(async(req:Request)=>{
   }
   const user=await getAuthUser(req);if(!user)return json({error:'unauthorized'},401);const player=user.id
   if(action!=='state-lite')await ensurePlayer(player)
-  if(action==='idle-policy'||action==='plan-evolution'||action==='defense-command'||action==='defense-upgrade'){
-   const rpc=action==='idle-policy'?'game_set_idle_policy':action==='plan-evolution'?'game_plan_evolution':action==='defense-command'?'game_defense_command':'game_defense_upgrade';
-   const args=action==='idle-policy'?{p_player:player,p_settings:body.settings||{}}:action==='plan-evolution'?{p_player:player,p_monster:String(body.monsterId||''),p_evolution:String(body.evolutionId||'')}:action==='defense-command'?{p_player:player,p_action:String(body.command||''),p_stage:body.stage==null?null:Number(body.stage)}:{p_player:player,p_kind:String(body.kind||''),p_expected:Number(body.expectedLevel)};
+  if(action==='plan-evolution'||action==='defense-command'||action==='defense-upgrade'){
+   const rpc=action==='plan-evolution'?'game_plan_evolution':action==='defense-command'?'game_defense_command':'game_defense_upgrade';
+   const args=action==='plan-evolution'?{p_player:player,p_monster:String(body.monsterId||''),p_evolution:String(body.evolutionId||'')}:action==='defense-command'?{p_player:player,p_action:String(body.command||''),p_stage:body.stage==null?null:Number(body.stage)}:{p_player:player,p_kind:String(body.kind||''),p_expected:Number(body.expectedLevel)};
    const {data,error}=await db.rpc(rpc,args);if(error){for(const code of ['gold_short','facility_changed','max_level','locked','evolution_invalid','invalid_action','invalid_settings','facility'])if(error.message.includes(code))return json({error:code},400);throw error}
    return json({ok:true,result:data,state:await state(player)})
   }

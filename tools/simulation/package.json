@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node campaign.test.mjs && node economy.test.mjs && node idle.test.mjs && node defense.test.mjs",
+    "test": "node campaign.test.mjs && node economy.test.mjs && node idle.test.mjs && node defense.test.mjs && node manual-operations.test.mjs",
     "test:ui": "node idle-ui.test.mjs",
     "probe:progression": "node progression.mjs",
     "probe:idle": "node idle-progression.mjs"

@@ -11,7 +11,6 @@ await page.route('https://cdn.jsdelivr.net/npm/@supabase/**',route=>route.fulfil
 await page.route('https://xtvhisddjtfnsumprgpm.supabase.co/**',async route=>{
  const body=route.request().postDataJSON()||{};calls.push(body);
  if(body.action==='plan-evolution'){const m=state.monsters.find(m=>m.id===body.monsterId),e=state.evolutionDefs.find(e=>e.id===body.evolutionId);m.evolution_plan[e.from_form_id]=e.id;}
- if(body.action==='idle-policy')Object.assign(state.player,body.settings);
  if(body.action==='defense-command'){if(body.command==='stage'){state.defense.stage=body.stage;state.defense.boss_auto=false;}else state.defense.boss_auto=body.command==='boss-auto';}
  if(body.action==='defense-upgrade'){const bases={traps:120,gas:180,slow:240,arcane:300};state.player.gold-=Math.ceil(bases[body.kind]*1.28**state.defense[body.kind]);state.defense[body.kind]++;}
  if(body.action==='craft'){const r=state.recipes.find(r=>r.id===body.recipeId);state.craftJobs.push({id:'new-job',output_item:r.output_item,output_qty:body.quantity,status:'queued',started_at:new Date().toISOString(),finish_at:new Date(Date.now()+r.craft_seconds*body.quantity*1000).toISOString()});}
@@ -45,11 +44,11 @@ try{
   await page.getByLabel('종류 필터',{exact:true}).selectOption('material');assert((await page.locator('.idle-item').count())>0);
   const catalyst=catalog.items.find(x=>x.acquisition?.catalyst);await page.getByLabel('아이템 검색',{exact:true}).fill(catalyst.id);assert.equal(await page.locator('.idle-item').count(),0);await close();
  });
- await test('service ranks, both reserved evolution routes and automatic policy are interactive',async()=>{
+ await test('service ranks and reserved evolution remain; operating policy is absent',async()=>{
   await page.evaluate(()=>employeeModal(S.monsters[0].id));assert((await page.locator('.office-service').textContent()).includes('500 / 800'));assert.equal(await page.locator('.office-route').count(),2);
   const chosen=await page.locator('.office-route').last().getAttribute('data-evolution');await page.locator('.office-route').last().click();await page.waitForFunction(id=>document.querySelector(`.office-route[data-evolution="${id}"]`)?.getAttribute('aria-pressed')==='true',chosen);
   state.monsters[0].growth_grade='A';state.monsters[0].service_points=810;await page.evaluate(()=>window.__frontendPollNow());await page.waitForFunction(()=>document.querySelector('.office-service')?.textContent.includes('810 / 2,000'));assert((await page.locator('.office-service').textContent()).includes('810 / 2,000'),'open promotion progress refreshes');
-  await close();await page.locator('[data-idle-action="policy"]').click();await page.locator('[data-idle-policy="auto_advance"]').uncheck();await page.waitForFunction(()=>S.player.auto_advance===false);await close();
+  await close();assert.equal(await page.locator('[data-idle-action="policy"],[data-idle-policy]').count(),0);assert.equal(await page.evaluate(()=>typeof OfficeUI.policy),'undefined');assert(!calls.some(c=>c.action==='idle-policy'));
  });
  await test('defense tab, live movement, boss failure, stage switch and upgrade affordance stay current',async()=>{
   await page.locator('[data-screen="defense"]').click();assert.equal(await page.locator('.defense-hero').count(),3);assert.equal(await page.locator('.defense-team button').count(),9);
