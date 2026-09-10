@@ -1,10 +1,10 @@
-/* v0.13.9 — generated fantasy pixel UI assets integrated without layout shifts */
+/* v0.13.10 — generated fantasy pixel UI assets integrated without layout shifts */
 :root{
   --v0139-menu-icons:url('assets/ui/menu-icons-v0139.png');
   --v0139-facility-scenes:url('assets/ui/facility-scenes-v0139.png');
 }
 
-/* Facility rows keep the exact legacy geometry. Artwork lives only in the paint layer. */
+/* Facility rows keep one shared geometry and typography. No facility-specific font sizing. */
 .facility-stack .facility-row{
   min-height:86px!important;
   grid-template-columns:64px minmax(0,1fr) auto!important;
@@ -16,6 +16,7 @@
   background-repeat:no-repeat!important;
   background-size:100% 100%,200% 400%!important;
   color:#eef1eb!important;
+  font-family:inherit!important;
 }
 .facility-stack .facility-row.dorm{background-image:linear-gradient(90deg,rgba(14,18,15,.80) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.66) 100%),var(--v0139-facility-scenes)!important;background-position:center,100% 0%!important}
 .facility-stack .facility-row.recruit{background-image:linear-gradient(90deg,rgba(14,18,15,.82) 0%,rgba(20,24,21,.86) 44%,rgba(27,31,28,.68) 100%),var(--v0139-facility-scenes)!important;background-position:center,0% 33.333%!important}
@@ -49,10 +50,10 @@
 .facility-stack .facility-row::before{z-index:4!important}
 .facility-stack .facility-row>.facility-copy,
 .facility-stack .facility-row>.facility-side{position:relative;z-index:2;min-width:0}
-.facility-stack .facility-row .facility-copy b{font-size:19px!important;line-height:1.1!important;color:#f2f3ef!important;text-shadow:0 2px 3px #000}
-.facility-stack .facility-row .facility-copy small{margin-top:5px!important;font-size:11px!important;line-height:1.25!important;color:#c5ccc5!important;text-shadow:0 1px 2px #000;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.facility-stack .facility-row .facility-copy b{font-size:19px!important;line-height:1.1!important;color:#f2f3ef!important;text-shadow:0 2px 3px #000;font-weight:700!important}
+.facility-stack .facility-row .facility-copy small{margin-top:5px!important;font-size:11px!important;line-height:1.25!important;color:#c5ccc5!important;text-shadow:0 1px 2px #000;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-weight:400!important}
 .facility-stack .facility-row .facility-side{gap:10px!important}
-.facility-stack .facility-row .facility-side em{font-size:10px!important;color:#e0c18d!important;text-shadow:0 1px 2px #000}
+.facility-stack .facility-row .facility-side em{font-size:10px!important;color:#e0c18d!important;text-shadow:0 1px 2px #000;font-weight:700!important}
 .facility-stack .facility-row .facility-side i{font-size:24px!important;color:#d8ddd8!important;text-shadow:0 1px 2px #000}
 .facility-stack .facility-row:active,
 .facility-stack .facility-row.ui-pressed{background-color:#323833!important}
@@ -112,13 +113,17 @@
   image-rendering:pixelated;pointer-events:none;filter:brightness(1.05) drop-shadow(0 1px 1px #0008)
 }
 
-/* Use a tiny generated chest pictogram for loot-collection actions; layout remains fixed. */
-.chapter-loot-btn{position:relative!important;padding-left:28px!important}
+/* Loot collection reacts immediately while server collection completes. */
+.chapter-loot-btn{position:relative!important;padding-left:28px!important;overflow:hidden}
 .chapter-loot-btn::before{
   content:"";position:absolute;left:5px;top:50%;width:18px;height:18px;transform:translateY(-50%);
   background-image:var(--v0139-menu-icons);background-repeat:no-repeat;background-size:600% 200%;background-position:40% 100%;
   image-rendering:pixelated;pointer-events:none;filter:brightness(.95)
 }
+.chapter-loot-btn.collecting{opacity:1!important;filter:brightness(1.13) saturate(1.08)!important;cursor:progress!important;padding-left:34px!important}
+.chapter-loot-btn.collecting::before{display:none!important}
+.chapter-loot-btn .collect-pulse{display:inline-block;width:10px;height:10px;margin-right:7px;vertical-align:-1px;background:#f2c870;box-shadow:6px 0 #79603d,-6px 0 #79603d;animation:lootCollectPulse .45s steps(3,end) infinite}
+@keyframes lootCollectPulse{0%{transform:scale(.75);opacity:.55}50%{transform:scale(1.05);opacity:1}100%{transform:scale(.75);opacity:.55}}
 
 @media(max-width:430px){
   .facility-stack .facility-row{
@@ -142,4 +147,5 @@
 }
 @media(prefers-reduced-motion:reduce){
   .bottom-nav .nav-pict,.stat-rail .rail-icon{filter:none!important}
+  .chapter-loot-btn .collect-pulse{animation:none!important}
 }
