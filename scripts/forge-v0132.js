@@ -137,8 +137,7 @@
   }
 
   function decorateHome(){
-    if(!S||screen!=='home')return;const stack=document.querySelector('.facility-stack');if(!stack)return;let row=stack.querySelector('.facility-row.forge');
-    if(!row){row=document.createElement('button');row.className='facility-row forge';row.dataset.forgeAction='open';row.innerHTML=`<img src="assets/icon-forge.svg" alt=""><span class="facility-copy"><b>대장간</b><small></small></span><span class="facility-side"><em>강화</em><i>›</i></span>`;const workshop=stack.querySelector('.facility-row.workshop');if(workshop)workshop.insertAdjacentElement('afterend',row);else stack.appendChild(row)}
+    if(!S||screen!=='home')return;const row=document.querySelector('.facility-row.forge');if(!row)return;
     const small=row.querySelector('.facility-copy small'),text=`강화석 ${fmt(stones())}개 · 장착 장비 ${(S.equipment||[]).length}개`;if(small&&small.textContent!==text)small.textContent=text;
   }
 

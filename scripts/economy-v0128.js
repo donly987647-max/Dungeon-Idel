@@ -4,6 +4,7 @@
  * - Finished jobs do not block the next queued job
  */
 (()=>{
+  const claiming=new Set();
   const durationText=seconds=>{
     const n=Math.max(0,Math.ceil(Number(seconds||0)));
     const d=Math.floor(n/86400),h=Math.floor((n%86400)/3600),m=Math.floor((n%3600)/60),s=n%60;
@@ -27,12 +28,12 @@
     const jobs=visibleJobs(type);
     if(!jobs.length)return '';
     return `<div class="job-list econ-job-list">${jobs.map(j=>{
-      const now=Date.now(),start=new Date(j.started_at).getTime(),finish=new Date(j.finish_at).getTime(),ready=j.status==='ready'||finish<=now,waiting=!ready&&start>now;
+      const now=Date.now(),start=new Date(j.started_at).getTime(),finish=new Date(j.finish_at).getTime(),ready=j.status==='ready'||finish<=now,waiting=!ready&&start>now,working=claiming.has(String(j.id));
       const qty=Number(type==='craft'?j.batch_qty:j.quantity||1),pct=ready?100:waiting?0:jobProgress(j),item=type==='craft'?j.output_item:j.item_id;
       const state=ready?(type==='craft'?'제작 완료':'판매 완료'):waiting?'대기':'진행 중';
       const note=ready?(type==='craft'?'완제품 수령 대기':`${fmt(j.sale_gold)}G 정산 대기`):waiting?'앞 작업 종료 후 시작':`<span class="job-percent">${Math.floor(pct)}%</span>`;
       const right=ready
-        ?`<button class="primary-btn econ-claim-btn" data-econ-action="${type==='craft'?'claim-craft':'claim-sell'}" data-id="${esc(j.id)}">완료</button>`
+        ?`<button class="primary-btn econ-claim-btn" data-econ-action="${type==='craft'?'claim-craft':'claim-sell'}" data-id="${esc(j.id)}" ${working?'disabled':''}>${working?(type==='craft'?'수령 중…':'정산 중…'):'완료'}</button>`
         :`<strong>${waiting?'대기 '+remaining(j.started_at):remaining(j.finish_at)}</strong>`;
       return `<div class="job-row craft-job ${waiting?'queued':''} ${ready?'ready-to-claim':''}" data-econ-job="1" data-econ-type="${type}" data-job-id="${esc(j.id)}" data-job-item="${esc(item)}" data-job-qty="${qty}" data-job-gold="${Number(j.sale_gold||0)}" data-progress-start="${esc(j.started_at)}" data-progress-end="${esc(j.finish_at)}" data-job-status="${ready?'ready':j.status}"><div class="job-copy"><b>${esc(item)} × ${fmt(qty)} · <span class="econ-job-state">${state}</span></b><small class="econ-job-note">${note}</small><div class="craft-progress"><i class="craft-progress-fill" style="width:${pct}%"></i></div></div><div class="job-left econ-job-right">${right}</div></div>`;
     }).join('')}</div>`;
@@ -82,13 +83,13 @@
   }
 
   function makeReady(row){
-    if(!row||row.dataset.jobStatus==='ready')return;
+    if(!row)return;
     row.dataset.jobStatus='ready';row.classList.remove('queued');row.classList.add('ready-to-claim');
-    const type=row.dataset.econType,item=row.dataset.jobItem,qty=Number(row.dataset.jobQty||1),gold=Number(row.dataset.jobGold||0),state=row.querySelector('.econ-job-state'),note=row.querySelector('.econ-job-note'),fill=row.querySelector('.craft-progress-fill'),right=row.querySelector('.econ-job-right');
+    const type=row.dataset.econType,gold=Number(row.dataset.jobGold||0),state=row.querySelector('.econ-job-state'),note=row.querySelector('.econ-job-note'),fill=row.querySelector('.craft-progress-fill'),right=row.querySelector('.econ-job-right'),working=claiming.has(String(row.dataset.jobId||''));
     if(state)state.textContent=type==='craft'?'제작 완료':'판매 완료';
     if(note)note.textContent=type==='craft'?'완제품 수령 대기':`${fmt(gold)}G 정산 대기`;
     if(fill)fill.style.width='100%';
-    if(right)right.innerHTML=`<button class="primary-btn econ-claim-btn" data-econ-action="${type==='craft'?'claim-craft':'claim-sell'}" data-id="${esc(row.dataset.jobId)}">완료</button>`;
+    if(right&&!right.querySelector('.econ-claim-btn'))right.innerHTML=`<button class="primary-btn econ-claim-btn" data-econ-action="${type==='craft'?'claim-craft':'claim-sell'}" data-id="${esc(row.dataset.jobId)}" ${working?'disabled':''}>${working?(type==='craft'?'수령 중…':'정산 중…'):'완료'}</button>`;
   }
 
   function updateTimers(){
@@ -108,22 +109,36 @@
     if(s)s.textContent=`판매 ${sActive}/${S.shopCapacity||5}${sReady?` · 정산 ${sReady}`:''}`;
   }
 
+  function removeLocalJob(type,id){
+    const key=type==='craft'?'craftJobs':'sellJobs';
+    S[key]=[...(S?.[key]||[])].filter(j=>String(j.id)!==String(id));
+  }
+
+  function addLocalInventory(item,qty){
+    if(!item||!Number(qty))return;let row=(S.inventory||[]).find(x=>x.item_id===item);
+    if(row)row.qty=Number(row.qty||0)+Number(qty);else{S.inventory=S.inventory||[];S.inventory.push({item_id:item,qty:Number(qty)})}
+  }
+
   async function claim(type,id){
-    if(busy)return;busy=true;
+    const key=String(id||'');if(!key||claiming.has(key))return;claiming.add(key);
+    const row=document.querySelector(`[data-econ-job][data-job-id="${CSS.escape(key)}"]`),btn=row?.querySelector('.econ-claim-btn');
+    row?.classList.add('claiming');if(btn){btn.disabled=true;btn.textContent=type==='craft'?'수령 중…':'정산 중…'}
     try{
       const fn=type==='craft'?'game_claim_craft':'game_claim_sell';
-      const {data,error}=await sb.rpc(fn,{p_job:id});
-      if(error)throw error;
-      await api('state');render();
-      if(type==='craft'){workshop();toast(`${data?.itemId||'완제품'} × ${fmt(data?.quantity||0)} 수령 완료`)}
-      else{shop();toast(`${fmt(data?.gold||0)}G 정산 완료`)}
+      const {data,error}=await sb.rpc(fn,{p_job:id});if(error)throw error;
+      removeLocalJob(type,id);
+      if(type==='craft'){addLocalInventory(data?.itemId,Number(data?.quantity||0));workshop();toast(`${data?.itemId||'완제품'} × ${fmt(data?.quantity||0)} 수령 완료`)}
+      else{S.player.gold=Number(S.player.gold||0)+Number(data?.gold||0);updateChrome();shop();toast(`${fmt(data?.gold||0)}G 정산 완료`)}
+      queueMicrotask(()=>window.__frontendPollNow?.());
     }catch(err){
       const msg=String(err?.message||err||'');
+      if(btn&&btn.isConnected){btn.disabled=false;btn.textContent='완료'}
+      row?.classList.remove('claiming');
       if(msg.includes('job_not_ready'))toast('아직 작업이 완료되지 않았습니다.');
-      else if(msg.includes('job_already_claimed'))toast('이미 완료 처리된 작업입니다.');
-      else if(msg.includes('job_missing'))toast('작업 정보를 찾을 수 없습니다.');
+      else if(msg.includes('job_already_claimed')){toast('이미 완료 처리된 작업입니다.');window.__frontendPollNow?.()}
+      else if(msg.includes('job_missing')){toast('작업 정보를 찾을 수 없습니다.');window.__frontendPollNow?.()}
       else toast('완료 처리 중 오류가 발생했습니다.');
-    }finally{busy=false}
+    }finally{claiming.delete(key)}
   }
 
   async function start(mode,id){

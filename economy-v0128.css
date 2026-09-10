@@ -11,3 +11,12 @@
 @keyframes econReadyPulse{from{filter:brightness(.92);transform:scale(1)}to{filter:brightness(1.12);transform:scale(1.025)}}
 @media(max-width:430px){.economy-v0128-sheet .job-row{grid-template-columns:minmax(0,1fr) auto}.economy-v0128-sheet .econ-job-right{min-width:64px}.economy-v0128-sheet .econ-claim-btn{min-width:60px}}
 @media(prefers-reduced-motion:reduce){.economy-v0128-sheet .econ-claim-btn{animation:none}}
+
+
+/* v0.13.13 — stable economy artwork and instant claim feedback */
+.economy-v0128-sheet .shop-item>div:first-child{width:40px;height:40px;min-width:40px;min-height:40px;display:grid;place-items:center;overflow:hidden;aspect-ratio:1/1}
+.economy-v0128-sheet .shop-item>div:first-child>.pixel-item,.economy-v0128-sheet .shop-item>div:first-child>.generated-item-gfx{width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;max-width:34px!important;max-height:34px!important;aspect-ratio:1/1!important;flex:0 0 34px!important;background-repeat:no-repeat;image-rendering:pixelated}
+.economy-v0128-sheet .batch-hero>.pixel-item,.economy-v0128-sheet .batch-hero>.generated-item-gfx{width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;max-width:42px!important;max-height:42px!important;aspect-ratio:1/1!important;flex:0 0 42px!important;background-repeat:no-repeat;image-rendering:pixelated}
+.economy-v0128-sheet .job-row.claiming{border-color:#826838;box-shadow:inset 3px 0 #d39b4d}
+.economy-v0128-sheet .econ-claim-btn:disabled{opacity:.72;cursor:wait;animation:none}
+@media(max-width:380px){.economy-v0128-sheet .shop-item>div:first-child{width:36px;height:36px;min-width:36px;min-height:36px}.economy-v0128-sheet .shop-item>div:first-child>.pixel-item,.economy-v0128-sheet .shop-item>div:first-child>.generated-item-gfx{width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;flex-basis:32px!important}}
