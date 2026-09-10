@@ -1,0 +1,13 @@
+/* v0.12.8 — manual completion for workshop/shop */
+.economy-v0128-sheet .econ-job-list{margin-bottom:10px}
+.economy-v0128-sheet .job-row.ready-to-claim{border-color:#7f693f;background:#221d14;box-shadow:inset 3px 0 #d8a652}
+.economy-v0128-sheet .job-row.ready-to-claim .craft-progress{border-color:#765c34}
+.economy-v0128-sheet .job-row.ready-to-claim .craft-progress-fill{background:linear-gradient(90deg,#7e5b2f,#d69e4f,#f0c36c);box-shadow:0 0 10px #e3ac5660}
+.economy-v0128-sheet .job-row.ready-to-claim .econ-job-state{color:#f2c576}
+.economy-v0128-sheet .job-row.ready-to-claim .econ-job-note{color:#c8b58d}
+.economy-v0128-sheet .econ-job-right{min-width:72px;display:flex;justify-content:flex-end;align-items:center;text-align:right;font-variant-numeric:tabular-nums}
+.economy-v0128-sheet .econ-job-right>strong{font-size:10px;color:#e5b264;white-space:nowrap}
+.economy-v0128-sheet .econ-claim-btn{min-width:66px;min-height:36px;padding:0 10px;font-size:10px;animation:econReadyPulse 1.3s ease-in-out infinite alternate}
+@keyframes econReadyPulse{from{filter:brightness(.92);transform:scale(1)}to{filter:brightness(1.12);transform:scale(1.025)}}
+@media(max-width:430px){.economy-v0128-sheet .job-row{grid-template-columns:minmax(0,1fr) auto}.economy-v0128-sheet .econ-job-right{min-width:64px}.economy-v0128-sheet .econ-claim-btn{min-width:60px}}
+@media(prefers-reduced-motion:reduce){.economy-v0128-sheet .econ-claim-btn{animation:none}}
