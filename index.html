@@ -4,7 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#111311">
-<title>용사 박멸 주식회사 v0.13.11</title>
+<title>용사 박멸 주식회사 v0.13.12</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://xtvhisddjtfnsumprgpm.supabase.co" crossorigin>
+<link rel="preload" as="image" href="assets/hq-scene.svg">
+<link rel="preload" as="image" href="assets/icon-forge.svg">
+<link rel="preload" as="image" href="assets/ui/facility-scenes-v0139.png">
 <link rel="stylesheet" href="app.css?v=0133a">
 <link rel="stylesheet" href="generated-assets.css?v=0133a">
 <link rel="stylesheet" href="ui-hotfix-v091.css?v=0133a">
@@ -24,6 +29,7 @@
 <link rel="stylesheet" href="ui-v0136.css?v=0136a">
 <link rel="stylesheet" href="ui-v0137.css?v=01310a">
 <link rel="stylesheet" href="ui-v0139.css?v=01310a">
+<link rel="stylesheet" href="ui-v01312.css?v=01312a">
 </head>
 <body>
 <section id="authGate" class="auth-gate">
@@ -38,26 +44,33 @@
 </section>
 <div id="app" class="hidden">
   <header class="game-header">
-    <div class="corp-bar"><button class="menu-button" data-action="menu" aria-label="메뉴"><i></i><i></i><i></i></button><div class="title-stack"><small>용사 박멸 주식회사 · v0.13.11</small><h1 id="screenTitle">본부</h1></div><div class="vault"><span>금고</span><b id="gold">0</b></div></div>
+    <div class="corp-bar"><button class="menu-button" data-action="menu" aria-label="메뉴"><i></i><i></i><i></i></button><div class="title-stack"><small>용사 박멸 주식회사 · v0.13.12</small><h1 id="screenTitle">본부</h1></div><div class="vault"><span>금고</span><b id="gold">0</b></div></div>
     <div class="stat-rail"><span><i class="rail-icon skull"></i><b id="fame">0</b><small>악명</small></span><span><i class="rail-icon staff"></i><b id="monsterCount">0</b><small>몬스터</small></span><span><i class="rail-icon target"></i><b id="activeCount">0</b><small>작전</small></span><span><i class="rail-icon crate"></i><b id="pendingCount">0</b><small>화물</small></span></div>
     <button id="briefStrip" class="brief-strip" data-action="brief"><span class="live-dot"></span><b>상황실</b><span id="briefLine">서버 연결 중...</span><i>›</i></button>
   </header>
-  <main id="view" class="view"></main>
+  <main id="view" class="view">
+    <section class="boot-shell" aria-label="본부 데이터 연결 중">
+      <div class="boot-banner"></div>
+      <div class="boot-row"><span class="boot-icon"></span><span class="boot-copy"><i></i><i></i></span></div>
+      <div class="boot-row"><span class="boot-icon"></span><span class="boot-copy"><i></i><i></i></span></div>
+      <div class="boot-row"><span class="boot-icon"></span><span class="boot-copy"><i></i><i></i></span></div>
+    </section>
+  </main>
   <nav class="bottom-nav" id="nav"><button data-screen="home" class="active"><span class="nav-pict hq"></span><b>본부</b></button><button data-screen="monsters"><span class="nav-pict staff"></span><b>몬스터</b></button><button data-screen="hunt"><span class="nav-pict target"></span><b>박멸</b></button><span class="nav-placeholder" aria-hidden="true"></span></nav>
 </div>
 <div id="modal" class="modal hidden"></div><div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
-<script src="scripts/stability-v0133.js?v=0133a"></script>
-<script src="app.js?v=0133a"></script>
-<script src="scripts/equipment-v0117.js?v=0133a"></script>
-<script src="scripts/economy-v0128.js?v=0133a"></script>
-<script src="scripts/economy-v0128-compat.js?v=0133a"></script>
-<script src="scripts/v0129-controls.js?v=0133a"></script>
-<script src="scripts/navigation-v0130.js?v=0133a"></script>
-<script src="scripts/v0131-hunt-status.js?v=0133a"></script>
-<script src="scripts/forge-v0132.js?v=0135a"></script>
-<script src="scripts/interaction-v0136.js?v=0136a"></script>
-<script src="scripts/sprites-v0137.js?v=0137a"></script>
-<script src="scripts/loot-collect-v01310.js?v=01310a"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
+<script defer src="scripts/stability-v0133.js?v=01312a"></script>
+<script defer src="app.js?v=0133a"></script>
+<script defer src="scripts/equipment-v0117.js?v=0133a"></script>
+<script defer src="scripts/economy-v0128.js?v=0133a"></script>
+<script defer src="scripts/economy-v0128-compat.js?v=0133a"></script>
+<script defer src="scripts/v0129-controls.js?v=0133a"></script>
+<script defer src="scripts/navigation-v0130.js?v=0133a"></script>
+<script defer src="scripts/v0131-hunt-status.js?v=0133a"></script>
+<script defer src="scripts/forge-v0132.js?v=0135a"></script>
+<script defer src="scripts/interaction-v0136.js?v=0136a"></script>
+<script defer src="scripts/sprites-v0137.js?v=0137a"></script>
+<script defer src="scripts/loot-collect-v01310.js?v=01310a"></script>
 </body>
 </html>
