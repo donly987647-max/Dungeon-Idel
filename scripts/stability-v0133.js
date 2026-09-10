@@ -1,6 +1,5 @@
 /* v0.13.12 — frontend runtime stability
- * One state poll, no legacy full-screen polling, no duplicate economy timer writer.
- * Server state patches visible DOM in place so menus do not blink or get recreated.
+ * Full state is loaded once at boot. Background polls use state-lite and merge only dynamic state.
  */
 (()=>{
   const nativeSetInterval=window.setInterval.bind(window);
@@ -16,9 +15,7 @@
       window.__v01312SuppressedIntervals[name]=true;
       return -1;
     }
-    if(name==='updateTimers'){
-      return nativeSetInterval(()=>{if(document.querySelector('[data-econ-job]'))fn()},1000);
-    }
+    if(name==='updateTimers')return nativeSetInterval(()=>{if(document.querySelector('[data-econ-job]'))fn()},1000);
     return nativeSetInterval(fn,delay,...args);
   };
   window.clearInterval=function(id){if(id===-1)return;return nativeClearInterval(id)};
@@ -26,6 +23,15 @@
   const readyJobs=type=>{const jobs=type==='craft'?(S?.craftJobs||[]):(S?.sellJobs||[]),now=Date.now();return jobs.filter(j=>j.status==='ready'||(['running','queued'].includes(j.status)&&new Date(j.finish_at).getTime()<=now))};
   const activeJobs=type=>(type==='craft'?(S?.craftJobs||[]):(S?.sellJobs||[])).filter(j=>['running','queued'].includes(j.status));
   const siteCargoCapacity=sid=>Math.min(9000,3000+Math.max(0,(typeof activeAt==='function'?activeAt(sid).length:1)-1)*1500);
+
+  function mergeLiteState(previous,patch){
+    const progress=new Map((patch?.stageProgress||[]).map(x=>[x.site_id,x]));
+    const sites=(previous?.sites||[]).map((site,idx,all)=>{
+      const prev=idx>0?all[idx-1]:null,p=progress.get(site.id)||{normal_wins:0,boss_ready:false,boss_cleared:false,boss_attempts:0};
+      return {...site,unlocked:idx===0||!!progress.get(prev?.id)?.boss_cleared,progress:p};
+    });
+    return {...previous,...patch,sites,account:previous?.account||null,itemDefs:previous?.itemDefs||[],recipes:previous?.recipes||[],evolutionDefs:previous?.evolutionDefs||[],skillDefs:previous?.skillDefs||[]};
+  }
 
   function ensureForgeRow(){
     if(!S||screen!=='home')return;const stack=document.querySelector('.facility-stack');if(!stack)return;let row=stack.querySelector('.facility-row.forge');
@@ -55,7 +61,15 @@
 
   async function pollState(){
     if(pollInFlight||document.hidden||typeof S==='undefined'||!S||typeof session==='undefined'||!session||typeof busy!=='undefined'&&busy)return;pollInFlight=true;
-    try{await api('state');patchVisible()}catch(err){if(err?.message==='unauthorized'){try{await sb.auth.signOut();showAuth()}catch(_){}}else{const line=document.querySelector('#briefLine');if(line)line.textContent='서버 재연결 중...'}}finally{pollInFlight=false}
+    const previous=S;
+    try{
+      const d=await api('state-lite');const patch=d?.state||S;S=mergeLiteState(previous,patch);patchVisible();
+    }catch(err){
+      S=previous;
+      if(err?.message==='unknown_action'){try{await api('state');patchVisible()}catch(_){}}
+      else if(err?.message==='unauthorized'){try{await sb.auth.signOut();showAuth()}catch(_){}}
+      else{const line=document.querySelector('#briefLine');if(line)line.textContent='서버 재연결 중...'}
+    }finally{pollInFlight=false}
   }
 
   function start(){
