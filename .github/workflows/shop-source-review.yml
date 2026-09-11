@@ -1,0 +1,19 @@
+name: Shop Source Review
+on:
+  push:
+    branches: ['feature/shop-crafting-usage']
+    paths: ['.github/workflows/shop-source-review.yml']
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package exact source
+        run: git archive --format=zip --output=shop-source.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shop-source-review
+          path: shop-source.zip
+          retention-days: 2
