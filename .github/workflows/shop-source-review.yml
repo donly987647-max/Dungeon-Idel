@@ -1,19 +1,48 @@
-name: Shop Source Review
+name: Finalize Shop Crafting Usage
 on:
   push:
     branches: ['feature/shop-crafting-usage']
-    paths: ['.github/workflows/shop-source-review.yml']
+    paths: ['.github/workflows/shop-source-review.yml', 'tools/apply-shop-usage.py', 'tests/shop-crafting-usage.py', 'scripts/shop-crafting-usage.js', 'ui-shop-usage.css']
+  workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
-  export:
+  finalize:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: Package exact source
-        run: git archive --format=zip --output=shop-source.zip HEAD
-      - uses: actions/upload-artifact@v4
+      - uses: actions/setup-node@v4
         with:
-          name: shop-source-review
-          path: shop-source.zip
-          retention-days: 2
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Integrate reviewed changes in existing source
+        run: |
+          set -euo pipefail
+          python tools/apply-shop-usage.py
+          node --check app.js
+          find scripts -name '*.js' -print0 | xargs -0 -n1 node --check
+      - name: Install test browser
+        run: |
+          pip install playwright==1.56.0 >/tmp/pw-install.log 2>&1
+          playwright install --with-deps chromium >>/tmp/pw-install.log 2>&1 || { tail -n 60 /tmp/pw-install.log; exit 1; }
+      - name: Verify actual UI and sale actions with synthetic state
+        run: python tests/shop-crafting-usage.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shop-crafting-usage-review
+          path: artifacts/shop-crafting-usage
+          retention-days: 7
+      - name: Keep validated source and remove one-time patch workflow
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm tools/apply-shop-usage.py .github/workflows/shop-source-review.yml
+          git add index.html scripts/idle-economy-v016.js scripts/navigation-v0130.js
+          git commit -m 'feat: verified v0.17.1 shop crafting usage and sale decisions'
+          git push origin HEAD:feature/shop-crafting-usage
+          echo VERIFIED_COMMIT=$(git rev-parse HEAD)

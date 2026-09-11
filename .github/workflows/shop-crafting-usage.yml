@@ -1,0 +1,45 @@
+name: Shop Crafting Usage QA
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/idle-economy-v016.js', 'scripts/navigation-v0130.js', 'scripts/shop-crafting-usage.js', 'ui-shop-usage.css', 'index.html', 'content/**', 'tests/shop-crafting-usage.py', '.github/workflows/shop-crafting-usage.yml']
+  workflow_dispatch:
+  deployment_status:
+permissions:
+  contents: read
+jobs:
+  shop:
+    if: github.event_name != 'deployment_status' || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source syntax
+        run: |
+          set -euo pipefail
+          node --check app.js
+          find scripts -name '*.js' -print0 | xargs -0 -n1 node --check
+      - name: Install test browser
+        run: |
+          pip install playwright==1.56.0
+          playwright install --with-deps chromium
+      - name: Shop navigation and recipe fixtures
+        run: python tests/shop-crafting-usage.py
+      - name: Check live release after production deployment
+        if: github.event_name == 'deployment_status'
+        env:
+          QA_BASE_URL: https://hero-extermination-inc.vercel.app
+          QA_OUTPUT_DIR: artifacts/shop-crafting-usage-live
+        run: python tests/shop-crafting-usage.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shop-crafting-usage-${{ github.run_id }}
+          path: artifacts/shop-crafting-usage*
+          retention-days: 7
