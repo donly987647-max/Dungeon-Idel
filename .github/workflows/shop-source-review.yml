@@ -29,6 +29,7 @@ jobs:
               anchor="fixture['sellJobs'] = []\n"
               assert anchor in s
               s=s.replace(anchor,anchor+"# Crafted goods are defined by recipes, not necessarily the item catalog.\nstocked_outputs={x['item_id'] for x in fixture['inventory']}\nfor recipe in fixture['recipes']:\n    if recipe['output_item'] not in stocked_outputs:\n        fixture['inventory'].append({'item_id':recipe['output_item'],'qty':40})\n        stocked_outputs.add(recipe['output_item'])\n",1)
+          s=s.replace("[{'action':'sell','itemId':'잡화 꾸러미','quantity':2}]","[{'action':'sell','itemId':'잡화 꾸러미','quantity':2,'stateMode':'lite'}]")
           p.write_text(s)
           p=Path('scripts/shop-crafting-usage.js');s=p.read_text()
           if 'const usageSignatures=new WeakMap' not in s:
