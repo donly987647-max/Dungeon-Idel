@@ -1,0 +1,72 @@
+/* Shop crafting usage: native item buttons, bounded icons, readable material counts. */
+#modal .idle-sale-item{gap:10px;align-items:center}
+#modal .idle-sale-item>.idle-item-open{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;flex:1 1 0;min-width:0;max-width:none;width:auto;min-height:64px;padding:6px 0;text-align:left;background:transparent;border:0;border-radius:7px;color:#f5e8d5;box-shadow:none;text-shadow:none;white-space:normal}
+#modal .idle-item-open .idle-item-icon{display:grid;place-items:center;width:44px;height:44px;overflow:hidden;align-self:center}
+#modal .idle-item-open .idle-item-icon>.pixel-item{width:40px!important;height:40px!important;max-width:40px!important;max-height:40px!important;aspect-ratio:1;flex:none}
+#modal .idle-item-copy{display:block;min-width:0}
+#modal .idle-item-copy>b{font-size:16px;line-height:1.4;color:#f6e5c8;white-space:normal;overflow-wrap:anywhere}
+#modal .idle-item-copy>small,#modal .idle-item-copy>p{font-size:13px;line-height:1.55;color:#cbb8a4;margin:3px 0}
+#modal .idle-usage-cue{display:block;font-size:13px;line-height:1.5;color:#e9c687;margin-top:5px}
+#modal .idle-usage-cue>i{font-size:17px;font-style:normal;margin-left:4px}
+#modal .idle-sale-item>.idle-item-queue{flex:0 0 60px;min-height:44px;max-width:80px;font-size:14px;padding:8px}
+#modal .idle-item-open:focus-visible,#modal .shop-usage-sheet button:focus-visible,#modal .shop-usage-sheet summary:focus-visible{outline:3px solid #efc98d;outline-offset:2px}
+#modal .shop-usage-sheet{width:min(600px,100%);max-width:100%;min-width:0}
+#modal .shop-usage-sheet .sheet-head h2{font-size:22px!important;line-height:1.35}
+#modal .shop-usage-sheet .sheet-head p{font-size:14px!important;line-height:1.5;overflow-wrap:anywhere;white-space:normal}
+.shop-usage-root{min-width:0}
+.usage-item-hero{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:14px;padding:16px 0}
+.usage-hero-icon,.usage-product-icon,.usage-small-icon{display:grid;place-items:center;flex:none;overflow:hidden;aspect-ratio:1}
+.usage-hero-icon{width:64px;height:64px;background:#302638;border:1px solid #82687d;border-radius:10px}
+#modal .usage-hero-icon>.pixel-item{width:56px!important;height:56px!important;max-width:56px!important;max-height:56px!important;aspect-ratio:1}
+.usage-item-hero>div{min-width:0;display:grid;gap:5px}
+.usage-item-hero small{font-size:13px;color:#ccb6c6;line-height:1.5}
+.usage-item-hero b{font-size:20px;line-height:1.35;color:#f8ead2;overflow-wrap:anywhere}
+.usage-item-hero div>span{font-size:15px;color:#d4c6d6;line-height:1.5;font-variant-numeric:tabular-nums}
+.usage-item-hero strong{font-size:19px;color:#efc788}
+.usage-purpose{display:grid;gap:5px;border:1px solid #735b75;border-radius:10px;padding:12px;background:#32273a;margin:0 0 12px;line-height:1.55;word-break:keep-all;overflow-wrap:anywhere}
+.usage-purpose>b{font-size:15px;color:#efc788}
+.usage-purpose>span{font-size:13px;color:#d4c4d7}
+.usage-purpose.no-recipe{border-color:#657b67;background:#25312d}
+.usage-purpose.no-recipe>b{color:#b3d59a}
+.usage-sale-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #614e68;margin:0 0 16px}
+.usage-sale-actions>div{display:grid;grid-template-columns:auto auto;column-gap:8px;align-items:baseline;min-width:0}
+.usage-sale-actions small{font-size:13px;color:#cbb5cc}
+.usage-sale-actions b{font-size:19px;color:#f2c485;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.usage-sale-actions div>span{grid-column:1/-1;font-size:13px;color:#bba6c0;line-height:1.6}
+.usage-sale-actions>span{font-size:14px;line-height:1.6;color:#d4c6d6}
+#modal .usage-sale-actions>.primary-btn{min-height:46px;max-width:55%;font-size:14px;line-height:1.45;white-space:normal;padding:9px 12px;overflow-wrap:anywhere}
+.usage-section-title{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:20px 0 10px}
+.usage-section-title h3{font-size:18px;line-height:1.4;margin:0;color:#f7e6cb}
+.usage-section-title>span{font-size:14px;color:#cbb2cd}
+.usage-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:14px}
+#modal .usage-tabs>button{min-width:0;min-height:44px;border:1px solid #79617d;background:#292130;border-radius:8px;color:#cebcd3;font-size:14px;padding:6px;line-height:1.4;font-weight:700;white-space:normal}
+#modal .usage-tabs>button.active{background:#4b354e;border-color:#d1a675;color:#ffe2ac;box-shadow:inset 0 -2px #d1a675}
+.usage-products{display:grid;gap:14px}
+.usage-product{padding:12px;border:1px solid #745e79;background:#2a2132;border-radius:12px;min-width:0}
+#modal .usage-product-open{display:grid;grid-template-columns:44px minmax(0,1fr) 14px;align-items:center;gap:10px;width:100%;max-width:none;padding:0;text-align:left;background:transparent;border:0;box-shadow:none;color:#f8e9d5;white-space:normal;text-shadow:none}
+.usage-product-icon{width:44px;height:44px}
+#modal .usage-product-icon>.pixel-item{width:42px!important;height:42px!important;max-width:42px!important;max-height:42px!important;aspect-ratio:1}
+.usage-product-open>span:nth-child(2){display:grid;gap:4px;min-width:0}
+.usage-product-open small{font-size:13px;color:#cbb2d2;line-height:1.5}
+.usage-product-open b{font-size:16px;line-height:1.4;overflow-wrap:anywhere;color:#f8e9d5}
+.usage-product-open i{font-size:22px;font-style:normal;color:#dabb88}
+.usage-product-meta{font-size:13px;line-height:1.5;color:#d2c0a3;overflow-wrap:anywhere}
+.usage-product-status{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 12px;padding:10px 0;font-size:13px;line-height:1.5}
+.usage-product-status .available{color:#b0d696}.usage-product-status .short{color:#e9b096}.usage-product-status .locked{color:#dfc891}.usage-product-status>span:last-child{color:#c5b3cb;font-variant-numeric:tabular-nums}
+#modal .shop-usage-sheet details{border:1px solid #5f4c68;border-radius:8px;background:#211b2a;margin:8px 0 0;min-width:0}
+#modal .shop-usage-sheet summary{padding:11px 10px;min-height:44px;box-sizing:border-box;font-size:14px;line-height:1.55;color:#e9d6b3;cursor:pointer;overflow-wrap:anywhere}
+.usage-description p,.usage-sale-value{font-size:13px;line-height:1.7;padding:0 10px 10px;margin:0;color:#d3c1d7;word-break:keep-all;overflow-wrap:anywhere}
+.usage-made-from section>b{display:block;font-size:13px;line-height:1.5;color:#d0bed5;padding:0 10px 8px}
+.usage-ingredients{list-style:none;padding:0 9px 8px;margin:0}
+.usage-ingredients li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid #47394f;min-width:0}
+#modal .usage-ingredients li>button{display:flex;gap:7px;align-items:center;min-width:0;width:100%;min-height:44px;padding:0;text-align:left;background:none;border:0;box-shadow:none;color:#ddd0e1;font-size:13px;line-height:1.5;white-space:normal;text-shadow:none}
+.usage-ingredients li>button>span:last-child{overflow-wrap:anywhere;min-width:0}
+.usage-small-icon{width:26px;height:26px;flex:0 0 26px}
+#modal .usage-small-icon>.pixel-item{width:24px!important;height:24px!important;max-width:24px!important;max-height:24px!important;aspect-ratio:1}
+.usage-ingredient-count{display:grid;gap:2px;text-align:right;min-width:64px;font-variant-numeric:tabular-nums}
+.usage-ingredient-count>b,.usage-ingredient-count>small{font-size:12px!important;line-height:1.5;color:#d4c1d5;white-space:normal}
+.usage-ingredient-count.short>small{color:#f0ac9b}.usage-selected-material>button>span:last-child{color:#f1cc8b;font-weight:700}
+.usage-gear-stats{display:flex;gap:5px 12px;flex-wrap:wrap;padding:0 10px 10px;margin:0;color:#abcbdb;font-size:13px;line-height:1.6}
+#modal .usage-craft{display:block;width:100%;max-width:none;min-height:44px;font-size:14px;margin-top:10px;white-space:normal;line-height:1.5}
+#modal .shop-usage-sheet button:disabled{opacity:.6;cursor:not-allowed}
+.usage-empty{font-size:14px;line-height:1.7;color:#cbbace;text-align:center;padding:16px 10px;background:#282130;border:1px dashed #715d7a;border-radius:10px;word-break:keep-all;overflow-wrap:anywhere}
