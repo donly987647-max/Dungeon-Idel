@@ -31,7 +31,8 @@
     const h2=(box.querySelector('h2')?.textContent||'').trim();
     const kicker=(box.querySelector('.section-kicker')?.textContent||'').trim();
     const cls=String(extra||'').trim().replace(/\s+/g,'.');
-    return [cls,kicker,h2].filter(Boolean).join('|')||String(html||'').replace(/\s+/g,' ').slice(0,96);
+    const item=box.querySelector('[data-usage-item]')?.dataset.usageItem||'';
+    return [cls,kicker,h2,item].filter(Boolean).join('|')||String(html||'').replace(/\s+/g,' ').slice(0,96);
   };
 
   const captureCurrent=()=>{
@@ -40,6 +41,16 @@
     const sheet=host.querySelector(':scope > .sheet');
     if(!sheet)return null;
     const clone=sheet.cloneNode(true);
+    // innerHTML does not preserve live form properties; persist filters/quantities before capture.
+    const controls=[...sheet.querySelectorAll('input,select,textarea')];
+    clone.querySelectorAll('input,select,textarea').forEach((copy,index)=>{
+      const control=controls[index];
+      if(control.tagName==='SELECT'){
+        [...copy.options].forEach((option,i)=>option.toggleAttribute('selected',control.options[i].selected));
+      }else if(control.tagName==='TEXTAREA')copy.textContent=control.value;
+      else if(control.type==='checkbox'||control.type==='radio')copy.toggleAttribute('checked',control.checked);
+      else if(!['password','file'].includes(control.type))copy.setAttribute('value',control.value);
+    });
     clone.querySelectorAll('.global-back-btn,.global-nav-fallback').forEach(x=>x.remove());
     clone.classList.remove('global-nav-sheet');
     clone.querySelector('.sheet-head')?.classList.remove('has-global-back');

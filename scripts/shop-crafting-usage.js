@@ -59,6 +59,7 @@
   const state=recipeState(recipe),def=itemDef(recipe.output_item),equipment=isGear(recipe),made=Math.max(1,Number(recipe.output_qty)||1);
   return `<article class="usage-product" data-usage-recipe="${esc(recipe.id)}"><button type="button" class="usage-product-open" data-idle-econ="usage" data-id="${esc(recipe.output_item)}" aria-label="${esc(recipe.output_item)} 상세 확인"><span class="usage-product-icon">${itemSvg(itemAsset(recipe.output_item))}</span><span><small>${equipment?`${esc(def?.rarity||'장비')} · ${slotName(def?.slot)}`:'회사 상품'}</small><b>${esc(recipe.output_item)}</b><span class="usage-product-meta">이 재료 ×${fmt(recipe.inputs[item])} → ${fmt(made)}개 제작</span></span><i aria-hidden="true">›</i></button><div class="usage-product-status"><span class="${state.locked?'locked':state.max<1?'short':'available'}">${state.label}</span><span>${duration(recipe.craft_seconds)}</span></div><details data-usage-details="${esc(recipe.id)}"><summary>재료${equipment?' · 능력치':''} 확인</summary>${ingredientList(recipe,item)}${equipment?gearStats(recipe.output_item):`<p class="usage-sale-value">완제품 개당 판매 ${fmt(saleInfo(recipe.output_item)?.unitGold||recipe.sale_gold)}G</p>`}</details><button type="button" class="soft-btn usage-craft" data-idle-econ="usage-craft" data-id="${esc(recipe.id)}" ${state.disabled?'disabled':''}>${state.locked?'시설 레벨 부족':state.max<1?'재료 부족':state.full?'제작 예약 가득 참':'제작 수량 선택'}</button></article>`;
  }
+ const usageSignatures=new WeakMap();
  function usageSignature(){return JSON.stringify([S?.inventory,S?.player?.workshop_level,S?.player?.shop_level,S?.craftCapacity,S?.shopCapacity,rows('craft').map(j=>[j.id,j.status]),rows('sell').map(j=>[j.id,j.status]),S?.recipes]);}
  function usageContent(item,filter='all'){
   const recipes=recipesUsing(item),gear=recipes.filter(isGear),goods=recipes.filter(r=>!isGear(r)),s=saleState(item),def=itemDef(item),madeBy=outputIndex.get(item)||[];
@@ -70,14 +71,14 @@
  function showUsage(item){
   if(!item||(!itemDef(item)&&!recipesUsing(item).length&&!outputIndex.has(item)&&inventoryQty(item)<=0))return;
   modal(`${header('제작 용도',esc(item))}<section class="shop-usage-root" data-usage-item="${esc(item)}" data-usage-filter="all">${usageContent(item)}</section>`,'economy-sheet shop-usage-sheet');
-  document.querySelector('.shop-usage-root').dataset.usageSignature=usageSignature();
+  usageSignatures.set(document.querySelector('.shop-usage-root'),usageSignature());
  }
  function refreshUsage(filter){
   const root=document.querySelector('.shop-usage-root');if(!root)return;
-  const signature=usageSignature();if(!filter&&root.dataset.usageSignature===signature)return;
+  const signature=usageSignature();if(!filter&&usageSignatures.get(root)===signature)return;
   const open=[...root.querySelectorAll('details[open]')].map(el=>el.dataset.usageDetails||el.className),sheet=root.closest('.sheet'),scroll=sheet?.scrollTop||0;
   root.dataset.usageFilter=filter||root.dataset.usageFilter||'all';
-  root.innerHTML=usageContent(root.dataset.usageItem,root.dataset.usageFilter);root.dataset.usageSignature=signature;
+  root.innerHTML=usageContent(root.dataset.usageItem,root.dataset.usageFilter);usageSignatures.set(root,signature);
   root.querySelectorAll('details').forEach(el=>{el.open=open.includes(el.dataset.usageDetails||el.className);});
   if(sheet)sheet.scrollTop=scroll;
  }

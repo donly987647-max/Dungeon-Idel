@@ -22,6 +22,12 @@ fixture = json.loads(subprocess.check_output([
 fixture['player']['workshop_level'] = 1
 fixture['craftJobs'] = []
 fixture['sellJobs'] = []
+# Crafted goods are defined by recipes, not necessarily the item catalog.
+stocked_outputs={x['item_id'] for x in fixture['inventory']}
+for recipe in fixture['recipes']:
+    if recipe['output_item'] not in stocked_outputs:
+        fixture['inventory'].append({'item_id':recipe['output_item'],'qty':40})
+        stocked_outputs.add(recipe['output_item'])
 state = copy.deepcopy(fixture)
 actions, errors, checks = [], [], []
 widths = [320, 360, 390, 430, 768, 1024]
@@ -155,7 +161,7 @@ window.supabase={createClient:()=>({auth:{getSession:async()=>({data:{session:wi
         page.locator('#idleQuantity').fill('2')
         page.locator('[data-idle-econ="confirm"]').click()
         page.wait_for_selector('.idle-economy-sheet')
-        assert [x for x in actions if x.get('action')=='sell']==[{'action':'sell','itemId':'잡화 꾸러미','quantity':2}]
+        assert [x for x in actions if x.get('action')=='sell']==[{'action':'sell','itemId':'잡화 꾸러미','quantity':2,'stateMode':'lite'}]
         assert next(x for x in state['inventory'] if x['item_id']=='잡화 꾸러미')['qty']==38
         checks.append('usage detail sells only the chosen item and quantity through the existing API')
         usage('강화석')
